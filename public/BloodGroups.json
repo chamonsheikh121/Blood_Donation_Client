@@ -1,0 +1,58 @@
+[
+    {
+        "group": "A+",
+        "antigens": ["A"],
+        "antibodies": ["Anti-B"],
+        "canDonateTo": ["A+", "AB+"],
+        "canReceiveFrom": ["A+", "A-", "O+", "O-"]
+    },
+    {
+        "group": "A-",
+        "antigens": ["A"],
+        "antibodies": ["Anti-B", "Anti-Rh"],
+        "canDonateTo": ["A+", "A-", "AB+", "AB-"],
+        "canReceiveFrom": ["A-", "O-"]
+    },
+    {
+        "group": "B+",
+        "antigens": ["B"],
+        "antibodies": ["Anti-A"],
+        "canDonateTo": ["B+", "AB+"],
+        "canReceiveFrom": ["B+", "B-", "O+", "O-"]
+    },
+    {
+        "group": "B-",
+        "antigens": ["B"],
+        "antibodies": ["Anti-A", "Anti-Rh"],
+        "canDonateTo": ["B+", "B-", "AB+", "AB-"],
+        "canReceiveFrom": ["B-", "O-"]
+    },
+    {
+        "group": "AB+",
+        "antigens": ["A", "B"],
+        "antibodies": [],
+        "canDonateTo": ["AB+"],
+        "canReceiveFrom": ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]
+    },
+    {
+        "group": "AB-",
+        "antigens": ["A", "B"],
+        "antibodies": ["Anti-Rh"],
+        "canDonateTo": ["AB+", "AB-"],
+        "canReceiveFrom": ["A-", "B-", "AB-", "O-"]
+    },
+    {
+        "group": "O+",
+        "antigens": [],
+        "antibodies": ["Anti-A", "Anti-B"],
+        "canDonateTo": ["A+", "B+", "AB+", "O+"],
+        "canReceiveFrom": ["O+", "O-"]
+    },
+    {
+        "group": "O-",
+        "antigens": [],
+        "antibodies": ["Anti-A", "Anti-B", "Anti-Rh"],
+        "canDonateTo": ["A+", "B+", "AB+", "O+", "A-", "B-", "AB-", "O-"],
+        "canReceiveFrom": ["O-"]
+    }
+]

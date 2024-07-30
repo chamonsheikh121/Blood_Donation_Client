@@ -6,12 +6,18 @@ import { IoMenu } from "react-icons/io5";
 import UseAuthContext from "../../Hooks/UseAuthContext";
 import Swal from "sweetalert2";
 import { RxCross1 } from "react-icons/rx";
+import UseUser from "../../Hooks/UseUser";
 
 const Navbar = () => {
     const { user, logOut } = UseAuthContext();
     const [showNav, setShowNav] = useState(false);
+    const [data] = UseUser()
+    console.log(data);
     const location = useLocation();
-    console.log(location.pathname);
+    const userName = data?.donarName?.split('')[0];
+    console.log(userName);
+    const dashboard = location.pathname.includes('dashboard');
+
 
 
     const handleLogOut = () => {
@@ -35,15 +41,39 @@ const Navbar = () => {
         <ul>
             <NavLink to='/' className={`${location.pathname === '/' ? 'border-b-4 border-red-600 hover:text-black text-red-700 hover:bg-transparent' : ''} px-5   font-bold uppercase hover:bg-red-200 py-3 transition-all rounded-md`}>Home</NavLink>
 
-            <NavLink to='/all-blood-donation-request' className={`${location.pathname === '/all-blood-donation-request' ? 'border-b-4 border-red-600 hover:text-black text-red-700 hover:bg-transparent' : ''} px-5   font-bold uppercase hover:bg-red-200 py-3 transition-all rounded-md`}> donation&nbsp;req</NavLink>
+            <NavLink to='/all-blood-donation-request' className={`${location.pathname === '/all-blood-donation-request' ? 'border-b-4 border-red-600 hover:text-black text-red-700 hover:bg-transparent' : ''} px-5   font-bold uppercase hover:bg-red-200 py-3 transition-all rounded-md`}> donation&nbsp;req&apos;s</NavLink>
 
-            <NavLink to='/dashboard/profile' className={`${location.pathname === '/dashboard' ? 'border-b-4 border-red-600 hover:text-black text-red-700 hover:bg-transparent' : ''} px-5   font-bold uppercase hover:bg-red-200 py-3 transition-all rounded-md`}>dashboard</NavLink>
+            {
+                user && <NavLink to='/dashboard/profile' className={`${dashboard ? 'border-b-4 border-red-600 hover:text-black text-red-700 hover:bg-transparent' : ''} px-5   font-bold uppercase hover:bg-red-200 py-3 transition-all rounded-md`}>dashboard</NavLink>
+            }
 
             <NavLink className={`${location.pathname === '/funding' ? 'border-b-4 border-red-600 hover:text-black text-red-700 hover:bg-transparent' : ''} px-5   font-bold uppercase hover:bg-red-200 py-3 transition-all rounded-md`}>funding</NavLink>
             <NavLink to='/blogs' className={`${location.pathname === '/blogs' ? 'border-b-4 border-red-600 hover:text-black text-red-700 hover:bg-transparent' : ''} px-5   font-bold uppercase hover:bg-red-200 py-3 transition-all rounded-md`}>blogs</NavLink>
 
-            {user ? <button onClick={handleLogOut} className=" rounded-md bg-red-700 text-white font-bold uppercase py-2  transition-all  hover:bg-red-900 border-2 px-10">logout</button> : <NavLink to='/login' className=" rounded-md bg-red-700 text-white font-bold uppercase py-2  transition-all  hover:bg-red-900 border-2 px-10">login</NavLink>}
+            <div className="flex relative items-center">
+                {data ? data?.donarImage ?
+                    <div>
+                        <div className="w-14 relative h-14 rounded-full bg-red-600 text-white">
+                        <img className="rounded-full w-full h-full" src={data?.donarImage} alt="" />
+                        <span className={`w-[20px] absolute top-0 right-0 rounded-full h-[20px] ${data?.Status == 'true' ? 'bg-green-500 border-white border-2': 'bg-gray-300'}`}></span>
+                    </div>
+                    </div> :
+                    <div className="w-14 relative h-14 rounded-full bg-red-600 text-white">
+                        <span className="flex items-center justify-center font-semibold text-4xl" >{userName}</span>
+                        <span className={`w-[20px] absolute top-0 right-0 rounded-full h-[20px] ${data?.Status == 'true' ? 'bg-red-500': 'bg-gray-300'}`}></span>
+                    </div> :
+                    <NavLink to='/login' className=" rounded-md bg-red-700 text-white font-bold uppercase py-2  transition-all  hover:bg-red-900 border-2 px-10">join</NavLink>}
+
+                {
+                    user ? <select onChange={handleLogOut} className="absolute w-[100px] cursor-pointer h-full bg-transparent  bottom-0 -right-10" name="" id="">
+                        <option className="" value=""></option>
+                        <option className=" rounded-md w-full bg-red-700 text-white font-bold uppercase py-2  transition-all  hover:bg-red-900 border-2 px-10" value=""> logout</option>
+                    </select> : null
+                }
+            </div>
         </ul>
+
+    // 
 
 
 
@@ -57,7 +87,7 @@ const Navbar = () => {
                     <div className="lgSizeDevice lg:block hidden">
                         {navContent}
                     </div>
-                    <div onClick={() => setShowNav(!showNav)} className="cursor-pointer btn lg:hidden bg-red-700 text-white">{showNav ? <RxCross1></RxCross1>  : <IoMenu ></IoMenu>}</div>
+                    <div onClick={() => setShowNav(!showNav)} className="cursor-pointer btn lg:hidden bg-red-700 text-white">{showNav ? <RxCross1></RxCross1> : <IoMenu ></IoMenu>}</div>
                 </div>
 
             </div>

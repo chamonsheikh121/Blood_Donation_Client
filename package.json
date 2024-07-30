@@ -10,17 +10,22 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.51.15",
+    "axios": "^1.7.2",
+    "cors": "^2.8.5",
     "firebase": "^10.12.3",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^5.2.1",
+    "react-loader-spinner": "^6.1.6",
     "react-router-dom": "^6.24.1",
     "react-simple-captcha": "^9.3.1",
     "react-toastify": "^10.0.5",
     "sweetalert2": "^11.12.2"
   },
+  "proxy": "https://api.imgbb.com/1/upload",
   "devDependencies": {
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",

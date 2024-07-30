@@ -8,6 +8,9 @@ import Login from "../Pages/Login/Login";
 import Blogs from "../Pages/Blog/Blogs";
 import DashboardLayout from "../Pages/UserDashboard/ProfilePage/DashboardLayout/DashboardLayout";
 import Profile from "../Pages/UserDashboard/ProfilePage/Profile";
+import MyDonationRequest from "../Pages/UserDashboard/MyDonationRequest/MyDonationRequest";
+import CreateDonationRequest from "../Pages/UserDashboard/CreateDonationRequest/CreateDonationRequest";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
     {
@@ -23,16 +26,26 @@ const router = createBrowserRouter([
                 element: <AllDonationReq></AllDonationReq>
             },
             {
-                path:'blogs',
-                element:<Blogs></Blogs>
+                path: 'blogs',
+                element: <Blogs></Blogs>
             },
             {
-                path:'dashboard',
-                element: <DashboardLayout></DashboardLayout>,
-                children:[
+                path: 'dashboard',
+                element: <PrivateRoute>
+                    <DashboardLayout></DashboardLayout>
+                    </PrivateRoute>,
+                children: [
                     {
-                        path:'profile',
-                        element:<Profile></Profile>
+                        path: 'profile',
+                        element: <PrivateRoute><Profile></Profile></PrivateRoute>
+                    },
+                    {
+                        path: 'my-donation-requests',
+                        element: <MyDonationRequest></MyDonationRequest>
+                    },
+                    {
+                        path: 'create-donation-request',
+                        element: <CreateDonationRequest></CreateDonationRequest>
                     }
                 ]
             }

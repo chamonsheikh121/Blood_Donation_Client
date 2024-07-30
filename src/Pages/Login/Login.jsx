@@ -2,9 +2,13 @@ import { Link, useNavigate } from "react-router-dom";
 import image from './../../assets/Login/29313294_pq6o_qij1_220606.jpg'
 import UseAuthContext from "../../Hooks/UseAuthContext";
 import Swal from "sweetalert2";
+import SignInOptions from "../../Components/Shared/SignInOptions";
+import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
+import { useState } from "react";
 
 const Login = () => {
     const { signInEmailPass } = UseAuthContext();
+    const [toggle, setToggle] = useState(false)
     const navigate = useNavigate();
     const handleLoginSubmit = (e) => {
         e.preventDefault();
@@ -39,13 +43,17 @@ const Login = () => {
                                 <input type="email" placeholder="email" name='userEmail' className="input focus:outline-none focus:border-black input-bordered" required />
                             </div>
                             <span>Password :</span>
-                            <div className="form-control">
-
-                                <input type="password" placeholder="password" name='userPassword' className="input focus:outline-none focus:border-black input-bordered" required />
+                            <div className="form-control relative">
+                            <div onClick={()=>setToggle(!toggle)} className='absolute top-3 right-5 cursor-pointer rounded-full'>
+                                    {toggle? <BsEyeFill size={25}></BsEyeFill>:<BsEyeSlashFill size={25}></BsEyeSlashFill>}
+                                </div>
+                                <input type={toggle?'text' : 'password'} placeholder="password" name='userPassword' className="input focus:outline-none focus:border-black input-bordered" required />
                             </div>
                             <button className="btn mt-5 bg-red-600 text-white">Login now</button>
-                            <p className='text-sm text-center text-gray-600'>New here ? <Link className='text-red-700 underline-offset-4 underline' to='/registration'>Register</Link></p>
+                            <p className='text-sm text-center text-gray-600'>New here ? <Link className='text-red-700 underline-offset-4 underline' to='/registration'>create account</Link></p>
                         </form>
+                        <hr className="mb-2" />
+                        <SignInOptions></SignInOptions>
                     </div>
                 </div>
             </div>

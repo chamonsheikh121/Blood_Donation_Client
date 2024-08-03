@@ -28,7 +28,7 @@ const MyDonationRequest = () => {
     return (
         <div>
 
-            <div className="max-w-7xl border mx-auto ">
+            <div className="max-w-5xl border mx-auto ">
                 {/* <h1 className="text-center font-bold text-4xl mb-5">My Request&apos;s</h1> */}
                 <div className=" col-span-12 grid md:grid-cols-2 grid-cols-1 lg:grid-cols-3 gap-10 p-5  ">
                     {

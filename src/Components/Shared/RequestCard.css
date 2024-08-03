@@ -1,0 +1,12 @@
+.cards {
+    transition: all .3s ease-in-out;
+    perspective: 200px;
+    position: relative;
+
+}
+
+.cards:hover {
+    transform: translate(10px, -10px);
+    box-shadow: -10px 10px 30px rgb(129, 129, 129);
+    
+}

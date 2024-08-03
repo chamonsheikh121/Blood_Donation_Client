@@ -11,7 +11,10 @@ import Profile from "../Pages/UserDashboard/ProfilePage/Profile";
 import MyDonationRequest from "../Pages/UserDashboard/MyDonationRequest/MyDonationRequest";
 import CreateDonationRequest from "../Pages/UserDashboard/CreateDonationRequest/CreateDonationRequest";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import MyRequestDetails from "../Pages/UserDashboard/MyRequestDetails/MyRequestDetails";
+import UseAxiosPublic from "../Hooks/UseAxiosPublic";
 
+const axiosPublic = UseAxiosPublic()
 const router = createBrowserRouter([
     {
         path: "/",
@@ -24,6 +27,10 @@ const router = createBrowserRouter([
             {
                 path: 'all-blood-donation-request',
                 element: <AllDonationReq></AllDonationReq>
+            },
+            {
+                path: 'all-blood-donation-request/:id',
+                element: <MyRequestDetails></MyRequestDetails>
             },
             {
                 path: 'blogs',
@@ -42,6 +49,10 @@ const router = createBrowserRouter([
                     {
                         path: 'my-donation-requests',
                         element: <MyDonationRequest></MyDonationRequest>
+                    },
+                    {
+                        path: 'my-donation-requests/:id',
+                        element: <MyRequestDetails></MyRequestDetails>
                     },
                     {
                         path: 'create-donation-request',

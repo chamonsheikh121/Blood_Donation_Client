@@ -4,9 +4,14 @@ import { MdEdit } from "react-icons/md";
 import UseAxiosPublic from "../../../Hooks/UseAxiosPublic";
 import Swal from "sweetalert2";
 import UseUser from "../../../Hooks/UseUser";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ProfileModal_1 from './ProfileModal_1';
 import { DNA } from 'react-loader-spinner';
+import { FaCopy } from 'react-icons/fa';
+// import { IoCheckmarkDoneOutline } from 'react-icons/io5';
+import { ImCheckmark } from 'react-icons/im';
+import UseMyRequest from '../../../Hooks/UseMyRequest';
+import RequestCard from '../../../Components/Shared/RequestCard';
 
 
 
@@ -14,12 +19,15 @@ import { DNA } from 'react-loader-spinner';
 const Profile = () => {
 
     const [data, refetch] = UseUser();
+    const [myRequest] = UseMyRequest()
     const [loading, setLoading] = useState(false)
+    const [myThreeRequest, setMyThreeRequest] = useState()
     const [updatedName, setUpdatedName] = useState('')
     const [updatedImage, setUpdatedImage] = useState(null);
     const [activeStatus, setActiveStatus] = useState(data?.Status)
     const [updatedPhone, setUpdatedPhone] = useState(data?.donarPhone)
     const [saveActive, setSaveActive] = useState(false)
+    const [UIDCopy, setUIDCopy] = useState(false)
     const axiosPublic = UseAxiosPublic()
 
     const handleFormSubmit = async (e) => {
@@ -87,17 +95,26 @@ const Profile = () => {
 
     }
 
+    const handleUidCopy = () => {
+        navigator.clipboard.writeText(data?.userUID)
+        setUIDCopy(true)
+    }
+
     // const handleProfileDetailsSubmit = (e) => {
     //     e.preventDefault();
     //     console.log(e);
     // }
-
+    useEffect(() => {
+        if (myRequest) {
+            setMyThreeRequest(myRequest?.slice(0, 3))
+        }
+    }, [myRequest])
 
     return (
         <div className="p-10">
 
             {data ? <div>
-                <div className="flex gap-6">
+                <div className="flex md:flex-row flex-col gap-6">
                     <div className=" p-5   relative  bg-white space-y-10  text-gray-600">
                         <figure className="relative">
 
@@ -115,15 +132,18 @@ const Profile = () => {
                                 loading={loading}
                                 handleFormSubmit={handleFormSubmit}></ProfileModal_1>
                         </figure>
-                        <div>
+                        <div className='space-y-2'>
                             <div className="flex items-end  gap-4">
                                 <span className="text-3xl font-extrabold">
                                     {data ? data?.donarName : 'name: not given'} </span>
 
                             </div>
                             <p className="font-semibold"> {data?.donarEmail ? data?.donarEmail : 'email: not given'}</p>
-                            <p className="font-semibold">Phone : {data?.donarPhone ? data.donarPhone : 'not given'}</p>
-                            <p className="mt-3 flex items-center justify-between border p-2 rounded-full">active status:  <div className={` relative h-[30px] cursor-pointer transition-all  w-[60px]`}>
+                            <p className="font-semibold"><span className='font-semibold'>Phone </span> : {data?.donarPhone ? data.donarPhone : 'not given'}</p>
+                            <p className="font-semibold flex items-center gap-3"><span className='font-semibold'>userID</span>: <span className='text-red-500'> {data?.userUID} {
+                                UIDCopy ? <ImCheckmark onClick={handleUidCopy} className='inline ml-2 text-green-500 cursor-pointer' size={20}></ImCheckmark> : <FaCopy onClick={handleUidCopy} className='inline ml-2 text-gray-500 cursor-pointer' size={20}></FaCopy>
+                            }</span> </p>
+                            <p className="mt-3 flex items-center justify-between  rounded-full"><span className='font-semibold'>active status</span>:<div className={`relative h-[30px]  transition-all  w-[60px]`}>
                                 <button className={`${data?.Status == 'true' ? 'bg-green-500' : 'bg-gray-300'} h-full transition-all border-2  w-full border-gray-500  rounded-full`}></button>
                                 <span className={`w-[30px] h-[30px]  absolute  ${data?.Status == 'true' ? 'right-[2px] ' : 'left-[2px]'} transition-all border-2 border-gray-500 bg-gray-50 rounded-full h-full`}></span>
                             </div> </p>
@@ -138,8 +158,6 @@ const Profile = () => {
                             setSaveActive={setSaveActive}
                             saveActive={saveActive}
                             loading={loading}
-
-
                             handleProfileDetailsSubmit={handleProfileDetailsSubmit}
                         ></ProfileModal_2> */}
                         <div className="flex items-center justify-center gap-1">
@@ -191,28 +209,32 @@ const Profile = () => {
 
                 <div className="">
                     <p className="text-3xl font-bold mt-20 mb-5 text-center  text-gray-600">My recent donation:</p>
-                    <div className="grid grid-cols-3 gap-10 mx-10">
+                    {/* <div className="grid grid-cols-3 gap-10 mx-10">
                         <div className="h-[250px] bg-green-700"></div>
                         <div className="h-[250px] bg-green-700"></div>
                         <div className="h-[250px] bg-green-700"></div>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="">
                     <p className="text-3xl font-bold mt-20 mb-5 text-center  text-gray-600">My recent request&apos;s:</p>
-                    <div className="grid grid-cols-3 gap-10 mx-10">
-                        <div className="h-[250px] bg-green-700"></div>
-                        <div className="h-[250px] bg-green-700"></div>
-                        <div className="h-[250px] bg-green-700"></div>
+                    <div className="grid md:grid-cols-2 grid-cols-1 lg:grid-cols-3 gap-10 md:mx-10">
+                        {
+                            myThreeRequest?.length > 0 && myThreeRequest?.map(requests => <RequestCard
+                                key={requests?._id}
+                                request={requests}
+                            ></RequestCard>)
+                        }
                     </div>
                 </div>
-            </div> : <DNA
-                visible={true}
-                height="80"
-                width="80"
-                ariaLabel="dna-loading"
-                wrapperStyle={{}}
-                wrapperClass="dna-wrapper"
-            />}
+            </div> : <div className='w-full flex items-center justify-center mt-10'>
+                <DNA
+                    visible={true}
+                    height="100"
+                    width="100"
+                    ariaLabel="dna-loading"
+                    wrapperStyle={{}}
+                    wrapperClass="dna-wrapper"
+                /></div>}
         </div >
     );
 };

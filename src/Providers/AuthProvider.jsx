@@ -11,13 +11,13 @@ const provider = new GoogleAuthProvider();
 const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState();
+
     const [loading, setLoading] = useState(true)
     const [divisions, setDivisions] = useState([])
     const [districts, setDistricts] = useState([])
     const [upazilas, setUpazilas] = useState([])
     const [bloodGroups, setBloodGroups] = useState([])
 
-    console.log(divisions, districts, upazilas, bloodGroups);
     const createUserEmailPass = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password)
     }

@@ -8,7 +8,7 @@ import './RequestCard.css'
 const RequestCard = ({ request, requestType }) => {
     const { _id, donarImage, donarName, donarEmail, requestedBloodGroup, requesterImage, requesterHospital, requesterFullAddress, requestedDate, requestedTime, } = request
     return (
-        <div className="border cards flex flex-col justify-between  border-gray-200 rounded-md bg-gray-200 hover:bg-white  shadow-lg p-2">
+        <div className="border cards flex flex-col justify-between  border-gray-300 rounded-md bg-gray-200 hover:bg-white  shadow-lg p-2">
             <div className="space-y-2">
                 <div className="flex  justify-between text-gray-600">
                     <div className="flex items-center gap-2">
@@ -35,7 +35,8 @@ const RequestCard = ({ request, requestType }) => {
             <div className="flex items-center px-5 justify-between">
 
                 {
-                    requestType ? <button className="btn bg-blue-600 text-white px-5 border-none btn-sm ">accept </button> : <button className="btn bg-gray-400 border-none btn-sm mt-2 hover:bg-gray-500 hover:text-white">Edit <FaEdit></FaEdit></button>
+                    requestType ? <button className="btn bg-blue-600 text-white px-5 border-none btn-sm ">accept </button> : 
+                    <Link to={`/dashboard/my-donation-requests/${_id}/edit`}> <button className="btn bg-gray-400 border-none btn-sm mt-2 hover:bg-gray-500 hover:text-white">Edit <FaEdit></FaEdit></button></Link>
                 }
                 <Link to={requestType ? `/all-blood-donation-request/${_id}` : `/dashboard/my-donation-requests/${_id}`}><button className="btn btn-sm mt-2 border-none hover:text-white  text-white bg-red-600 hover:bg-red-700">details <FaArrowRight></FaArrowRight></button></Link>
 

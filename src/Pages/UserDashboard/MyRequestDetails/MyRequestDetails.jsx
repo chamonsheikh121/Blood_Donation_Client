@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import UseAxiosPublic from "../../../Hooks/UseAxiosPublic";
 import { DNA } from "react-loader-spinner";
 import { FaCopy, FaRegUser } from "react-icons/fa";
 import { ImCheckmark } from "react-icons/im";
 import { CiHospital1 } from "react-icons/ci";
 import { MdAccessTime, MdDateRange, MdOutlineNumbers, MdOutlinePhoneInTalk, MdOutlineQrCode2 } from "react-icons/md";
-
 import { BiDonateBlood, BiSolidMapPin } from "react-icons/bi";
 import { GrLocation } from "react-icons/gr";
+import { LuClipboardEdit } from "react-icons/lu";
 
 
 
@@ -27,11 +27,15 @@ const MyRequestDetails = () => {
         setRequestedId(true)
     }
 
+    const location = useLocation();
+    const isInDashboard = location?.pathname?.includes('dashboard');
+
+
     const param = useParams();
     useEffect(() => {
         const getData = async () => {
             if (param) {
-                const res = await axiosPublic.get(`/api/v1/request-details/${param.id}`)
+                const res = await axiosPublic.get(`/api/v1/findOne/${param.id}`)
                 const data = res.data;
                 return setRequestDetails(data)
             }
@@ -61,7 +65,11 @@ const MyRequestDetails = () => {
                                     </div>
                                 </div>
                                 <div>
-                                    <button className="btn block px-16 bg-white text-purple-700 hover:bg-purple-700 hover:text-white border-2 border-purple-700 font-semibold">Accept</button>
+                                    {
+
+                                        isInDashboard ? <Link to={`/dashboard/my-donation-requests/${requestDetails?._id}/edit`}><button className="btn flex items-center gap-4 px-16 bg-white text-purple-700 hover:bg-purple-700 hover:text-white border-2 border-purple-700 font-semibold">Edit <LuClipboardEdit size={20}></LuClipboardEdit></button></Link> : <button className="btn  px-16 bg-white text-purple-700 hover:bg-purple-700 hover:text-white border-2 border-purple-700 font-semibold">Accept</button>
+                                    }
+
                                 </div>
                             </div>
 

@@ -3,6 +3,7 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import UseAllRequestCount from "../../Hooks/UseAllDonationRequest";
 import RequestCard from "../../Components/Shared/RequestCard";
 import { DNA } from "react-loader-spinner";
+import Footer from "../HomePage/Footer";
 
 
 const AllDonationReq = () => {
@@ -13,12 +14,11 @@ const AllDonationReq = () => {
     const [dataPerPage, setDataPerPage] = useState(8)
     const [pageCount, setPageCount] = useState()
 
-const array = [1,2,3];
-console.log(array.slice(0,5));
+    const array = [1, 2, 3];
+    console.log(array.slice(0, 5));
 
     const count = data?.count;
     const pageArray = [...Array(pageCount).keys()];
-
     const handlePagination = (index) => {
         setCurrentPage(index)
         const newData = data?.data?.slice(dataPerPage * index, (dataPerPage * index) + dataPerPage);
@@ -48,18 +48,27 @@ console.log(array.slice(0,5));
         </div>
     }
     return (
-        <div className="pb-10">
-            <div className="max-w-7xl  text-gray-500 mx-auto mt-20">
+        <div >
+            <div className="max-w-7xl pb-10  text-gray-500 mx-auto mt-20">
                 <h1 className="text-center font-bold my-10 text-4xl">All Recent Request&apos;s</h1>
                 <div className=" col-span-12 grid md:grid-cols-3  grid-cols-1 lg:grid-cols-4 gap-y-10 gap-x-5 p-5  ">
 
                     {
-                        sliceData?.map(request => <RequestCard
+                        sliceData?.length > 0 ? sliceData?.map(request => <RequestCard
                             key={request?._id}
                             requestType={data?.requestType}
                             request={request && request}
                         ></RequestCard>
-                        )
+                        ) : <div className="w-full flex items-center justify-center mt-10">
+                            <DNA
+                                visible={true}
+                                height="100"
+                                width="100"
+                                ariaLabel="dna-loading"
+                                wrapperStyle={{}}
+                                wrapperClass="dna-wrapper"
+                            />
+                        </div>
                     }
 
 
@@ -89,6 +98,7 @@ console.log(array.slice(0,5));
 
             </div>
 
+            <Footer></Footer>
         </div>
     );
 };

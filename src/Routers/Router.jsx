@@ -13,6 +13,7 @@ import CreateDonationRequest from "../Pages/UserDashboard/CreateDonationRequest/
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import MyRequestDetails from "../Pages/UserDashboard/MyRequestDetails/MyRequestDetails";
 import UseAxiosPublic from "../Hooks/UseAxiosPublic";
+import EditRequest from "../Pages/UserDashboard/EditRequest/EditRequest";
 
 const axiosPublic = UseAxiosPublic()
 const router = createBrowserRouter([
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
                 path: 'dashboard',
                 element: <PrivateRoute>
                     <DashboardLayout></DashboardLayout>
-                    </PrivateRoute>,
+                </PrivateRoute>,
                 children: [
                     {
                         path: 'profile',
@@ -53,6 +54,11 @@ const router = createBrowserRouter([
                     {
                         path: 'my-donation-requests/:id',
                         element: <MyRequestDetails></MyRequestDetails>
+                    },
+                    {
+                        path: 'my-donation-requests/:id/edit',
+                        element: <EditRequest></EditRequest>
+
                     },
                     {
                         path: 'create-donation-request',

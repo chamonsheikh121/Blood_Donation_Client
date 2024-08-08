@@ -7,6 +7,7 @@ import UseAuthContext from "../../Hooks/UseAuthContext";
 import Swal from "sweetalert2";
 import { RxCross1 } from "react-icons/rx";
 import UseUser from "../../Hooks/UseUser";
+import SectionComponent from "../SectionComponent/SectionComponent";
 
 const Navbar = () => {
     const { user, logOut } = UseAuthContext();
@@ -80,7 +81,10 @@ const Navbar = () => {
 
 
     return (
-        <div className="sticky left-0 top-0 bg-white">
+        <div className="sticky left-0 top-0 bg-white"
+        style={{ opacity: .1, transform: 'translateY(-90%)', transition: '1s', transitionDelay:'.2s'}} id="navSection"
+        
+        >
             <div className="max-w-7xl mx-auto ">
                 <div className="flex  sm:flex-row items-center justify-around lg:justify-between">
                     <div className="lg:flex-1">
@@ -97,6 +101,8 @@ const Navbar = () => {
                 {navContent}
             </div>
             <hr />
+            <SectionComponent id={'navSection'} from={'translateY'}></SectionComponent>
+
         </div>
     );
 };

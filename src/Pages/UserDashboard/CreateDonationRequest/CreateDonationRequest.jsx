@@ -4,6 +4,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import UseUser from "../../../Hooks/UseUser";
 import UseAxiosPublic from "../../../Hooks/UseAxiosPublic";
+import SectionComponent from "../../../Components/SectionComponent/SectionComponent";
 
 const CreateDonationRequest = () => {
 
@@ -28,7 +29,7 @@ const CreateDonationRequest = () => {
         const fullAddress = form.get('fullAddress')
         const requesterMessage = form.get('requesterMessage');
         const photo = form.get('file');
-        if(!selectedBloodGroup || !selectedDivision || !selectedDistrict || !selectedUpazila){
+        if (!selectedBloodGroup || !selectedDivision || !selectedDistrict || !selectedUpazila) {
             alert('please make sure you have selected : \nblood-group ,\nDivision ,\nDistrict and \nUpazila')
             setLoading(false)
             return
@@ -61,7 +62,8 @@ const CreateDonationRequest = () => {
                 requesterPhone: phone || null,
                 requesterFullAddress: fullAddress || null,
                 requesterMessage: requesterMessage || null,
-                requesterImage: res?.data?.data?.display_url || null
+                requesterImage: res?.data?.data?.display_url || null,
+                status:'pending'
 
             }
             if (user?.email) {
@@ -75,11 +77,11 @@ const CreateDonationRequest = () => {
                         showConfirmButton: false,
                         timer: 2000
                     });
-                   
+
                     setLoading(false)
                     e.target.reset()
                 }
-                else{
+                else {
                     Swal.fire({
                         position: "top-end",
                         icon: "error",
@@ -93,7 +95,7 @@ const CreateDonationRequest = () => {
             }
 
         }
-        else{
+        else {
             Swal.fire({
                 position: "top-end",
                 icon: "error",
@@ -113,11 +115,11 @@ const CreateDonationRequest = () => {
                 <div className="flex flex-col md:flex-row gap-10">
                     <div className="flex flex-col flex-1 justify-center gap-2">
                         <label htmlFor="RequesterName">Requester name:</label>
-                        <input defaultValue={data?.donarName} disabled type="text" name="" className="py-2 border  bg-gray-300 placeholder:text-gray-500 pl-5 cursor-not-allowed focus:bg-white " required placeholder="Name" id="RequesterName" />
+                        <input defaultValue={data?.donarName} disabled type="text" name="" className="py-2 border  bg-gray-300 placeholder:text-gray-500 pl-5 cursor-not-allowed focus:bg-white " required placeholder="Name" id="RequesterName" style={{ opacity: .1, transition: '1s', transform: 'translateX(-90%)' }} />
                     </div>
                     <div className="flex flex-1 flex-col justify-center gap-2">
                         <label htmlFor="RequesterName">Requester email:</label>
-                        <input defaultValue={user?.email} disabled type="email" name="" className="py-2 border bg-gray-300 placeholder:text-gray-500 cursor-not-allowed  pl-5 focus:bg-white " required placeholder="Email" id="RequesterName" />
+                        <input defaultValue={user?.email} disabled type="email" name="" className="py-2 border bg-gray-300 placeholder:text-gray-500 cursor-not-allowed  pl-5 focus:bg-white " required placeholder="Email" id="RequesterEmail" style={{ opacity: .1, transition: '1s', transform: 'translateX(90%)' }} />
                     </div>
                 </div>
 
@@ -126,11 +128,11 @@ const CreateDonationRequest = () => {
                 <div className="flex flex-col md:flex-row gap-10">
                     <div className="flex flex-col flex-1 justify-center gap-2">
                         <label htmlFor="RecipientName">Recipient name:</label>
-                        <input type="text" name="RecipientName" className="py-2 border bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white " required placeholder="Name" id="RecipientName" />
+                        <input type="text" name="RecipientName" className="py-2 border bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white " required placeholder="Name" id="RecipientName" style={{ opacity: .1, transition: '1s', transform: 'translateX(-90%)' }} />
                     </div>
                     <div className="flex flex-1 flex-col justify-center gap-2">
                         <label htmlFor="HospitalName">Hospital name:</label>
-                        <input type="text" name="HospitalName" className="py-2 border bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white " required placeholder="Hospital name" id="HospitalName" />
+                        <input type="text" name="HospitalName" className="py-2 border bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white " required placeholder="Hospital name" id="HospitalName" style={{ opacity: .1, transition: '1s', transform: 'translateX(90%)' }} />
                     </div>
                 </div>
 
@@ -139,7 +141,7 @@ const CreateDonationRequest = () => {
                 <div className="flex flex-col md:flex-row gap-10">
                     <div className="flex flex-col flex-1 justify-center gap-2">
                         <label htmlFor="bloodGroup">Blood group:</label>
-                        <select id="bloodGroup" required onChange={(e) => setSelectedBloodGroup(JSON.parse(e.target.value))} className={`py-2 ${selectedBloodGroup ? 'border':'border-red-700 border'} bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white`} >
+                        <select id="bloodGroup" required onChange={(e) => setSelectedBloodGroup(JSON.parse(e.target.value))} className={`py-2 ${selectedBloodGroup ? 'border' : 'border-red-700 border'} bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white`} style={{ opacity: .1, transition: '1s', transform: 'translateX(-90%)' }}>
                             <option disabled selected>Select blood</option>
                             {
                                 bloodGroups?.length > 0 && bloodGroups.map((bloodGroup, i) => <option key={i}
@@ -148,10 +150,11 @@ const CreateDonationRequest = () => {
                             }
 
                         </select>
+                        <SectionComponent id={'bloodGroup'} from={'translateX'}></SectionComponent>
                     </div>
                     <div className="flex flex-col flex-1 justify-center gap-2">
                         <label htmlFor="division">Division :</label>
-                        <select id="division" required onChange={(e) => setSelectedDivision(JSON.parse(e.target.value))} className={`py-2 ${selectedDivision ? 'border':'border border-red-700'} bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white`}>
+                        <select id="division" required onChange={(e) => setSelectedDivision(JSON.parse(e.target.value))} className={`py-2 ${selectedDivision ? 'border' : 'border border-red-700'} bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white`} style={{ opacity: .1, transition: '1s', transform: 'translateY(-200%)' }}>
                             <option disabled selected>Select Division</option>
                             {
                                 divisions?.length > 0 && divisions.map(division => <option key={division.id}
@@ -160,10 +163,12 @@ const CreateDonationRequest = () => {
                             }
 
                         </select>
+                        <SectionComponent id={'division'} from={'translateY'}></SectionComponent>
+
                     </div>
                     <div className="flex flex-col flex-1 justify-center gap-2">
                         <label htmlFor="district">District :</label>
-                        <select id="district" required onChange={(e) => setSelectedDistrict(JSON.parse(e.target.value))} className={`py-2 ${selectedDistrict ? 'border':'border border-red-700'} bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white`}>
+                        <select id="district" required onChange={(e) => setSelectedDistrict(JSON.parse(e.target.value))} className={`py-2 ${selectedDistrict ? 'border' : 'border border-red-700'} bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white`} style={{ opacity: .1, transition: '1s', transform: 'translateX(90%)' }}>
                             <option disabled selected>Select District</option>
                             {
                                 districts?.length > 0 && districts.map(district => {
@@ -179,6 +184,8 @@ const CreateDonationRequest = () => {
                             }
 
                         </select>
+                        <SectionComponent id={'district'} from={'translateX'}></SectionComponent>
+
                     </div>
                 </div>
 
@@ -187,7 +194,7 @@ const CreateDonationRequest = () => {
                 <div className="flex flex-col md:flex-row gap-10">
                     <div className="flex flex-col flex-1 justify-center gap-2">
                         <label htmlFor="upazila">Upazila:</label>
-                        <select id="upazila" required onChange={(e) => setSelectedUpazila(JSON.parse(e.target.value))} className={`py-2 ${selectedUpazila ? 'border':'border border-red-700'} bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white`} >
+                        <select id="upazila" required onChange={(e) => setSelectedUpazila(JSON.parse(e.target.value))} className={`py-2 ${selectedUpazila ? 'border' : 'border border-red-700'} bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white`} style={{ opacity: .1, transition: '1s', transform: 'translateX(-90%)' }}>
                             <option disabled selected>Select upazila</option>
                             {
                                 upazilas?.length > 0 && upazilas.map(upazila => {
@@ -203,14 +210,20 @@ const CreateDonationRequest = () => {
                             }
 
                         </select>
+                        <SectionComponent id={'upazila'} from={'translateX'}></SectionComponent>
+
                     </div>
                     <div className="flex flex-col flex-1 justify-center gap-2">
                         <label htmlFor="date">Donation date:</label>
-                        <input type="date" name="date" className="py-2 border bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white " required placeholder="Name" id="date" />
+                        <input type="date" name="date" className="py-2 border bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white " required placeholder="Name" id="date" style={{ opacity: .1, transition: '1s', transform: 'translateY(-200%)' }} />
+                        <SectionComponent id={'date'} from={'translateY'}></SectionComponent>
+
                     </div>
                     <div className="flex flex-col flex-1 justify-center gap-2">
                         <label htmlFor="time">Donation time:</label>
-                        <input type="time" name="time" className="py-2 border bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white " required placeholder="Name" id="time" />
+                        <input type="time" name="time" className="py-2 border bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white " required placeholder="Name" id="time" style={{ opacity: .1, transition: '1s', transform: 'translateX(90%)' }} />
+                        <SectionComponent id={'time'} from={'translateX'}></SectionComponent>
+
                     </div>
                 </div>
 
@@ -220,11 +233,15 @@ const CreateDonationRequest = () => {
 
                     <div className="flex flex-col flex-1 justify-center gap-2">
                         <label htmlFor="Phone">Phone No:</label>
-                        <input type="number" name="phone" className="py-2 border bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white " required placeholder="Phone number" id="Phone" />
+                        <input type="number" name="phone" className="py-2 border bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white " required placeholder="Phone number" id="Phone" style={{ opacity: .1, transition: '1s', transform: 'translateX(-90%)' }} />
+                        <SectionComponent id={'Phone'} from={'translateX'}></SectionComponent>
+
                     </div>
                     <div className="flex flex-col flex-1 justify-center gap-2">
                         <label htmlFor="FullAddress">Full Address No:</label>
-                        <input type="text" name="fullAddress" className="py-2 border bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white " required placeholder="Address" id="FullAddress" />
+                        <input type="text" name="fullAddress" className="py-2 border bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white " required placeholder="Address" id="FullAddress" style={{ opacity: .1, transition: '1s', transform: 'translateX(90%)' }} />
+                        <SectionComponent id={'FullAddress'} from={'translateX'}></SectionComponent>
+
                     </div>
 
                 </div>
@@ -236,7 +253,10 @@ const CreateDonationRequest = () => {
                     <div className="flex flex-col flex-1 justify-center gap-2">
                         <label htmlFor="TextArea">Request message:</label>
                         <textarea name="requesterMessage" id="requesterMessage" required placeholder="why do you need blood describe in this input field
-in details"  className="py-2 border bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white h-[100px]"  ></textarea>
+in details"  className="py-2 border bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white h-[100px]"
+                            style={{ opacity: .1, transition: '1s', transform: 'translateY(90%)' }}></textarea>
+                        <SectionComponent id={'requesterMessage'} from={'translateY'}></SectionComponent>
+
                     </div>
 
 
@@ -246,7 +266,9 @@ in details"  className="py-2 border bg-gray-300 placeholder:text-gray-500 pl-5 f
 
                 <div className="flex flex-col items-center gap-2 md:items-start">
                     <label htmlFor="file">Photo :</label>
-                    <input type="file" name="file" id="file" className="py-2 border bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white" />
+                    <input type="file" name="file" id="file" className="py-2 border bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white" style={{ opacity: .1, transition: '1s', transform: 'translateX(-90%)' }} />
+                    <SectionComponent id={'file'} from={'translateX'}></SectionComponent>
+
 
                 </div>
 
@@ -256,6 +278,10 @@ in details"  className="py-2 border bg-gray-300 placeholder:text-gray-500 pl-5 f
 
 
             </form>
+            <SectionComponent id={'RequesterName'} from={'translateX'}></SectionComponent>
+            <SectionComponent id={'RequesterEmail'} from={'translateX'}></SectionComponent>
+            <SectionComponent id={'RecipientName'} from={'translateX'}></SectionComponent>
+            <SectionComponent id={'HospitalName'} from={'translateX'}></SectionComponent>
 
         </div>
     );

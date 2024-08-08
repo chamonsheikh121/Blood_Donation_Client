@@ -1,4 +1,4 @@
-
+import PropTypes from 'prop-types'
 
 const ProfileModal_1 = ({data,setUpdatedImage,setSaveActive, setUpdatedName, setUpdatedPhone,setActiveStatus, saveActive, handleFormSubmit, loading}) => {
 
@@ -58,3 +58,14 @@ const ProfileModal_1 = ({data,setUpdatedImage,setSaveActive, setUpdatedName, set
 };
 
 export default ProfileModal_1;
+ProfileModal_1.propTypes={
+    data: PropTypes.node,
+    setUpdatedImage: PropTypes.node,
+    setSaveActive: PropTypes.node,
+    setUpdatedName: PropTypes.node,
+    setUpdatedPhone: PropTypes.node,
+    saveActive: PropTypes.node,
+    handleFormSubmit: PropTypes.node,
+    loading: PropTypes.node,
+    setActiveStatus: PropTypes.node
+}

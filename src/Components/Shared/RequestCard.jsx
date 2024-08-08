@@ -3,10 +3,19 @@ import { Link } from "react-router-dom";
 import { PropTypes } from 'prop-types'
 import img from './../../assets/Registration/blood.png'
 import './RequestCard.css'
+import { UseDateConverter } from "../../Hooks/UseDateConverter";
+import { UseTimeConverter } from "../../Hooks/UseTimeConverter";
 
 
 const RequestCard = ({ request, requestType }) => {
-    const { _id, donarImage, donarName, donarEmail, requestedBloodGroup, requesterImage, requesterHospital, requesterFullAddress, requestedDate, requestedTime, } = request
+
+    const dateConstructor = new Date(request?.requestedDate);
+    const date = UseDateConverter(dateConstructor)
+    const time = UseTimeConverter(request?.requestedTime)
+
+    const { _id, donarImage, donarName, donarEmail, requestedBloodGroup, requesterImage, requesterHospital, requesterFullAddress, } = request
+
+
     return (
         <div className="border cards flex flex-col justify-between  border-gray-300 rounded-md bg-gray-200 hover:bg-white  shadow-lg p-2">
             <div className="space-y-2">
@@ -28,15 +37,16 @@ const RequestCard = ({ request, requestType }) => {
                     <p><span className="font-semibold">Hospital :</span> {requesterHospital}</p>
                     <p><span className="font-semibold">location :</span> {requesterFullAddress}</p>
                     <p className="font-semibold">Donation date & time :</p>
-                    <p className="text-sm">{requestedDate} , {requestedTime}{requestedTime >= 12 ? ' PM' : ' AM'}</p>
+                    <p className="text-sm">{date}</p>
+                    <p className="text-sm">{time}</p>
 
                 </div>
             </div>
             <div className="flex items-center px-5 justify-between">
 
                 {
-                    requestType ? <button className="btn bg-blue-600 text-white px-5 border-none btn-sm ">accept </button> : 
-                    <Link to={`/dashboard/my-donation-requests/${_id}/edit`}> <button className="btn bg-gray-400 border-none btn-sm mt-2 hover:bg-gray-500 hover:text-white">Edit <FaEdit></FaEdit></button></Link>
+                    requestType ? null :
+                        <Link to={`/dashboard/my-donation-requests/${_id}/edit`}> <button className="btn bg-gray-400 border-none btn-sm mt-2 hover:bg-gray-500 hover:text-white">Edit <FaEdit></FaEdit></button></Link>
                 }
                 <Link to={requestType ? `/all-blood-donation-request/${_id}` : `/dashboard/my-donation-requests/${_id}`}><button className="btn btn-sm mt-2 border-none hover:text-white  text-white bg-red-600 hover:bg-red-700">details <FaArrowRight></FaArrowRight></button></Link>
 

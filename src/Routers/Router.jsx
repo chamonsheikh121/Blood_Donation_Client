@@ -12,10 +12,9 @@ import MyDonationRequest from "../Pages/UserDashboard/MyDonationRequest/MyDonati
 import CreateDonationRequest from "../Pages/UserDashboard/CreateDonationRequest/CreateDonationRequest";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import MyRequestDetails from "../Pages/UserDashboard/MyRequestDetails/MyRequestDetails";
-import UseAxiosPublic from "../Hooks/UseAxiosPublic";
 import EditRequest from "../Pages/UserDashboard/EditRequest/EditRequest";
+import MyAcceptation from "../Pages/UserDashboard/MyAcceptation/MyAcceptation";
 
-const axiosPublic = UseAxiosPublic()
 const router = createBrowserRouter([
     {
         path: "/",
@@ -54,6 +53,10 @@ const router = createBrowserRouter([
                     {
                         path: 'my-donation-requests/:id',
                         element: <MyRequestDetails></MyRequestDetails>
+                    },
+                    {
+                        path: 'my-acceptations',
+                        element: <MyAcceptation></MyAcceptation>
                     },
                     {
                         path: 'my-donation-requests/:id/edit',

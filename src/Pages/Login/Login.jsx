@@ -9,9 +9,11 @@ import { useState } from "react";
 const Login = () => {
     const { signInEmailPass } = UseAuthContext();
     const [toggle, setToggle] = useState(false)
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate();
     const handleLoginSubmit = (e) => {
         e.preventDefault();
+        setLoading(true)
         const form = new FormData(e.currentTarget);
         const email = form.get('userEmail');
         const password = form.get('userPassword');
@@ -24,6 +26,7 @@ const Login = () => {
                     icon: 'success',
                     timer: 1000,
                 });
+                setLoading(false)
                 navigate('/')
             })
             .catch(err => console.log(err));
@@ -49,7 +52,7 @@ const Login = () => {
                                 </div>
                                 <input type={toggle?'text' : 'password'} placeholder="password" name='userPassword' className="input focus:outline-none focus:border-black input-bordered" required />
                             </div>
-                            <button className="btn mt-5 bg-red-600 text-white">Login now</button>
+                            <button className="btn mt-5 bg-red-600 text-white">{loading ? <span className="loading text-white"></span>: 'Login now'}</button>
                             <p className='text-sm text-center text-gray-600'>New here ? <Link className='text-red-700 underline-offset-4 underline' to='/registration'>create account</Link></p>
                         </form>
                         <hr className="mb-2" />

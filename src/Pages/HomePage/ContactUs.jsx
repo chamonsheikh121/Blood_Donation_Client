@@ -1,3 +1,4 @@
+
 import img from './../../assets/2148969982.jpg'
 import './Contact.css'
 
@@ -11,7 +12,7 @@ const ContactUs = () => {
             <div className='relative -top-20 text-gray-700   max-w-7xl w-full  sm:w-3/4 lg:w-full  mx-auto'>
                 <div className='flex md:px-10 px-5 flex-col lg:flex-row  justify-around gap-32'>
                     {/* left side */}
-                    <div className='flex-1 md:p-10 p-5  space-y-5  shadow-xl shadow-gray-300 bg-white'>
+                    <div  className='flex-1 md:p-10 p-5  space-y-5  shadow-xl shadow-gray-300 bg-white'>
                         <p className='text-2xl md:text-3xl md:px-10 py-5 pb-10 font-bold text-gray-700 text-center'>Contact with volenter</p>
                         <div className=' flex justify-between items-center '>
                             <div className='flex items-center gap-4'>
@@ -32,7 +33,7 @@ const ContactUs = () => {
                         </div>
                     </div>
                     {/* right side */}
-                    <div className='flex-1 md:p-10 p-2 space-y-5  shadow-xl shadow-gray-300 bg-white'>
+                    <div  className='flex-1 md:p-10 p-2 space-y-5  shadow-xl shadow-gray-300 bg-white'>
                         <p className='text-3xl px-10 pb-10 font-bold text-gray-700 text-center'>Contact with volenter</p>
                         <div className=' flex  justify-between items-center '>
                             <div className='flex items-center gap-4'>
@@ -54,7 +55,7 @@ const ContactUs = () => {
                     </div>
                 </div>
             </div>
-
+           
         </div>
     );
 };

@@ -9,15 +9,38 @@ import { MdAccessTime, MdDateRange, MdOutlineNumbers, MdOutlinePhoneInTalk, MdOu
 import { BiDonateBlood, BiSolidMapPin } from "react-icons/bi";
 import { GrLocation } from "react-icons/gr";
 import { LuClipboardEdit } from "react-icons/lu";
+import SectionComponent from "../../../Components/SectionComponent/SectionComponent";
+import UseAuthContext from "../../../Hooks/UseAuthContext";
+import UseUser from './../../../Hooks/UseUser';
+import Swal from "sweetalert2";
+import { UseDateConverter } from './../../../Hooks/UseDateConverter';
+import { UseTimeConverter } from "../../../Hooks/UseTimeConverter";
 
 
 
 const MyRequestDetails = () => {
     const axiosPublic = UseAxiosPublic()
+    const { user } = UseAuthContext();
+    const [loading, setLoading] = useState(false)
+    const [userData] = UseUser();
+    const [refetch, setRefetch] = useState(false)
     const [requestDetails, setRequestDetails] = useState()
     const [serialCopy, setSerialCopy] = useState(false)
     const [requestedId, setRequestedId] = useState(false)
+    const param = useParams();
 
+
+
+    // ==================  converting date and time to full name ===================
+    const dateConstructor = new Date(requestDetails?.requestedDate);
+    const date = UseDateConverter(dateConstructor);
+    // console.log(requestDetails?.requestedTime);
+    if (requestDetails?.requestedTime) {
+        var time = UseTimeConverter(requestDetails?.requestedTime)
+    }
+
+
+    // ====================================== ID and serial number copy =======================
     const handleSerialCopy = () => {
         navigator.clipboard.writeText(requestDetails?.serialNumber)
         setSerialCopy(true)
@@ -29,9 +52,61 @@ const MyRequestDetails = () => {
 
     const location = useLocation();
     const isInDashboard = location?.pathname?.includes('dashboard');
+    //  ================================ handle accepted ==========================================
+    const handleAccepted = () => {
+        let acceptedUserDetails = {
+            accepterName: userData?.donarName,
+            accepterEmail: userData?.donarEmail,
+            accepterPhone: userData?.donarPhone,
+            accepterImage: userData?.donarImage,
+            accepterUID: userData?.userUID,
+
+        }
+        acceptedUserDetails = { ...requestDetails, acceptedUserDetails };
+        acceptedUserDetails.requestedId = requestDetails?._id;
+        acceptedUserDetails.status = 'notFullFilled';
+        delete acceptedUserDetails?._id;
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Do you want to accept this Request !",
+            icon: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Accept"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                setLoading(true)
+                const res = await axiosPublic.post('/api/v1/all-acceptedRequest', acceptedUserDetails)
+                const data = res?.data;
+
+                if (data?.acknowledged == true) {
+                    setLoading(false)
+                    setRefetch(!refetch)
+                    Swal.fire({
+                        title: "Request Accepted",
+                        icon: "success",
+                        showCancelButton: true,
+                        cancelButtonText: "ok",
+                        confirmButtonColor: "#713ae9",
+                        cancelButtonColor: "#713ae9",
+                        confirmButtonText: "see now"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Navigate(`/dashboard/my-donation-requests/${_id}`)
+                            alert("hio")
+                        }
+                    });
+                }
 
 
-    const param = useParams();
+
+
+
+            }
+        });
+
+    }
     useEffect(() => {
         const getData = async () => {
             if (param) {
@@ -41,23 +116,25 @@ const MyRequestDetails = () => {
             }
         }
         getData()
-    }, [param, axiosPublic])
+    }, [param, axiosPublic, refetch])
     return (
-        <div className="mb-20">
+        <div className="mb-20" id="detailsPage" style={{ opacity: .1, transform: 'translateX(90%)', transition: '1s' }}>
+
 
             {
                 requestDetails ? <div className="mt-2">
                     <div className="flex lg:flex-row flex-col justify-center items-center lg:items-start gap-10 p-2 ">
-                        <div className="bg-gradient-to-t from-gray-400 to-purple-600 flex flex-col lg:flex-row  items-start lg:p-5 gap-2 justify-between w-10/12 rounded-md">
+                        <div className={`bg-gradient-to-t from-gray-400 ${requestDetails?.status == 'accepted' ? 'bg-green-600' : 'to-purple-600'}  flex flex-col lg:flex-row  items-start lg:p-5 gap-2 justify-between w-10/12 rounded-md`}>
                             <div className="lg:h-[400px]  lg:w-[600px]">
                                 <img className="h-full w-full " src={requestDetails?.requesterImage} />
+
                             </div>
 
                             <div className="flex flex-col h-[400px] flex-1 items-center lg:items-start p-2">
                                 <div className="text-white flex-1   pb-5 lg:pb-0 space-y-5 text-start  ">
                                     <p className="text-2xl md:text-4xl font-bold">Requested from :</p>
                                     <div className="flex items-center gap-2">
-                                        <img className="h-[80px] w-[80px] p-2 bg-purple-700 rounded-full" src={requestDetails?.donarImage} alt="" />
+                                        <img className={`h-[80px] w-[80px] p-2 ${requestDetails?.status == 'accepted' ? 'bg-green-700' : 'to-purple-700'} rounded-full`} src={requestDetails?.donarImage} alt="" />
                                         <div>
                                             <h3 className="text-xl  font-bold">{requestDetails?.donarName}</h3>
                                             <p className="font-semibold">{requestDetails?.donarEmail}</p>
@@ -67,7 +144,7 @@ const MyRequestDetails = () => {
                                 <div>
                                     {
 
-                                        isInDashboard ? <Link to={`/dashboard/my-donation-requests/${requestDetails?._id}/edit`}><button className="btn flex items-center gap-4 px-16 bg-white text-purple-700 hover:bg-purple-700 hover:text-white border-2 border-purple-700 font-semibold">Edit <LuClipboardEdit size={20}></LuClipboardEdit></button></Link> : <button className="btn  px-16 bg-white text-purple-700 hover:bg-purple-700 hover:text-white border-2 border-purple-700 font-semibold">Accept</button>
+                                        isInDashboard ? <Link to={`/dashboard/my-donation-requests/${requestDetails?._id}/edit`}><button className="btn flex items-center gap-4 px-16 bg-white text-purple-700 hover:bg-purple-700 hover:text-white border-2 border-purple-700 font-semibold">Edit <LuClipboardEdit size={20}></LuClipboardEdit></button></Link> : <button onClick={handleAccepted} disabled={requestDetails?.donarEmail == user?.email || requestDetails?.status == 'accepted'} className={`btn ${requestDetails?.status == 'accepted' ? 'cursor-not-allowed' : ''} px-16 bg-white text-purple-700 hover:bg-purple-700 hover:text-white border-2 border-purple-700 font-semibold`}>{loading ? <span className="loading loading-ring text-purple-700"></span> : requestDetails?.status == 'accepted' ? 'Accepted' : 'Accept'}</button>
                                     }
 
                                 </div>
@@ -161,7 +238,7 @@ const MyRequestDetails = () => {
 
                                 <div>
                                     <p className="font-semibold text-xl">Requested date :</p>
-                                    <p className="flex items-center gap-5">{requestDetails?.requestedDate} </p>
+                                    <p className="flex items-center gap-5">{date}</p>
                                 </div>
                             </div>
                             <hr className="border-gray-200 border-2" />
@@ -170,7 +247,7 @@ const MyRequestDetails = () => {
 
                                 <div>
                                     <p className="font-semibold text-xl">Requested time :</p>
-                                    <p className="flex items-center gap-5">{requestDetails?.requestedTime} {requestDetails?.requestedTime >= 12 ? 'PM' : "AM"} </p>
+                                    <p className="flex items-center gap-5">{time}</p>
                                 </div>
                             </div>
                             <hr className="border-gray-200 border-2" />
@@ -194,19 +271,22 @@ const MyRequestDetails = () => {
                         </div>
 
                     </div>
-                </div> : <div className="w-full flex items-center justify-center mt-10">
-                    <DNA
-                        visible={true}
-                        height="100"
-                        width="100"
-                        ariaLabel="dna-loading"
-                        wrapperStyle={{}}
-                        wrapperClass="dna-wrapper"
-                    />
+
                 </div>
+
+                    : <div className="w-full flex items-center justify-center mt-10">
+                        <DNA
+                            visible={true}
+                            height="100"
+                            width="100"
+                            ariaLabel="dna-loading"
+                            wrapperStyle={{}}
+                            wrapperClass="dna-wrapper"
+                        />
+                    </div>
             }
 
-
+            <SectionComponent id={'detailsPage'} from={'translateX'}></SectionComponent>
 
         </div>
     );

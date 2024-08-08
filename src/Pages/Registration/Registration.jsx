@@ -38,6 +38,7 @@ const Registration = () => {
         const img = form.get('userImage')
         const image = { 'image': img };
         const API_KEY = 'f6a950227b2e6c0fda979d39facb73d8';
+        const joinDate = new Date()
         const api = `https://api.imgbb.com/1/upload?key=${API_KEY}`
         if (password !== confirmPassword) {
             alert("password not matched");
@@ -96,6 +97,7 @@ const Registration = () => {
                         Division: selectedDivision || null,
                         District: selectedDistrict || null,
                         Upazila: selectedUpazila || null,
+                        joiningDate: joinDate,
                         BloodGroup: selectedBloodGroup || null,
                         Status: 'pending',
                     }

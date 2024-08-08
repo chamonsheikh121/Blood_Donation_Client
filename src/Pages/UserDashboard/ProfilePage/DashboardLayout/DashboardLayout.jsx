@@ -3,30 +3,52 @@ import { GiNotebook } from "react-icons/gi";
 import { RiFolderAddFill } from "react-icons/ri";
 import './DashboardLayout.css'
 import { NavLink, Outlet, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { BsEnvelopeCheckFill } from "react-icons/bs";
+import useAccepterDetails from "../../../../Hooks/UseAccepterDetails";
 
 
 
 const DashboardLayout = () => {
     const [layoutNav, setLayoutNav] = useState(false);
-    console.log(layoutNav);
+    const [accepterData] = useAccepterDetails();
+    console.log(accepterData);
+    const [acceptedDataCount, setAcceptedDataCount] = useState()
 
 
     const location = useLocation();
+
+
+
+
 
     const dashboardNav = <ul className="w-full space-y-5 p-1">
         <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/profile' ? 'border-b-2' : ''}  rounded-md hover:bg-red-800 shadow-md py-2 pl-5 font-semibold space-y-5`}>
             <NavLink to='/dashboard/profile' className={` flex items-center gap-4  uppercase`}><FaHome size={25}></FaHome>profile</NavLink>
         </li>
-        <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/my-donation-requests' ? 'border-b-2' : ''} rounded-md hover:bg-red-800 shadow-md py-2 pl-5 font-semibold space-y-5`}>
-            <NavLink to='/dashboard/my-donation-requests' className={` ${location.pathname === '/dashboard/my-donation-requests' ? '' : ''} flex items-center gap-4  uppercase`}><GiNotebook size={25}></GiNotebook>my requests</NavLink>
+        <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/my-donation-requests' ? 'border-b-2' : ''}  relative rounded-md hover:bg-red-800 shadow-md py-2 pl-5 font-semibold space-y-5`}>
+            <NavLink to='/dashboard/my-donation-requests' className={` flex items-center gap-4  uppercase`}><GiNotebook size={25}></GiNotebook>my requests</NavLink>
+            <div className="absolute cursor-pointer  bg-red-900 text-white rounded-full
+            p-[1px] w-[20px] h-[20px] flex items-center justify-center  -top-5 text-sm  left-3 tooltip tooltip-close tooltip-right" data-tip="not full filled">
+                <span className="">{acceptedDataCount}</span>
+            </div>
+
+        </li>
+        <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/my-acceptations' ? 'border-b-2' : ''} rounded-md hover:bg-red-800 shadow-md py-2 pl-5 font-semibold space-y-5`}>
+            <NavLink to='/dashboard/my-acceptations' className={` flex items-center gap-4  uppercase`}><BsEnvelopeCheckFill size={25}></BsEnvelopeCheckFill>my Acceptation</NavLink>
         </li>
         <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/create-donation-request' ? 'border-b-2' : ''} rounded-md hover:bg-red-800 shadow-md py-2 pl-5 font-semibold space-y-5`}>
-            <NavLink to='/dashboard/create-donation-request' className={` ${location.pathname === '/dashboard/create-donation-request' ? '' : ''} flex items-center gap-4  uppercase`}><RiFolderAddFill size={25}></RiFolderAddFill>create request</NavLink>
+            <NavLink to='/dashboard/create-donation-request' className={`  flex items-center gap-4  uppercase`}><RiFolderAddFill size={25}></RiFolderAddFill>create request</NavLink>
         </li>
 
     </ul>
-
+    useEffect(() => {
+        if (accepterData) {
+            console.log('chamon');
+            const filter = accepterData?.filter(data => data?.status == 'notFullFilled');
+            setAcceptedDataCount(filter?.length)
+        }
+    }, [accepterData])
     return (
         <div className="">
             <button onClick={() => setLayoutNav(true)} className={`fixed btn  ${layoutNav ? 'hidden' : ''} text-white bg-red-700

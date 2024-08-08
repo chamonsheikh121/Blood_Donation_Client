@@ -11,7 +11,6 @@ const UseMyRequest = () => {
         queryFn: async () => {
             const res = await axiosPublic.get(`/api/v1/my-requests/${user?.email}`)
             const data = res?.data;
-            console.log(data);
             return data
         }
     })

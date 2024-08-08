@@ -12,13 +12,14 @@ import { FaCopy } from 'react-icons/fa';
 import { ImCheckmark } from 'react-icons/im';
 import UseMyRequest from '../../../Hooks/UseMyRequest';
 import RequestCard from '../../../Components/Shared/RequestCard';
+import SectionComponent from '../../../Components/SectionComponent/SectionComponent';
 
 
 
 
 const Profile = () => {
 
-    const [data, refetch] = UseUser();
+    const [data, refetch, isLoading] = UseUser();
     const [myRequest] = UseMyRequest()
     const [loading, setLoading] = useState(false)
     const [myThreeRequest, setMyThreeRequest] = useState()
@@ -30,14 +31,18 @@ const Profile = () => {
     const [UIDCopy, setUIDCopy] = useState(false)
     const axiosPublic = UseAxiosPublic()
 
+
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true)
+        if (updatedName == data?.donarName && updatedPhone == data?.donarPhone && activeStatus == data?.Status) {
+            alert('nothing to be update')
+            return
+        }
+        setLoading(true);
         const API_KEY = 'f6a950227b2e6c0fda979d39facb73d8';
         const api = `https://api.imgbb.com/1/upload?key=${API_KEY}`
         if (updatedImage) {
             const image = { 'image': updatedImage }
-            console.log(image);
             const res = await axiosPublic.post(api, image, {
                 headers: {
                     'content-type': 'multipart/form-data'
@@ -111,9 +116,9 @@ const Profile = () => {
     }, [myRequest])
 
     return (
-        <div className="p-10">
+        <div className="p-10" id="profile" style={{ opacity: .1, transition: '1s', transform: 'translateY(-90%)' }}>
 
-            {data ? <div>
+            {data ? <div >
                 <div className="flex md:flex-row flex-col gap-6">
                     <div className=" p-5   relative  bg-white space-y-10  text-gray-600">
                         <figure className="relative">
@@ -209,15 +214,24 @@ const Profile = () => {
 
                 <div className="">
                     <p className="text-3xl font-bold mt-20 mb-5 text-center  text-gray-600">My recent donation:</p>
-                    {/* <div className="grid grid-cols-3 gap-10 mx-10">
-                        <div className="h-[250px] bg-green-700"></div>
-                        <div className="h-[250px] bg-green-700"></div>
-                        <div className="h-[250px] bg-green-700"></div>
-                    </div> */}
+                    {
+                        myThreeRequest?.length > 0 || <div className='w-full flex justify-center items-center mt-5'><span className="loading loading-spinner loading-lg"></span></div>
+                    }
+                    <div style={{ opacity: .1, transition: '1s', transform: 'translateX(-90%)' }} id='recentDonation' className="grid md:grid-cols-2 grid-cols-1 lg:grid-cols-3 gap-10 md:mx-10">
+                        {
+                            myThreeRequest?.length > 0 ? myThreeRequest?.map(requests => <RequestCard
+                                key={requests?._id}
+                                request={requests}
+                            ></RequestCard>) : <div className='w-full flex justify-center items-center mt-5'><span className="loading loading-spinner loading-lg"></span></div>
+                        }
+                    </div>
                 </div>
                 <div className="">
                     <p className="text-3xl font-bold mt-20 mb-5 text-center  text-gray-600">My recent request&apos;s:</p>
-                    <div className="grid md:grid-cols-2 grid-cols-1 lg:grid-cols-3 gap-10 md:mx-10">
+                    {
+                        myThreeRequest?.length > 0 || <div className='w-full flex justify-center items-center mt-5'><span className="loading loading-spinner loading-lg"></span></div>
+                    }
+                    <div style={{ opacity: .1, transition: '1s', transform: 'translateX(90%)' }} id='recentRequest' className="grid md:grid-cols-2 grid-cols-1 lg:grid-cols-3 gap-10 md:mx-10">
                         {
                             myThreeRequest?.length > 0 && myThreeRequest?.map(requests => <RequestCard
                                 key={requests?._id}
@@ -235,6 +249,17 @@ const Profile = () => {
                     wrapperStyle={{}}
                     wrapperClass="dna-wrapper"
                 /></div>}
+            {
+                !isLoading && data && <SectionComponent id={'profile'} from={'translateY'}></SectionComponent>
+            }
+
+            {
+                myThreeRequest?.length > 0 && data && <SectionComponent id={'recentRequest'} from={'translateX'}></SectionComponent>
+            }
+            {
+                myThreeRequest?.length > 0 && data && <SectionComponent id={'recentDonation'} from={'translateX'}></SectionComponent>
+            }
+
         </div >
     );
 };

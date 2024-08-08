@@ -1,9 +1,11 @@
 import { FaHome } from "react-icons/fa";
+import SectionComponent from "../../Components/SectionComponent/SectionComponent";
+
 
 
 const Featured = () => {
     return (
-        <div className="bg-gray-200 ">
+        <div style={{opacity:.1, transform: 'translateX(-90%)', transition:'1s'}} className="bg-gray-200 featured" id="featuredContainer">
 
             <div className="max-w-7xl mx-auto py-20">
                 <div className="flex flex-col sm:flex-row p-5 md:p-0 justify-between gap-10 items-center">
@@ -31,6 +33,7 @@ const Featured = () => {
                 </div>
             </div>
 
+            <SectionComponent id='featuredContainer' from={'translateX'}></SectionComponent>
         </div>
     );
 };

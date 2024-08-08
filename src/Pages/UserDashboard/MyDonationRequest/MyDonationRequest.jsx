@@ -67,31 +67,31 @@ const MyDonationRequest = () => {
     return (
         <div>
 
-            <div id="AcceptedRequest" style={{opacity:'0.1', transform:'translateX(90%)', transition:'1s'}} className="max-w-5xl border mx-auto m-10">
+            <div id="AcceptedRequest" style={{ opacity: '0.1', transform: 'translateX(90%)', transition: '1s' }} className="max-w-5xl border mx-auto m-10">
                 <h1 className=" text-gray-600 font-bold text-3xl mb-5">Not accepted</h1>
                 <div className=" relative col-span-12 grid md:grid-cols-2 grid-cols-1 lg:grid-cols-3 gap-10 p-5  ">
                     {
-                       isLoading ? <div className="absolute flex  justify-center mt-10 w-full">
+                        isLoading ? <div className="absolute flex  justify-center mt-10 w-full">
                             <span className="loading loading-lg"></span></div> : remainingRequest?.length > 0 ? remainingRequest?.map((request) => <RequestCard
-                            key={request?._id}
-                            request={request && request}
-                        ></RequestCard>
-                        ) : <div className="absolute flex  justify-center mt-10 w-full"><span
-                            className="text-2xl font-extrabold"
-                        >No pending request yet</span></div>
+                                key={request?._id}
+                                request={request && request}
+                            ></RequestCard>
+                            ) : <div className="absolute flex  justify-center mt-10 w-full"><span
+                                className="text-2xl font-extrabold"
+                            >No pending request yet</span></div>
                     }
 
                 </div>
             </div>
 
-            <div id="AcceptedContainer" style={{opacity: '.1', transform: 'translateX(-90%)', transition:'1s'}} className="max-w-5xl border mx-auto m-10">
+            <div id="AcceptedContainer" style={{ opacity: '.1', transform: 'translateX(-90%)', transition: '1s' }} className="max-w-5xl border mx-auto m-10">
                 <h1 className=" text-gray-600 font-bold text-3xl mb-5">Accepted</h1>
                 <div className=" space-y-5">
                     {
                         isLoad ? <div className="absolute flex  justify-center mt-10 w-full">
                             <span className="loading loading-lg"></span></div> : accepterData?.length > 0 ? accepterData?.map(details => <div
                                 key={details?._id}
-                                className={`flex ${details?.status == 'fullFilled' ? 'bg-green-100 border border-black' : 'bg-red-200'} bg-red-200  p-5 rounded-md items-center justify-between`}>
+                                className={`flex ${details?.status == 'fullFilled' ? 'bg-green-100 border border-black' : 'bg-red-200'}   p-5 rounded-md items-center justify-between`}>
 
                                 <div className='flex-1 flex items-center   gap-5'>
                                     <div className='w-[200px] h-[150px]'>
@@ -139,8 +139,8 @@ const MyDonationRequest = () => {
                 </div>
             </div>
 
-<SectionComponent id={'AcceptedRequest'} from={'translateX'}></SectionComponent>
-<SectionComponent id={'AcceptedContainer'} from={'translateX'}></SectionComponent>
+            <SectionComponent id={'AcceptedRequest'} from={'translateX'}></SectionComponent>
+            <SectionComponent id={'AcceptedContainer'} from={'translateX'}></SectionComponent>
 
         </div>
     );

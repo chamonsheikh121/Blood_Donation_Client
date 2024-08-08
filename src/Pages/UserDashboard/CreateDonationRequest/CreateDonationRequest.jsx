@@ -238,7 +238,7 @@ const CreateDonationRequest = () => {
 
                     </div>
                     <div className="flex flex-col flex-1 justify-center gap-2">
-                        <label htmlFor="FullAddress">Full Address No:</label>
+                        <label htmlFor="FullAddress">Hospital Full Address :</label>
                         <input type="text" name="fullAddress" className="py-2 border bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white " required placeholder="Address" id="FullAddress" style={{ opacity: .1, transition: '1s', transform: 'translateX(90%)' }} />
                         <SectionComponent id={'FullAddress'} from={'translateX'}></SectionComponent>
 

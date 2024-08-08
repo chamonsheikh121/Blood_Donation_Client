@@ -14,6 +14,8 @@ import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import MyRequestDetails from "../Pages/UserDashboard/MyRequestDetails/MyRequestDetails";
 import EditRequest from "../Pages/UserDashboard/EditRequest/EditRequest";
 import MyAcceptation from "../Pages/UserDashboard/MyAcceptation/MyAcceptation";
+import SearchDonar from "../Pages/SearchDonar/SearchDonar";
+import SearchRequest from "../Pages/SearchRequest/SearchRequest";
 
 const router = createBrowserRouter([
     {
@@ -31,6 +33,20 @@ const router = createBrowserRouter([
             {
                 path: 'all-blood-donation-request/:id',
                 element: <MyRequestDetails></MyRequestDetails>
+            },
+            {
+                path: 'search-donar',
+                element: <SearchDonar></SearchDonar>
+            },
+            {
+                path: 'search-request',
+                element: <SearchRequest></SearchRequest>,
+                children:[
+                    {
+                        path:':id',
+                        element:<MyRequestDetails></MyRequestDetails>
+                    }
+                ]
             },
             {
                 path: 'blogs',

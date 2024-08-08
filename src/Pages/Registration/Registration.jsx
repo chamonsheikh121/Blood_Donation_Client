@@ -65,6 +65,7 @@ const Registration = () => {
                         Upazila: selectedUpazila || null,
                         BloodGroup: selectedBloodGroup || null,
                         Status: 'pending',
+                        userRole: 'user'
                     }
                     axiosPublic.post('/api/v1/all-users', userDetails)
                         .then(res => {
@@ -100,6 +101,7 @@ const Registration = () => {
                         joiningDate: joinDate,
                         BloodGroup: selectedBloodGroup || null,
                         Status: 'pending',
+                        userRole: 'user'
                     }
                     axiosPublic.post('/api/v1/all-users', userDetails)
                         .then(res => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import UseAxiosPublic from "../../../Hooks/UseAxiosPublic";
 import { DNA } from "react-loader-spinner";
 import { FaCopy, FaRegUser } from "react-icons/fa";
@@ -25,9 +25,11 @@ const MyRequestDetails = () => {
     const [userData] = UseUser();
     const [refetch, setRefetch] = useState(false)
     const [requestDetails, setRequestDetails] = useState()
+    console.log(requestDetails);
     const [serialCopy, setSerialCopy] = useState(false)
     const [requestedId, setRequestedId] = useState(false)
     const param = useParams();
+    const Navigate = useNavigate()
 
 
 
@@ -93,8 +95,7 @@ const MyRequestDetails = () => {
                         confirmButtonText: "see now"
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            // Navigate(`/dashboard/my-donation-requests/${_id}`)
-                            alert("hio")
+                            Navigate(`/dashboard/my-acceptations`)
                         }
                     });
                 }
@@ -108,21 +109,33 @@ const MyRequestDetails = () => {
 
     }
     useEffect(() => {
+        setLoading(true)
         const getData = async () => {
             if (param) {
                 const res = await axiosPublic.get(`/api/v1/findOne/${param.id}`)
                 const data = res.data;
+                setLoading(false)
                 return setRequestDetails(data)
             }
         }
         getData()
     }, [param, axiosPublic, refetch])
+
     return (
         <div className="mb-20" id="detailsPage" style={{ opacity: .1, transform: 'translateX(90%)', transition: '1s' }}>
 
 
             {
-                requestDetails ? <div className="mt-2">
+               loading ? <div className="w-full flex items-center justify-center mt-10">
+               <DNA
+                   visible={true}
+                   height="100"
+                   width="100"
+                   ariaLabel="dna-loading"
+                   wrapperStyle={{}}
+                   wrapperClass="dna-wrapper"
+               />
+           </div> : requestDetails ? <div className="mt-2">
                     <div className="flex lg:flex-row flex-col justify-center items-center lg:items-start gap-10 p-2 ">
                         <div className={`bg-gradient-to-t from-gray-400 ${requestDetails?.status == 'accepted' ? 'bg-green-600' : 'to-purple-600'}  flex flex-col lg:flex-row  items-start lg:p-5 gap-2 justify-between w-10/12 rounded-md`}>
                             <div className="lg:h-[400px]  lg:w-[600px]">
@@ -274,16 +287,9 @@ const MyRequestDetails = () => {
 
                 </div>
 
-                    : <div className="w-full flex items-center justify-center mt-10">
-                        <DNA
-                            visible={true}
-                            height="100"
-                            width="100"
-                            ariaLabel="dna-loading"
-                            wrapperStyle={{}}
-                            wrapperClass="dna-wrapper"
-                        />
-                    </div>
+                    : <div className=" flex  justify-center mt-10 w-full"><span
+                    className="text-2xl font-extrabold"
+                >No Request found</span></div>
             }
 
             <SectionComponent id={'detailsPage'} from={'translateX'}></SectionComponent>

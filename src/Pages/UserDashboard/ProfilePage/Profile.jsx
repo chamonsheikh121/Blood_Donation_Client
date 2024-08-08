@@ -13,6 +13,7 @@ import { ImCheckmark } from 'react-icons/im';
 import UseMyRequest from '../../../Hooks/UseMyRequest';
 import RequestCard from '../../../Components/Shared/RequestCard';
 import SectionComponent from '../../../Components/SectionComponent/SectionComponent';
+import UseMyAcceptation from '../../../Hooks/UseMyAcceptation';
 
 
 
@@ -20,9 +21,11 @@ import SectionComponent from '../../../Components/SectionComponent/SectionCompon
 const Profile = () => {
 
     const [data, refetch, isLoading] = UseUser();
-    const [myRequest] = UseMyRequest()
+    const [myRequest, , isLoadMyRequest] = UseMyRequest()
+
     const [loading, setLoading] = useState(false)
     const [myThreeRequest, setMyThreeRequest] = useState()
+    const [myThreeAcceptations, setMyThreeAcceptations] = useState()
     const [updatedName, setUpdatedName] = useState('')
     const [updatedImage, setUpdatedImage] = useState(null);
     const [activeStatus, setActiveStatus] = useState(data?.Status)
@@ -30,6 +33,7 @@ const Profile = () => {
     const [saveActive, setSaveActive] = useState(false)
     const [UIDCopy, setUIDCopy] = useState(false)
     const axiosPublic = UseAxiosPublic()
+    const [myAcceptations, isLoad] = UseMyAcceptation()
 
 
     const handleFormSubmit = async (e) => {
@@ -114,6 +118,11 @@ const Profile = () => {
             setMyThreeRequest(myRequest?.slice(0, 3))
         }
     }, [myRequest])
+    useEffect(() => {
+        if (myAcceptations) {
+            setMyThreeAcceptations(myAcceptations?.slice(0, 3))
+        }
+    }, [myAcceptations])
 
     return (
         <div className="p-10" id="profile" style={{ opacity: .1, transition: '1s', transform: 'translateY(-90%)' }}>
@@ -174,10 +183,31 @@ const Profile = () => {
                             <div>
                                 <span className="text-xl font-bold ">Blood:</span>
                                 <div className="ml-5">
-                                    <p>Antigens : {data?.BloodGroup?.antigens?.map(antigen => <span className="px-2" key={antigen}>{antigen}</span>)}</p>
-                                    <p>Antibodies : {data?.BloodGroup?.antibodies?.map(antibodie => <span className="px-2" key={antibodie}>{antibodie}</span>)}</p>
-                                    <p>CanDonateTo : {data?.BloodGroup?.canDonateTo?.map(canDonate => <span className="px-2" key={canDonate}> {canDonate} </span>)}</p>
-                                    <p>CanReceiveFrom : {data?.BloodGroup?.canReceiveFrom?.map(canReceive => <span className="px-2" key={canReceive}> {canReceive} </span>)}</p>
+
+                                    <p>Antigens : {data?.BloodGroup?.antigens?.map((antigen, index) => <span className="px-2" key={antigen}>{antigen}
+                                        {
+                                            data?.BloodGroup?.antigens?.length - 1 != index && <span> ,</span>
+                                        }
+                                    </span>)}
+
+                                    </p>
+                                    <p>Antibodies : {data?.BloodGroup?.antibodies?.map((antibodie, index) => <span className="px-2" key={antibodie}>{antibodie}
+                                        {
+                                            data?.BloodGroup?.antibodies?.length - 1 != index && <span> ,</span>
+                                        }
+                                    </span>)}</p>
+                                    <p>CanDonateTo : {data?.BloodGroup?.canDonateTo?.map((canDonate, index) => <span className="px-1" key={canDonate}> {canDonate}
+
+                                        {
+                                            data?.BloodGroup?.canDonateTo?.length - 1 != index && <span> ,</span>
+                                        }
+
+                                    </span>)}</p>
+                                    <p>CanReceiveFrom :  {data?.BloodGroup?.canReceiveFrom?.map((canReceive, index) => <span className="px-1" key={canReceive}> {canReceive}
+                                        {
+                                            data?.BloodGroup?.canReceiveFrom?.length - 1 != index && <span> ,</span>
+                                        }
+                                    </span>)}</p>
                                 </div>
                             </div>
                             <div>
@@ -212,31 +242,31 @@ const Profile = () => {
 
                 </div>
 
-                <div className="">
+                <div style={{ opacity: '1.', transition: '1s', transform: 'translateX(-90%)' }} id='recentDonation' className="pb-10">
                     <p className="text-3xl font-bold mt-20 mb-5 text-center  text-gray-600">My recent donation:</p>
-                    {
-                        myThreeRequest?.length > 0 || <div className='w-full flex justify-center items-center mt-5'><span className="loading loading-spinner loading-lg"></span></div>
-                    }
-                    <div style={{ opacity: .1, transition: '1s', transform: 'translateX(-90%)' }} id='recentDonation' className="grid md:grid-cols-2 grid-cols-1 lg:grid-cols-3 gap-10 md:mx-10">
+
+                    <div className="relative grid md:grid-cols-2 grid-cols-1 lg:grid-cols-3 gap-10 md:mx-10">
                         {
-                            myThreeRequest?.length > 0 ? myThreeRequest?.map(requests => <RequestCard
-                                key={requests?._id}
-                                request={requests}
-                            ></RequestCard>) : <div className='w-full flex justify-center items-center mt-5'><span className="loading loading-spinner loading-lg"></span></div>
+                            isLoad ? <div className='w-full flex justify-center items-center mt-5'><span className="loading loading-spinner loading-lg"></span></div> : myThreeAcceptations?.length > 0 ? myThreeAcceptations?.map(request => <RequestCard
+                                key={request?._id}
+                                request={request}
+                            ></RequestCard>) : <div className="absolute w-full text-center mt-5 "><span
+                                className="text-2xl font-extrabold"
+                            >Not donated yet</span></div>
                         }
                     </div>
                 </div>
-                <div className="">
+                <div style={{ opacity: '.1', transition: '1s', transform: 'translateX(90%)' }} id='recentRequest' className="m-10">
                     <p className="text-3xl font-bold mt-20 mb-5 text-center  text-gray-600">My recent request&apos;s:</p>
-                    {
-                        myThreeRequest?.length > 0 || <div className='w-full flex justify-center items-center mt-5'><span className="loading loading-spinner loading-lg"></span></div>
-                    }
-                    <div style={{ opacity: .1, transition: '1s', transform: 'translateX(90%)' }} id='recentRequest' className="grid md:grid-cols-2 grid-cols-1 lg:grid-cols-3 gap-10 md:mx-10">
+                   
+                    <div className="grid md:grid-cols-2 grid-cols-1 lg:grid-cols-3 gap-10 md:mx-10">
                         {
-                            myThreeRequest?.length > 0 && myThreeRequest?.map(requests => <RequestCard
+                            isLoadMyRequest ? <div className='w-full flex justify-center items-center mt-5'><span className="loading loading-spinner loading-lg"></span></div> : myThreeRequest?.length > 0 ? myThreeRequest?.map(requests => <RequestCard
                                 key={requests?._id}
                                 request={requests}
-                            ></RequestCard>)
+                            ></RequestCard>) : <div className="absolute w-full text-center mt-5 "><span
+                                className="text-2xl font-extrabold"
+                            >Not requested yet</span></div>
                         }
                     </div>
                 </div>
@@ -254,10 +284,10 @@ const Profile = () => {
             }
 
             {
-                myThreeRequest?.length > 0 && data && <SectionComponent id={'recentRequest'} from={'translateX'}></SectionComponent>
+                 data && <SectionComponent id={'recentRequest'} from={'translateX'}></SectionComponent>
             }
             {
-                myThreeRequest?.length > 0 && data && <SectionComponent id={'recentDonation'} from={'translateX'}></SectionComponent>
+                 data && <SectionComponent id={'recentDonation'} from={'translateX'}></SectionComponent>
             }
 
         </div >

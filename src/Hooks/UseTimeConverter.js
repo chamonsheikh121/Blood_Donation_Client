@@ -1,7 +1,7 @@
 
 
 export const UseTimeConverter = (time) => {
-console.log(time);
+// console.log(time);
     // Split the time into hours and minutes
     let [hours, minutes] = time.split(':').map(Number);
 

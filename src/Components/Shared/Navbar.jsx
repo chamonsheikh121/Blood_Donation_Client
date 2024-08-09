@@ -58,12 +58,12 @@ const Navbar = () => {
                             <div>
                                 <div className="w-14 relative h-14 rounded-full bg-red-600 text-white">
                                     <img className="rounded-full w-full h-full" src={data?.donarImage} alt="" />
-                                    <span className={`w-[20px] absolute top-0 right-0 rounded-full h-[20px] ${data?.Status == 'true' ? 'bg-green-500 border-white border-2' : 'bg-gray-300'}`}></span>
+                                    <span className={`w-[20px] absolute top-0 right-0 rounded-full h-[20px] ${data?.status == 'true' ? 'bg-green-500 border-white border-2' : 'bg-gray-300'}`}></span>
                                 </div>
                             </div> :
                             <div className="w-14 relative h-14 rounded-full bg-red-600 text-white">
                                 <span className="flex items-center justify-center font-semibold text-4xl" >{userName}</span>
-                                <span className={`w-[20px] absolute top-0 right-0 rounded-full h-[20px] ${data?.Status == 'true' ? 'bg-red-500' : 'bg-gray-300'}`}></span>
+                                <span className={`w-[20px] absolute top-0 right-0 rounded-full h-[20px] ${data?.status == 'true' ? 'bg-green-500' : 'bg-gray-300'}`}></span>
                             </div> :
                     <NavLink to='/login' className=" rounded-md bg-red-700 text-white font-bold uppercase py-2  transition-all  hover:bg-red-900 border-2 px-10">join</NavLink>}
 

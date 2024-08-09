@@ -67,13 +67,50 @@ const SearchDonar = () => {
                                         </div>
                                         <p className="font-semibold"> {data?.donarEmail ? data?.donarEmail : 'email: not given'}</p>
                                         <p className="font-semibold"><span className='font-semibold'>Phone </span> : {data?.donarPhone ? data.donarPhone : 'not given'}</p>
-                                        <p className="font-semibold flex items-center gap-3"><span className='font-semibold'>userID</span>: <span className='text-red-500'> {data?.userUID} {
+                                        <p className="font-semibold flex items-center gap-3"><span className='font-semibold'>userID</span>: <span className=''> {data?.userUID} {
                                             UIDCopy ? <ImCheckmark onClick={handleUidCopy} className='inline ml-2 text-green-500 cursor-pointer' size={20}></ImCheckmark> : <FaCopy onClick={handleUidCopy} className='inline ml-2 text-gray-500 cursor-pointer' size={20}></FaCopy>
                                         }</span> </p>
+
+
+<p className="font-bold"><span className=''>Health status  </span> : <span className={`${data?.healthStatus ? 'text-green-600':'bg-red-500'}`}>{data?.healthStatus ? data.healthStatus : 'not given'}</span></p>
+                            <p className="font-bold"><span className=''>Recent travel history  </span> : 
+                            <span className={`${data?.recentTravelHistory ? 'text-green-600':'text-red-500'} pl-2`}>{data?.recentTravelHistory ? data.recentTravelHistory : 'not given'}</span>
+                            </p>
+                            <p className="font-bold"><span className=''>Weight  </span> :  
+                            <span className={`${data?.weight ? 'text-green-600':'text-red-500'} pl-2`}>{data?.weight ? `${ data?.weight} kg` : 'not given'}</span>
+                            </p>
+                            <p className="font-bold"><span className=''>Profile Update status  </span> : 
+                            
+                            
+                            <span className={`${data?.profileUpdateStatus ? 'text-green-600':'text-red-500'} pl-2`}>{data?.profileUpdateStatus ? data?.profileUpdateStatus : 'not given'}</span>
+                            
+                            </p>
+                            <p className="font-bold"><span className=''>Last donation  </span> : 
+                            
+                            <span className={`${data?.lastDonation  ? 'text-green-600':'text-red-500'} pl-2`}>{data?.lastDonation ? data?.lastDonation : 'not given'}</span>
+                            
+                            </p>
+                            <p className="font-bold"><span className=''>Medication  </span> : 
+                            
+                            <span className={`${data?.lastDonation  ? 'text-green-600':'text-red-500'} pl-2`}>{data?.medication ? data.medication : 'not given'}
+                            </span>
+                            
+                            </p>
+                            <p className="font-bold"><span className=''>Date of birth  </span> : 
+                            <span className={`${data?.dateOfBirth  ? 'text-green-600':'text-red-500'} pl-2`}>{data?.dateOfBirth ? data.dateOfBirth : 'not given'}
+                            
+                            </span>
+                            
+                            </p>
+
+
+
+
                                         <p className="mt-3 flex items-center justify-between  rounded-full"><span className='font-semibold'>active status</span>:<div className={`relative h-[30px]  transition-all  w-[60px]`}>
                                             <button className={`${data?.Status == 'true' ? 'bg-green-500' : 'bg-gray-300'} h-full transition-all border-2  w-full border-gray-500  rounded-full`}></button>
                                             <span className={`w-[30px] h-[30px]  absolute  ${data?.Status == 'true' ? 'right-[2px] ' : 'left-[2px]'} transition-all border-2 border-gray-500 bg-gray-50 rounded-full h-full`}></span>
                                         </div> </p>
+                                        
 
                                     </div>
                                 </div>

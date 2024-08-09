@@ -19,7 +19,7 @@ export const UseSectionTransition = (id, from, isPlus) => {
                         }
                         else {
                             
-                            section.style.opacity = '.1';
+                            section.style.opacity = '.6';
                             
                         }
                     });

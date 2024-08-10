@@ -21,7 +21,7 @@ const RequestCard = ({ request, requestType }) => {
             <div className="space-y-2">
                 <div className="flex  justify-between text-gray-600">
                     <div className="flex items-center gap-2">
-                        <img src={donarImage ? donarImage : img} className="w-[40px] h-[40px] p-[1px] bg-red-400 rounded-full" alt="" />
+                        <img src={donarImage ? donarImage : img} className="w-[40px] object-cover h-[40px] p-[1px] bg-red-400 rounded-full" alt="" />
                         <div>
                             <h4 className="font-bold">{donarName}</h4>
                             <p className="text-xs">{donarEmail}</p>
@@ -30,7 +30,7 @@ const RequestCard = ({ request, requestType }) => {
                     <span className="text-3xl text-red-600 font-bold">{requestedBloodGroup}</span>
                 </div>
                 <div >
-                    <img className="h-[180px] w-full rounded-md" src={requesterImage} alt="" />
+                    <img className="h-[180px] w-full rounded-md object-cover" src={requesterImage} alt="" />
                 </div>
                 <div className="text-gray-700 px-5" >
                     {/* <h4 className="text-2xl font-bold flex items-center gap-2">{requesterName} <span className="text-sm">(requester)</span></h4> */}

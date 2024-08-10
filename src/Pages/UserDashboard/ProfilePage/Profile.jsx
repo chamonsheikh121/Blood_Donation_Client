@@ -27,7 +27,7 @@ const Profile = () => {
     const [loading, setLoading] = useState(false)
     const [myThreeRequest, setMyThreeRequest] = useState()
     const [myThreeAcceptations, setMyThreeAcceptations] = useState()
-    const [updatedName, setUpdatedName] = useState('')
+    const [updatedName, setUpdatedName] = useState(data?.donarName)
     const [updatedImage, setUpdatedImage] = useState(null);
     const [activeStatus, setActiveStatus] = useState(data?.Status)
     const phoneInputValue = useRef()
@@ -213,7 +213,7 @@ const Profile = () => {
                                 UIDCopy ? <ImCheckmark onClick={handleUidCopy} className='inline ml-2 text-green-500 cursor-pointer' size={20}></ImCheckmark> : <FaCopy onClick={handleUidCopy} className='inline ml-2 text-gray-500 cursor-pointer' size={20}></FaCopy>
                             }</span> </p>
 
-                            <p className="font-bold"><span className=''>Health status  </span> : <span className={`${data?.healthStatus ? 'text-green-600':'bg-red-500'}`}>{data?.healthStatus ? data.healthStatus : 'not given'}</span></p>
+                            <p className="font-bold"><span className=''>Health status  </span> : <span className={`${data?.healthStatus ? 'text-green-600':'text-red-500'}`}>{data?.healthStatus ? data.healthStatus : 'not given'}</span></p>
                             <p className="font-bold"><span className=''>Recent travel history  </span> : 
                             <span className={`${data?.recentTravelHistory ? 'text-green-600':'text-red-500'} pl-2`}>{data?.recentTravelHistory ? data.recentTravelHistory : 'not given'}</span>
                             </p>

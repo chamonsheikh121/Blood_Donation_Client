@@ -3,10 +3,13 @@ import Navbar from "../Shared/Navbar";
 import ProfileUpdateMessage from "../Shared/ProfileUpdateMessage";
 import UseUser from "../../Hooks/UseUser";
 import Swal from "sweetalert2";
+import UseAuthContext from "../../Hooks/UseAuthContext";
 
 
 const RootLayout = () => {
     const [userData] = UseUser();
+    const {user} = UseAuthContext()
+    console.log(user);
     let status = JSON.parse(localStorage.getItem('profileUpdateStatus'))
     if (userData?.profileUpdateStatus) {
         if (status == 90 && userData?.profileUpdateStatus == 100){
@@ -23,7 +26,7 @@ const RootLayout = () => {
     return (
         <div>
             {
-                status != 100 && <ProfileUpdateMessage status={status} data={userData}></ProfileUpdateMessage>
+               !user?.emailVerified || status != 100 && <ProfileUpdateMessage status={status} data={userData}></ProfileUpdateMessage>
             }
 
             <Navbar></Navbar>

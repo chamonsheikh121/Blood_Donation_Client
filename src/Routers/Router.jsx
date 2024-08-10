@@ -16,6 +16,7 @@ import EditRequest from "../Pages/UserDashboard/EditRequest/EditRequest";
 import MyAcceptation from "../Pages/UserDashboard/MyAcceptation/MyAcceptation";
 import SearchDonar from "../Pages/SearchDonar/SearchDonar";
 import SearchRequest from "../Pages/SearchRequest/SearchRequest";
+import ResetPassword from "../Pages/ResetPassword/ResetPassword";
 
 const router = createBrowserRouter([
     {
@@ -41,10 +42,10 @@ const router = createBrowserRouter([
             {
                 path: 'search-request',
                 element: <SearchRequest></SearchRequest>,
-                children:[
+                children: [
                     {
-                        path:':id',
-                        element:<MyRequestDetails></MyRequestDetails>
+                        path: ':id',
+                        element: <MyRequestDetails></MyRequestDetails>
                     }
                 ]
             },
@@ -94,6 +95,10 @@ const router = createBrowserRouter([
     {
         path: '/login',
         element: <Login></Login>
+    },
+    {
+        path: '/login/reset-password',
+        element: <ResetPassword></ResetPassword>
     }
 ])
 

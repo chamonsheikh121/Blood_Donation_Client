@@ -2,7 +2,8 @@ import { createContext, useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 import auth from "../Services/Firebase.config";
 
-import { createUserWithEmailAndPassword, onAuthStateChanged, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut, sendEmailVerification, sendPasswordResetEmail } from "firebase/auth";
+import UseAxiosPublic from "../Hooks/UseAxiosPublic";
 export const AuthContext = createContext([]);
 
 
@@ -16,6 +17,7 @@ const AuthProvider = ({ children }) => {
     const [districts, setDistricts] = useState([])
     const [upazilas, setUpazilas] = useState([])
     const [bloodGroups, setBloodGroups] = useState([])
+    const axiosPublic = UseAxiosPublic()
 
     const createUserEmailPass = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password)
@@ -29,18 +31,34 @@ const AuthProvider = ({ children }) => {
     const logOut = () => {
         return signOut(auth)
     }
+    const verifyEmail = () => {
+        return sendEmailVerification(auth?.currentUser)
+    }
+    const resetPass = (email) => {
+        return sendPasswordResetEmail(auth, email)
+    }
 
 
     useEffect(() => {
         const subscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
             setLoading(false)
+            const createToken = async () => {
+                if (currentUser) {
+                    const userDoc = { email: currentUser?.email };
+                    const res = await axiosPublic.post('/api/v1/jwt', userDoc);
+                    const data = res.data;
+                    localStorage.setItem('user-token', JSON.stringify(data?.token))
+                    console.log(data?.token);
+                }
+            }
+            createToken()
 
         })
         return () => {
             return subscribe
         }
-    }, [])
+    }, [axiosPublic])
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -75,7 +93,9 @@ const AuthProvider = ({ children }) => {
         districts,
         upazilas,
         bloodGroups,
-        loading
+        loading,
+        verifyEmail,
+        resetPass
     }
     return (
         <AuthContext.Provider value={info}>

@@ -2,13 +2,14 @@ import blood from './../../assets/Registration/blood.png'
 import { ImCheckmark } from "react-icons/im";
 import { FaCopy } from "react-icons/fa";
 import './SearchDonar.css'
-import UseAxiosPublic from '../../Hooks/UseAxiosPublic';
+// import UseAxiosPublic from '../../Hooks/UseAxiosPublic';
 import { useRef, useState } from 'react';
+import UseAxiosSecure from '../../Hooks/UseAxiosSecure';
 
 const SearchDonar = () => {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState()
-    const axiosPublic = UseAxiosPublic()
+    const axiosSecure = UseAxiosSecure()
     const value = useRef()
     console.log();
 
@@ -24,7 +25,7 @@ const SearchDonar = () => {
             idOrEmail = parseInt(value.current.value)
         }
         console.log(isEmail);
-        const res = await axiosPublic.get(`/api/v1/user/${idOrEmail}`)
+        const res = await axiosSecure.get(`/api/v1/user/${idOrEmail}`)
         if (res) {
             setData(res?.data)
             setLoading(false)

@@ -66,7 +66,7 @@ const ProfileModal_1 = ({ data,
                         <div className="form-control tooltip tooltip-close tooltip-bottom" data-tip="List any medications you are currently taking or have recently taken (e.g., insulin, antibiotics, drugs).">
                             <label htmlFor="userMedication" className="mb-2  w-full block text-start">Medication :</label>
                         </div>
-                        <input ref={medicationInputValue} defaultValue={data?.medication} type="text" placeholder="E.g., insulin, antibiotics, vitamins" id="userMedication" name='userMedication' className="input focus:outline-none focus:border-black input-bordered" required onKeyUp={() => setSaveActive(true)} />
+                        <input ref={medicationInputValue} defaultValue={data?.medication} type="text" placeholder="E.g., insulin, antibiotics, vitamins / no" id="userMedication" name='userMedication' className="input focus:outline-none focus:border-black input-bordered" required onKeyUp={() => setSaveActive(true)} />
                     </div>
 
 

@@ -15,11 +15,13 @@ import UseUser from './../../../Hooks/UseUser';
 import Swal from "sweetalert2";
 import { UseDateConverter } from './../../../Hooks/UseDateConverter';
 import { UseTimeConverter } from "../../../Hooks/UseTimeConverter";
+import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
 
 
 
 const MyRequestDetails = () => {
     const axiosPublic = UseAxiosPublic()
+    const axiosSecure = UseAxiosSecure()
     const { user } = UseAuthContext();
     const [loading, setLoading] = useState(false)
     const [userData] = UseUser();
@@ -112,14 +114,14 @@ const MyRequestDetails = () => {
         setLoading(true)
         const getData = async () => {
             if (param) {
-                const res = await axiosPublic.get(`/api/v1/findOne/${param.id}`)
+                const res = await axiosSecure.get(`/api/v1/findOne/${param.id}`)
                 const data = res.data;
                 setLoading(false)
                 return setRequestDetails(data)
             }
         }
         getData()
-    }, [param, axiosPublic, refetch])
+    }, [param, axiosSecure, refetch])
 
     return (
         <div className="mb-20" id="detailsPage" style={{ opacity: .1, transform: 'translateX(90%)', transition: '1s' }}>

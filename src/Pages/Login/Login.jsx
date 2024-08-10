@@ -20,16 +20,20 @@ const Login = () => {
         console.log(email, password);
 
         signInEmailPass(email, password)
-            .then(() =>{
+            .then(() => {
                 Swal.fire({
                     title: "Logged in successfully",
                     icon: 'success',
                     timer: 1000,
                 });
                 setLoading(false)
-                navigate('/')
+                navigate('/dashboard/profile')
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                Swal.fire(`${err.message}`);
+                setLoading(false)
+            });
+
     }
     return (
         <div>
@@ -47,12 +51,16 @@ const Login = () => {
                             </div>
                             <span>Password :</span>
                             <div className="form-control relative">
-                            <div onClick={()=>setToggle(!toggle)} className='absolute top-3 right-5 cursor-pointer rounded-full'>
-                                    {toggle? <BsEyeFill size={25}></BsEyeFill>:<BsEyeSlashFill size={25}></BsEyeSlashFill>}
+                                <div onClick={() => setToggle(!toggle)} className='absolute top-3 right-5 cursor-pointer rounded-full'>
+                                    {toggle ? <BsEyeFill size={25}></BsEyeFill> : <BsEyeSlashFill size={25}></BsEyeSlashFill>}
                                 </div>
-                                <input type={toggle?'text' : 'password'} placeholder="password" name='userPassword' className="input focus:outline-none focus:border-black input-bordered" required />
+                                <input type={toggle ? 'text' : 'password'} placeholder="password" name='userPassword' className="input focus:outline-none focus:border-black input-bordered" required />
                             </div>
-                            <button className="btn mt-5 bg-red-600 text-white">{loading ? <span className="loading text-white"></span>: 'Login now'}</button>
+                            <div className="flex justify-between w-full">
+                                <p className="flex items-center gap-2"> <input type="checkbox"  className="checkbox checkbox-sm" /><span>remember me</span></p>
+                                <Link to={'/login/reset-password'}><p className="text-end hover:underline underline-offset-4">forgot password ? </p></Link>
+                            </div>
+                            <button className="btn mt-5 bg-red-600 text-white">{loading ? <span className="loading text-white"></span> : 'Login now'}</button>
                             <p className='text-sm text-center text-gray-600'>New here ? <Link className='text-red-700 underline-offset-4 underline' to='/registration'>create account</Link></p>
                         </form>
                         <hr className="mb-2" />

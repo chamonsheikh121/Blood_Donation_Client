@@ -64,7 +64,7 @@ const Registration = () => {
                         District: selectedDistrict || null,
                         Upazila: selectedUpazila || null,
                         BloodGroup: selectedBloodGroup || null,
-                        Status: 'pending',
+                        Status: 'block',
                         userRole: 'user'
                     }
                     axiosPublic.post('/api/v1/all-users', userDetails)
@@ -101,7 +101,7 @@ const Registration = () => {
                         joiningDate: joinDate,
                         BloodGroup: selectedBloodGroup || null,
                         Status: 'pending',
-                        userRole: 'user'
+                        userRole: 'donar'
                     }
                     axiosPublic.post('/api/v1/all-users', userDetails)
                         .then(res => {
@@ -139,6 +139,7 @@ const Registration = () => {
         }
         else {
             alert('Captcha not matched');
+            setCaptchaInput('')
         }
     }
 
@@ -252,7 +253,7 @@ const Registration = () => {
                                 <div className='my-5'>
                                     <LoadCanvasTemplateNoReload></LoadCanvasTemplateNoReload>
                                 </div>
-                                <input onKeyUp={(e) => setCaptchaInput(e.target.value)} type="text" placeholder="input captcha" className="input focus:outline-none focus:border-black input-bordered" required />
+                                <input onKeyUp={(e) => setCaptchaInput(e.target.value)} defaultValue={captchaInput} type="text" placeholder="input captcha" className="input focus:outline-none focus:border-black input-bordered" required />
                                 <span onClick={captchaValidation} className='btn text-white btn-success absolute bottom-0 right-0 rounded-tl-none rounded-bl-none'>{captchaResult ? <GiCheckMark></GiCheckMark> : 'check now'}</span>
                             </div>
 

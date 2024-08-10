@@ -57,7 +57,7 @@ const Navbar = () => {
                         data?.donarImage ?
                             <div>
                                 <div className="w-14 relative h-14 rounded-full bg-red-600 text-white">
-                                    <img className="rounded-full w-full h-full" src={data?.donarImage} alt="" />
+                                    <img className="rounded-full object-cover w-full h-full" src={data?.donarImage} alt="" />
                                     <span className={`w-[20px] absolute top-0 right-0 rounded-full h-[20px] ${data?.status == 'true' ? 'bg-green-500 border-white border-2' : 'bg-gray-300'}`}></span>
                                 </div>
                             </div> :

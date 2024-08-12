@@ -6,45 +6,59 @@ import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { BsEnvelopeCheckFill } from "react-icons/bs";
 import useAccepterDetails from "../../../../Hooks/UseAccepterDetails";
+import UseUser from "../../../../Hooks/UseUser";
+
 
 
 
 const DashboardLayout = () => {
     const [layoutNav, setLayoutNav] = useState(false);
     const [accepterData] = useAccepterDetails();
-    console.log(accepterData);
+    // console.log(accepterData);
     const [acceptedDataCount, setAcceptedDataCount] = useState()
-
+    const [userData] = UseUser()
 
     const location = useLocation();
 
 
+    const adminNav = <div className="mt-4 space-y-4">
+       
+        <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/my-acceptations' ? 'border-b-2' : ''} rounded-md  ${userData?.userRole == 'admin' ? 'hover:bg-green-900' : userData?.userRole == 'volunteer' ? 'hover:bg-yellow-900' : 'hover:bg-red-900'} list-none shadow-md py-2 pl-5 font-semibold space-y-5`}>
+            <NavLink to='/dashboard/my-acceptations' className={` flex items-center gap-4  uppercase`}><BsEnvelopeCheckFill size={25}></BsEnvelopeCheckFill>manage users</NavLink>
+        </li>
+        <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/my-acceptations' ? 'border-b-2' : ''} rounded-md  ${userData?.userRole == 'admin' ? 'hover:bg-green-900' : userData?.userRole == 'volunteer' ? 'hover:bg-yellow-900' : 'hover:bg-red-900'} list-none shadow-md py-2 pl-5 font-semibold space-y-5`}>
+            <NavLink to='/dashboard/my-acceptations' className={` flex items-center gap-4  uppercase`}><BsEnvelopeCheckFill size={25}></BsEnvelopeCheckFill>manage volunteers</NavLink>
+        </li>
+        <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/my-acceptations' ? 'border-b-2' : ''} rounded-md  ${userData?.userRole == 'admin' ? 'hover:bg-green-900' : userData?.userRole == 'volunteer' ? 'hover:bg-yellow-900' : 'hover:bg-red-900'} list-none shadow-md py-2 pl-5 font-semibold space-y-5`}>
+            <NavLink to='/dashboard/my-acceptations' className={` flex items-center gap-4  uppercase`}><BsEnvelopeCheckFill size={25}></BsEnvelopeCheckFill>manage requests</NavLink>
+        </li>
+       
+    </div>
 
-
-
-    const dashboardNav = <ul className="w-full space-y-5 p-1">
-        <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/profile' ? 'border-b-2' : ''}  rounded-md hover:bg-red-800 shadow-md py-2 pl-5 font-semibold space-y-5`}>
+    const userNav = <ul className="w-full space-y-5 p-1">
+        <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/profile' ? 'border-b-2' : ''}  rounded-md  ${userData?.userRole == 'admin' ? 'hover:bg-green-900' : userData?.userRole == 'volunteer' ? 'hover:bg-yellow-900' : 'hover:bg-red-900'} shadow-md py-2 pl-5 font-semibold space-y-5`}>
             <NavLink to='/dashboard/profile' className={` flex items-center gap-4  uppercase`}><FaHome size={25}></FaHome>profile</NavLink>
         </li>
-        <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/my-donation-requests' ? 'border-b-2' : ''}  relative rounded-md hover:bg-red-800 shadow-md py-2 pl-5 font-semibold space-y-5`}>
+
+        <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/my-donation-requests' ? 'border-b-2' : ''}  relative rounded-md  ${userData?.userRole == 'admin' ? 'hover:bg-green-900' : userData?.userRole == 'volunteer' ? 'hover:bg-yellow-900' : 'hover:bg-red-900'} shadow-md py-2 pl-5 font-semibold space-y-5`}>
             <NavLink to='/dashboard/my-donation-requests' className={` flex items-center gap-4  uppercase`}><GiNotebook size={25}></GiNotebook>my requests</NavLink>
-            <div className="absolute cursor-pointer  bg-red-900 text-white rounded-full
+            <div className="absolute cursor-pointer  bg-black text-white rounded-full
             p-[1px] w-[20px] h-[20px] flex items-center justify-center  -top-5 text-sm  left-3 tooltip tooltip-close tooltip-right" data-tip="not full filled">
                 <span className="">{acceptedDataCount}</span>
             </div>
 
         </li>
-        <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/my-acceptations' ? 'border-b-2' : ''} rounded-md hover:bg-red-800 shadow-md py-2 pl-5 font-semibold space-y-5`}>
+        <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/my-acceptations' ? 'border-b-2' : ''} rounded-md  ${userData?.userRole == 'admin' ? 'hover:bg-green-900' : userData?.userRole == 'volunteer' ? 'hover:bg-yellow-900' : 'hover:bg-red-900'} shadow-md py-2 pl-5 font-semibold space-y-5`}>
             <NavLink to='/dashboard/my-acceptations' className={` flex items-center gap-4  uppercase`}><BsEnvelopeCheckFill size={25}></BsEnvelopeCheckFill>my Acceptation</NavLink>
         </li>
-        <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/create-donation-request' ? 'border-b-2' : ''} rounded-md hover:bg-red-800 shadow-md py-2 pl-5 font-semibold space-y-5`}>
+        <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/create-donation-request' ? 'border-b-2' : ''} rounded-md  ${userData?.userRole == 'admin' ? 'hover:bg-green-900' : userData?.userRole == 'volunteer' ? 'hover:bg-yellow-900' : 'hover:bg-red-900'} shadow-md py-2 pl-5 font-semibold space-y-5`}>
             <NavLink to='/dashboard/create-donation-request' className={`  flex items-center gap-4  uppercase`}><RiFolderAddFill size={25}></RiFolderAddFill>create request</NavLink>
         </li>
 
     </ul>
     useEffect(() => {
         if (accepterData) {
-            console.log('chamon');
+            // console.log('chamon');
             const filter = accepterData?.filter(data => data?.status == 'notFullFilled');
             setAcceptedDataCount(filter?.length)
         }
@@ -58,13 +72,27 @@ const DashboardLayout = () => {
 
                     <span onClick={() => setLayoutNav(false)} className="w-[20px] border text-center">+</span>
                 </div>
-                {dashboardNav}
+                {userNav}
             </div>
             <div className="grid grid-cols-12">
-                <div className="lg:col-span-2 hidden lg:block text-gray-200 bg-red-700 md:h-[650px] sticky top-[81px]">
-                    <div className="w-full mt-10">
-                        {dashboardNav}
+                <div className={`lg:col-span-2 hidden lg:block text-gray-200  ${userData?.userRole == 'admin' ? 'bg-green-800' : userData?.userRole == 'volunteer' ? 'bg-yellow-800' : 'bg-red-800'} md:h-[650px] sticky top-[81px]`}>
+                    <div>
+                        {
+                            userData?.userRole == 'user' && <h2 className="text-2xl text-center mt-5 font-bold">Donar & Requester</h2>
+                        }
+                        {
+                            userData?.userRole == 'volunteer' && <h2 className="text-2xl text-center mt-5 font-bold">Volunteer</h2>
+                        }
+                        {
+                            userData?.userRole == 'admin' && <h2 className="text-2xl text-center mt-5 font-bold">Admin</h2>
+                        }
                     </div>
+                    <div className="w-full mt-10">
+                        {userNav}
+                        {adminNav}
+
+                    </div>
+
                 </div>
                 <div className="lg:col-span-10 col-span-12 lg:p-2 p-5 pt-20 lg:pt-0 text-gray-800 bg-gray-200 ">
                     <Outlet></Outlet>

@@ -1,7 +1,7 @@
 
 
 export const UseDateConverter = (dateConstructor) => {
-    console.log(dateConstructor);
+    // console.log(dateConstructor);
     const dateTh = dateConstructor.getDate()
         const weekDay = dateConstructor.getDay()
         const month = dateConstructor.getMonth();

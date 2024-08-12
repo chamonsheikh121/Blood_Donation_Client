@@ -15,7 +15,7 @@ const ProfileUpdateMessage = ({ status, data }) => {
             .catch(error => console.log(error))
     }
 
-    console.log(user?.emailVerified);
+    // console.log(user?.emailVerified);
     return (
         <div id='profileUpdateMessage' style={{ opacity: '.9', transform: 'translateY(-90%)', transition: '1s', transitionDelay: '1s' }} className="bg-purple-900 w-full    flex justify-center items-center text-white">
             <div className="w-10/12 mx-auto flex items-center justify-center">

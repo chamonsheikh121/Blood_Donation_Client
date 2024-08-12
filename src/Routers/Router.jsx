@@ -17,11 +17,13 @@ import MyAcceptation from "../Pages/UserDashboard/MyAcceptation/MyAcceptation";
 import SearchDonar from "../Pages/SearchDonar/SearchDonar";
 import SearchRequest from "../Pages/SearchRequest/SearchRequest";
 import ResetPassword from "../Pages/ResetPassword/ResetPassword";
+import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <RootLayout></RootLayout>,
+        errorElement: <ErrorPage></ErrorPage>,
         children: [
             {
                 index: true,

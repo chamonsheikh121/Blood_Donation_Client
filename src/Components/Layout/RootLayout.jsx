@@ -9,7 +9,7 @@ import UseAuthContext from "../../Hooks/UseAuthContext";
 const RootLayout = () => {
     const [userData] = UseUser();
     const {user} = UseAuthContext()
-    console.log(user);
+    // console.log(user);
     let status = JSON.parse(localStorage.getItem('profileUpdateStatus'))
     if (userData?.profileUpdateStatus) {
         if (status == 90 && userData?.profileUpdateStatus == 100){

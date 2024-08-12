@@ -7,7 +7,7 @@ import UseUser from "../../../Hooks/UseUser";
 import { useEffect, useRef, useState } from 'react';
 import ProfileModal_1 from './ProfileModal_1';
 import { DNA } from 'react-loader-spinner';
-import { FaCopy } from 'react-icons/fa';
+import { FaCopy, FaQuestion } from 'react-icons/fa';
 // import { IoCheckmarkDoneOutline } from 'react-icons/io5';
 import { ImCheckmark } from 'react-icons/im';
 import UseMyRequest from '../../../Hooks/UseMyRequest';
@@ -15,6 +15,8 @@ import RequestCard from '../../../Components/Shared/RequestCard';
 import SectionComponent from '../../../Components/SectionComponent/SectionComponent';
 import UseMyAcceptation from '../../../Hooks/UseMyAcceptation';
 import { UseDateConverter } from '../../../Hooks/UseDateConverter';
+import { Helmet } from 'react-helmet';
+import UseRegisterInfo from '../../../Hooks/UseRegisterInfo';
 
 
 
@@ -23,7 +25,13 @@ const Profile = () => {
 
     const [data, refetch, isLoading] = UseUser();
     const [myRequest, , isLoadMyRequest] = UseMyRequest()
-
+  const [divisions, districts, upazilas, bloodGroups] = UseRegisterInfo()
+    console.log(divisions,districts,upazilas,bloodGroups);
+    const [selectedDivision, setSelectedDivision] = useState()
+    const [selectedDistrict, setSelectedDistrict] = useState()
+    const [selectedUpazila, setSelectedUpazila] = useState();
+    const [selectedBloodGroup, setSelectedbloodGroup] = useState()
+    // console.log(selectedDivision, selectedDistrict, selectedUpazila, selectedBloodGroup);
     const [loading, setLoading] = useState(false)
     const [myThreeRequest, setMyThreeRequest] = useState()
     const [myThreeAcceptations, setMyThreeAcceptations] = useState()
@@ -41,22 +49,22 @@ const Profile = () => {
     const [UIDCopy, setUIDCopy] = useState(false)
     const axiosPublic = UseAxiosPublic()
     const [myAcceptations, isLoad] = UseMyAcceptation()
-    
-    if(data){
+
+    if (data) {
         const dateOfBirthDateCons = new Date(data?.dateOfBirth)
-        var dateOfBirthDate  = UseDateConverter(dateOfBirthDateCons);
-        console.log(data?.medication);
+        var dateOfBirthDate = UseDateConverter(dateOfBirthDateCons);
+        // console.log(data?.medication);
         const lastDonationDateCons = new Date(data?.lastDonation)
         var lastDonationDate = UseDateConverter(lastDonationDateCons)
-        
+
     }
 
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        console.log(healthInputValue);
+        // console.log(healthInputValue);
 
-        console.log(updatedImage);
+        // console.log(updatedImage);
         if (!updatedImage && updatedName == data?.donarName && phoneInputValue?.current?.value == data?.donarPhone && activeStatus == data?.status) {
             alert('nothing to be update')
             return
@@ -87,7 +95,7 @@ const Profile = () => {
             medication: medicationInputValue?.current?.value,
             dateOfBirth: dateOfBirthInputValue?.current?.value,
         }
-        console.log(profileUpdate);
+        // console.log(profileUpdate);
         axiosPublic.patch('/api/v1/user-profile', profileUpdate)
             .then(res => {
                 if (res?.data?.modifiedCount > 0) {
@@ -146,12 +154,12 @@ const Profile = () => {
                     count: count,
                     donarEmail: data?.donarEmail
                 }
-                console.log(data?.profileUpdateStatus != countObj?.count);
+                // console.log(data?.profileUpdateStatus != countObj?.count);
                 if (data?.profileUpdateStatus != countObj?.count) {
                     const res = await axiosPublic.patch('/api/v1/user-profile', countObj)
                     const data = res.data;
                     refetch()
-                    console.log('profile Updated successfully', data);
+                    // console.log('profile Updated successfully', data);
                 }
 
             }
@@ -169,10 +177,15 @@ const Profile = () => {
         }
     }, [myAcceptations])
 
+    
+
     return (
         <div className="p-10" id="profile" style={{ opacity: .1, transition: '1s', transform: 'translateY(-90%)' }}>
-
+            <Helmet>
+                <title> Dashboard | profile</title>
+            </Helmet>
             {data ? <div >
+
                 <div className="flex md:flex-row flex-col gap-6">
                     <div className=" p-5   relative  bg-white space-y-10  text-gray-600">
                         <figure className="relative">
@@ -194,7 +207,18 @@ const Profile = () => {
                                 lastDonationInputValue={lastDonationInputValue}
                                 medicationInputValue={medicationInputValue}
                                 dateOfBirthInputValue={dateOfBirthInputValue}
+                                divisions={divisions}
+                                districts={districts}
+                                upazilas={upazilas}
+                                bloodGroups={bloodGroups}
+                                setSelectedDivision={setSelectedDivision}
+                                selectedDivision={selectedDivision}
+                                setSelectedDistrict={setSelectedDistrict}
+                                selectedDistrict={selectedDistrict}
+                                setSelectedUpazila={setSelectedUpazila}
+                                setSelectedbloodGroup={setSelectedbloodGroup}
                                 loading={loading}
+
                                 handleFormSubmit={handleFormSubmit}></ProfileModal_1>
                         </figure>
                         <div className='space-y-2'>
@@ -204,44 +228,44 @@ const Profile = () => {
 
                             </div>
                             <p className="font-semibold"> {data?.donarEmail ? data?.donarEmail : 'not given'}</p>
-                            <p className="font-bold"><span className='font-bold'>Phone </span> : 
-                            
-                            <span className={`${data?.donarPhone ? 'text-green-600':'text-red-500'} pl-2`}>{data?.donarPhone ? data.donarPhone : 'not given'}</span>
-                            
+                            <p className="font-bold"><span className='font-bold'>Phone </span> :
+
+                                <span className={`${data?.donarPhone ? 'text-green-600' : 'text-red-500'} pl-2`}>{data?.donarPhone ? data.donarPhone : 'not given'}</span>
+
                             </p>
                             <p className="font-semibold flex items-center gap-3"><span className='font-bold'>userID</span>: <span className='text-blue-600'> {data?.userUID} {
                                 UIDCopy ? <ImCheckmark onClick={handleUidCopy} className='inline ml-2 text-green-500 cursor-pointer' size={20}></ImCheckmark> : <FaCopy onClick={handleUidCopy} className='inline ml-2 text-gray-500 cursor-pointer' size={20}></FaCopy>
                             }</span> </p>
 
-                            <p className="font-bold"><span className=''>Health status  </span> : <span className={`${data?.healthStatus ? 'text-green-600':'text-red-500'}`}>{data?.healthStatus ? data.healthStatus : 'not given'}</span></p>
-                            <p className="font-bold"><span className=''>Recent travel history  </span> : 
-                            <span className={`${data?.recentTravelHistory ? 'text-green-600':'text-red-500'} pl-2`}>{data?.recentTravelHistory ? data.recentTravelHistory : 'not given'}</span>
+                            <p className="font-bold"><span className=''>Health status  </span> : <span className={`${data?.healthStatus ? 'text-green-600' : 'text-red-500'}`}>{data?.healthStatus ? data.healthStatus : 'not given'}</span></p>
+                            <p className="font-bold"><span className=''>Recent travel history  </span> :
+                                <span className={`${data?.recentTravelHistory ? 'text-green-600' : 'text-red-500'} pl-2`}>{data?.recentTravelHistory ? data.recentTravelHistory : 'not given'}</span>
                             </p>
-                            <p className="font-bold"><span className=''>Weight  </span> :  
-                            <span className={`${data?.weight ? 'text-green-600':'text-red-500'} pl-2`}>{data?.weight ? `${ data?.weight} kg` : 'not given'}</span>
+                            <p className="font-bold"><span className=''>Weight  </span> :
+                                <span className={`${data?.weight ? 'text-green-600' : 'text-red-500'} pl-2`}>{data?.weight ? `${data?.weight} kg` : 'not given'}</span>
                             </p>
-                            <p className="font-bold"><span className=''>Profile Update status  </span> : 
-                            
-                            
-                            <span className={`${data?.profileUpdateStatus ? 'text-green-600':'text-red-500'} pl-2`}>{data?.profileUpdateStatus ? data?.profileUpdateStatus : 'not given'}</span>
-                            
+                            <p className="font-bold"><span className=''>Profile Update status  </span> :
+
+
+                                <span className={`${data?.profileUpdateStatus ? 'text-green-600' : 'text-red-500'} pl-2`}>{data?.profileUpdateStatus ? data?.profileUpdateStatus : 'not given'}</span>
+
                             </p>
-                            <p className="font-bold"><span className=''>Last donation  </span> : 
-                            
-                            <span className={`${data?.lastDonation  ? 'text-green-600':'text-red-500'} pl-2`}>{data?.lastDonation ? lastDonationDate : 'not given'}</span>
-                            
+                            <p className="font-bold"><span className=''>Last donation  </span> :
+
+                                <span className={`${data?.lastDonation ? 'text-green-600' : 'text-red-500'} pl-2`}>{data?.lastDonation ? lastDonationDate : 'not given'}</span>
+
                             </p>
-                            <p className="font-bold"><span className=''>Medication  </span> : 
-                            
-                            <span className={`${data?.lastDonation  ? 'text-green-600':'text-red-500'} pl-2`}>{data?.medication ? data.medication : 'not given'}
-                            </span>
-                            
+                            <p className="font-bold"><span className=''>Medication  </span> :
+
+                                <span className={`${data?.lastDonation ? 'text-green-600' : 'text-red-500'} pl-2`}>{data?.medication ? data.medication : 'not given'}
+                                </span>
+
                             </p>
-                            <p className="font-bold"><span className=''>Date of birth  </span> : 
-                            <span className={`${data?.dateOfBirth  ? 'text-green-600':'text-red-500'} pl-2`}>{data?.dateOfBirth ? dateOfBirthDate : 'not given'}
-                            
-                            </span>
-                            
+                            <p className="font-bold"><span className=''>Date of birth  </span> :
+                                <span className={`${data?.dateOfBirth ? 'text-green-600' : 'text-red-500'} pl-2`}>{data?.dateOfBirth ? dateOfBirthDate : 'not given'}
+
+                                </span>
+
                             </p>
 
 
@@ -264,7 +288,7 @@ const Profile = () => {
                         ></ProfileModal_2> */}
                         <div className="flex items-center justify-center gap-1">
                             <img className="w-[70px]" src={blood} alt="" />
-                            <span className="text-3xl font-extrabold text-red-600">{data?.BloodGroup?.group}</span>
+                            <span className="text-3xl font-extrabold text-red-600">{data?.BloodGroup?.group ? data?.BloodGroup?.group : <FaQuestion></FaQuestion>}</span>
                             <img className="w-[70px]" src={blood} alt="" />
                         </div>
                         <div className="p-5 space-y-2 text-gray-600">
@@ -303,7 +327,7 @@ const Profile = () => {
                                 <div className="ml-5">
                                     <p>Name : {data?.Division?.name}</p>
                                     <p>Name (Bangla) : {data?.Division?.bn_name}</p>
-                                    <p>Official site : <a href={data?.Division?.url} target="_blank" className="underline underline-offset-2">{data?.Division?.url}</a></p>
+                                    <p>Official site : <a href={data?.Division?.url.startsWith('http') ? data?.Division?.url : `http://${data?.Division?.url}`} target="_blank" className="underline underline-offset-2">{data?.Division?.url}</a></p>
                                 </div>
                             </div>
                             <div>
@@ -313,7 +337,7 @@ const Profile = () => {
                                     <p>Name (Bangla) : {data?.District?.bn_name}</p>
                                     <p>Lat : {data?.District?.lat}</p>
                                     <p>Lon : {data?.District?.lon}</p>
-                                    <p>Official site : <a href={data?.District?.url} target="_blank" className="underline underline-offset-2">{data?.District?.url}</a></p>
+                                    <p>Official site : <a href={data?.District?.url.startsWith('http') ? data?.District?.url : `http://${data?.District?.url}`} target="_blank" className="underline underline-offset-2">{data?.District?.url}</a></p>
                                 </div>
                             </div>
                             <div>
@@ -321,7 +345,7 @@ const Profile = () => {
                                 <div className="ml-5">
                                     <p>Name : {data?.Upazila?.name}</p>
                                     <p>Name (Bangla) : {data?.Upazila?.bn_name}</p>
-                                    <p>Official site : <a href={data?.Upazila?.url} target="_blank" className="underline underline-offset-2">{data?.Upazila?.url}</a></p>
+                                    <p>Official site : <a target="_blank" href={data?.Upazila?.url.startsWith('http') ? data?.Upazila?.url : `http://${data?.Upazila?.url}`} className="underline underline-offset-2">{data?.Upazila?.url}</a></p>
                                 </div>
                             </div>
                         </div>

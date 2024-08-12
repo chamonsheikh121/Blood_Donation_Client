@@ -1,15 +1,18 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import image from './../../assets/Login/29313294_pq6o_qij1_220606.jpg'
 import UseAuthContext from "../../Hooks/UseAuthContext";
 import Swal from "sweetalert2";
 import SignInOptions from "../../Components/Shared/SignInOptions";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 
 const Login = () => {
     const { signInEmailPass } = UseAuthContext();
     const [toggle, setToggle] = useState(false)
     const [loading, setLoading] = useState(false)
+    const location = useLocation();
+    console.log(location);
     const navigate = useNavigate();
     const handleLoginSubmit = (e) => {
         e.preventDefault();
@@ -27,7 +30,7 @@ const Login = () => {
                     timer: 1000,
                 });
                 setLoading(false)
-                navigate('/dashboard/profile')
+                navigate(location?.state ? location.state : '/dashboard/profile')
             })
             .catch(err => {
                 Swal.fire(`${err.message}`);
@@ -37,6 +40,9 @@ const Login = () => {
     }
     return (
         <div>
+            <Helmet>
+                <title>Login</title>
+            </Helmet>
             <div className="hero bg-base-200 min-h-screen">
                 <div className="hero-content flex-col  lg:flex-row md:gap-20">
                     <div className="text-center lg:text-left">
@@ -57,7 +63,7 @@ const Login = () => {
                                 <input type={toggle ? 'text' : 'password'} placeholder="password" name='userPassword' className="input focus:outline-none focus:border-black input-bordered" required />
                             </div>
                             <div className="flex justify-between w-full">
-                                <p className="flex items-center gap-2"> <input type="checkbox"  className="checkbox checkbox-sm" /><span>remember me</span></p>
+                                <p className="flex items-center gap-2"> <input type="checkbox" className="checkbox checkbox-sm" /><span>remember me</span></p>
                                 <Link to={'/login/reset-password'}><p className="text-end hover:underline underline-offset-4">forgot password ? </p></Link>
                             </div>
                             <button className="btn mt-5 bg-red-600 text-white">{loading ? <span className="loading text-white"></span> : 'Login now'}</button>

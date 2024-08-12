@@ -27,12 +27,11 @@ const MyRequestDetails = () => {
     const [userData] = UseUser();
     const [refetch, setRefetch] = useState(false)
     const [requestDetails, setRequestDetails] = useState()
-    console.log(requestDetails);
+    // console.log(requestDetails);
     const [serialCopy, setSerialCopy] = useState(false)
     const [requestedId, setRequestedId] = useState(false)
     const param = useParams();
     const Navigate = useNavigate()
-
 
 
     // ==================  converting date and time to full name ===================
@@ -58,6 +57,25 @@ const MyRequestDetails = () => {
     const isInDashboard = location?.pathname?.includes('dashboard');
     //  ================================ handle accepted ==========================================
     const handleAccepted = () => {
+
+        if (!user?.email) {
+            Swal.fire({
+                title: "Want to login ?",
+                text: "To accept any request you have to login first !",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, login",
+                cancelButtonText: "Letter"
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    Navigate('/login', { status: location?.pathname })
+                }
+            })
+            return
+        }
+
         let acceptedUserDetails = {
             accepterName: userData?.donarName,
             accepterEmail: userData?.donarEmail,
@@ -128,16 +146,16 @@ const MyRequestDetails = () => {
 
 
             {
-               loading ? <div className="w-full flex items-center justify-center mt-10">
-               <DNA
-                   visible={true}
-                   height="100"
-                   width="100"
-                   ariaLabel="dna-loading"
-                   wrapperStyle={{}}
-                   wrapperClass="dna-wrapper"
-               />
-           </div> : requestDetails ? <div className="mt-2">
+                loading ? <div className="w-full flex items-center justify-center mt-10">
+                    <DNA
+                        visible={true}
+                        height="100"
+                        width="100"
+                        ariaLabel="dna-loading"
+                        wrapperStyle={{}}
+                        wrapperClass="dna-wrapper"
+                    />
+                </div> : requestDetails ? <div className="mt-2">
                     <div className="flex lg:flex-row flex-col justify-center items-center lg:items-start gap-10 p-2 ">
                         <div className={`bg-gradient-to-t from-gray-400 ${requestDetails?.status == 'accepted' ? 'bg-green-600' : 'to-purple-600'}  flex flex-col lg:flex-row  items-start lg:p-5 gap-2 justify-between w-10/12 rounded-md`}>
                             <div className="lg:h-[400px]  lg:w-[600px]">
@@ -290,8 +308,8 @@ const MyRequestDetails = () => {
                 </div>
 
                     : <div className=" flex  justify-center mt-10 w-full"><span
-                    className="text-2xl font-extrabold"
-                >No Request found</span></div>
+                        className="text-2xl font-extrabold"
+                    >No Request found</span></div>
             }
 
             <SectionComponent id={'detailsPage'} from={'translateX'}></SectionComponent>

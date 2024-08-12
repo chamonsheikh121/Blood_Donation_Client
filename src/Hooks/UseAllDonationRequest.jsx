@@ -12,7 +12,7 @@ const UseAllRequestCount = () => {
             return data
         }
     })
-    return [data, isLoading, refetch]
+    return [data,isLoading, refetch]
 };
 
 export default UseAllRequestCount;

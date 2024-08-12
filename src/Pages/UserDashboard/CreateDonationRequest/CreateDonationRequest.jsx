@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import UseUser from "../../../Hooks/UseUser";
 import UseAxiosPublic from "../../../Hooks/UseAxiosPublic";
 import SectionComponent from "../../../Components/SectionComponent/SectionComponent";
+import { Helmet } from "react-helmet";
 
 const CreateDonationRequest = () => {
 
@@ -110,7 +111,9 @@ const CreateDonationRequest = () => {
 
     return (
         <div>
-
+<Helmet>
+               <title> Dashboard | create & publish</title>
+              </Helmet>
             <form onSubmit={handleSubmitRequest} className="bg-white max-w-5xl space-y-5 mt-10 rounded-md p-10 text-gray-700 mx-auto">
                 <div className="flex flex-col md:flex-row gap-10">
                     <div className="flex flex-col flex-1 justify-center gap-2">
@@ -273,7 +276,7 @@ in details"  className="py-2 border bg-gray-300 placeholder:text-gray-500 pl-5 f
                 </div>
 
                 <div className="max-w-md mx-auto">
-                    <button className=" border hover:bg-red-800 bg-red-700 w-full py-2 text-white btn">{loading ? <span className="loading"></span> : 'Submit Request'}</button>
+                    <button className=" border hover:bg-red-800 bg-red-700 w-full py-2 text-white btn">{loading ? <span className="loading"></span> : 'Publish Request'}</button>
                 </div>
 
 

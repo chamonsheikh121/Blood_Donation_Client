@@ -49,7 +49,7 @@ const AuthProvider = ({ children }) => {
                     const res = await axiosPublic.post('/api/v1/jwt', userDoc);
                     const data = res.data;
                     localStorage.setItem('user-token', JSON.stringify(data?.token))
-                    console.log(data?.token);
+                    // console.log(data?.token);
                 }
             }
             createToken()
@@ -77,7 +77,7 @@ const AuthProvider = ({ children }) => {
 
             }
             catch (err) {
-                console.log(err);
+                // console.log(err);
             }
         }
         fetchData()

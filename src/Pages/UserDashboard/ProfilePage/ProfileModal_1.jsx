@@ -15,7 +15,21 @@ const ProfileModal_1 = ({ data,
     lastDonationInputValue,
     medicationInputValue,
     dateOfBirthInputValue,
+    divisions,
+    setSelectedDivision,
+    selectedDivision,
+    districts,
+    setSelectedDistrict,
+    selectedDistrict,
+    upazilas,
+    setSelectedUpazila,
+    bloodGroups,
+    setSelectedbloodGroup
 }) => {
+
+    // console.log(data);
+
+
 
     return (
         <dialog id="my_modal_1" className="modal ">
@@ -74,22 +88,95 @@ const ProfileModal_1 = ({ data,
                         <label htmlFor="userDateOfBirth" className="mb-2">Date of birth :</label>
                         <input ref={dateOfBirthInputValue} defaultValue={data?.dateOfBirth} type="date" placeholder="" id="userDateOfBirth" name='userDateOfBirth' className="input focus:outline-none focus:border-black input-bordered" required onChange={() => setSaveActive(true)} />
                     </div>
+                    <div className="flex gap-2 items-center flex-col lg:flex-row">
+                        <div className='w-full mb-2 h-[40px]'>
+                            <span className='mb-1 text-xs block'>Blood group: (not changeable)</span>
+                            <select defaultValue={'12'} required onChange={(e) => setSelectedbloodGroup(JSON.parse(e.target.value))} className="select  select-bordered h-full focus:outline-none select-sm w-full ">
+                                <option disabled selected>{data?.bloodGroups ? data?.bloodGroups?.bloodGroup : 'Select blood'}</option>
+                                {
+                                    bloodGroups?.length > 0 && bloodGroups?.map((bloodGroup, i) => <option key={i}
+                                        value={JSON.stringify(bloodGroup)}
+                                    >{bloodGroup?.group}</option>)
+                                }
+
+                            </select>
+                        </div>
+                    </div>
+                    <div className='space-y-5'>
+                        {/* ============================================================== */}
+                        <div className='w-full h-[40px]'>
+                            <span className='mb-1 text-xs block'>Division:</span>
+
+                            <select required onChange={(e) => setSelectedDivision(JSON.parse(e.target.value))} className="select h-full select-bordered focus:outline-none select-sm w-full ">
+                                <option disabled selected>{data?.Division ? data?.Division?.name : 'Select division'}</option>
+                                {
+                                    divisions?.length > 0 && divisions.map(division => <option key={division?.id}
+                                        value={JSON.stringify(division)}
+                                    >{division?.bn_name}, {division?.name}</option>)
+                                }
+
+                            </select>
+                        </div>
+                        {/* ======================================================== */}
+                        <div className='w-full h-[40px] mt-2'>
+                            <span className='mb-1 text-xs block'>District:</span>
+
+                            <select required onChange={(e) => setSelectedDistrict(JSON.parse(e.target.value))} className="select select-bordered  h-full focus:outline-none select-sm w-full">
+                                <option disabled selected>{data?.District ? data?.District?.name : 'Select District'}</option>
+
+                                {
+                                    districts?.length > 0 && districts.map(district => {
+                                        {
+                                            if (district?.division_id == selectedDivision?.id) {
+                                                return <option key={district.id}
+                                                    value={JSON.stringify(district)}
+                                                >{district?.bn_name}, {district?.name}</option>
+                                            }
+
+                                        }
+                                    })
+                                }
+
+                            </select>
+                        </div>
+
+                        {/* =================================================== */}
+                        <div className='w-full h-[40px] mb-2'>
+                            <span className='mb-1 text-xs block'>Upazila:</span>
+
+                            <select required onChange={(e) => setSelectedUpazila(JSON.parse(e.target.value))} className="select select-bordered focus:outline-none select-sm w-full h-full">
+                                <option disabled selected>{data?.Upazila ? data?.Upazila?.name : 'Select District'}</option>
+
+                                {
+                                    upazilas?.length > 0 && upazilas.map(upazila => {
+                                        {
+                                            if (upazila?.district_id == selectedDistrict?.id) {
+                                                return <option key={upazila?.id}
+                                                    value={JSON.stringify(upazila)}
+                                                >{upazila?.bn_name}, {upazila?.name} </option>
+                                            }
+
+                                        }
+                                    })
+                                }
+
+                            </select>
+
+                        </div>
 
 
+                        <div className='form-control mt-2'>
+                            <label htmlFor="">Active Status :</label>
+                            <select onChange={(e) => {
+                                setActiveStatus(e.target.value);
+                                setSaveActive(true)
+                            }} className="select select-info w-full ">
+                                <option defaultValue={data?.Status} disabled selected>Status</option>
+                                <option value={true}>Active</option>
+                                <option value={false}>InActive</option>
 
-
-
-                    <div className='form-control'>
-                        <label htmlFor="">Active Status :</label>
-                        <select onChange={(e) => {
-                            setActiveStatus(e.target.value);
-                            setSaveActive(true)
-                        }} className="select select-info w-full ">
-                            <option defaultValue={data?.Status} disabled selected>Status</option>
-                            <option value={true}>Active</option>
-                            <option value={false}>InActive</option>
-
-                        </select>
+                            </select>
+                        </div>
                     </div>
 
 
@@ -108,20 +195,30 @@ const ProfileModal_1 = ({ data,
 
 export default ProfileModal_1;
 ProfileModal_1.propTypes = {
-    data: PropTypes.node,
-    setUpdatedImage: PropTypes.node,
-    setSaveActive: PropTypes.node,
-    setUpdatedName: PropTypes.node,
-    phoneInputValue: PropTypes.node,
-    saveActive: PropTypes.node,
-    handleFormSubmit: PropTypes.node,
-    loading: PropTypes.node,
-    setActiveStatus: PropTypes.node,
-    healthInputValue: PropTypes.node,
-    travelInputValue: PropTypes.node,
-    weightInputValue: PropTypes.node,
-    lastDonationInputValue: PropTypes.node,
-    medicationInputValue: PropTypes.node,
-    dateOfBirthInputValue: PropTypes.node,
+    data: PropTypes.object,
+    setUpdatedImage: PropTypes.func,
+    setSaveActive: PropTypes.func,
+    setUpdatedName: PropTypes.func,
+    phoneInputValue: PropTypes.object,
+    saveActive: PropTypes.bool,
+    handleFormSubmit: PropTypes.func,
+    loading: PropTypes.bool,
+    setActiveStatus: PropTypes.func,
+    healthInputValue: PropTypes.object,
+    travelInputValue: PropTypes.object,
+    weightInputValue: PropTypes.object,
+    lastDonationInputValue: PropTypes.object,
+    medicationInputValue: PropTypes.object,
+    dateOfBirthInputValue: PropTypes.object,
+    divisions: PropTypes.object,
+    districts: PropTypes.object,
+    upazilas: PropTypes.object,
+    bloodGroups: PropTypes.object,
+    setSelectedDivision: PropTypes.func,
+    selectedDivision: PropTypes.func,
+    setSelectedDistrict: PropTypes.func,
+    selectedDistrict: PropTypes.func,
+    setSelectedUpazila: PropTypes.func,
+    setSelectedbloodGroup: PropTypes.func
 
 }

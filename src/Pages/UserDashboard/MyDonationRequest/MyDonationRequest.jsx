@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import UseAxiosPublic from "../../../Hooks/UseAxiosPublic";
 import { useEffect, useState } from "react";
 import SectionComponent from "../../../Components/SectionComponent/SectionComponent";
+import { Helmet } from "react-helmet";
 
 
 
@@ -66,7 +67,9 @@ const MyDonationRequest = () => {
 
     return (
         <div>
-
+            <Helmet>
+                <title> Dashboard | my request</title>
+            </Helmet>
             <div id="AcceptedRequest" style={{ opacity: '0.1', transform: 'translateX(90%)', transition: '1s' }} className="max-w-5xl border mx-auto m-10">
                 <h1 className=" text-gray-600 font-bold text-3xl mb-5">Not accepted</h1>
                 <div className=" relative col-span-12 grid md:grid-cols-2 grid-cols-1 lg:grid-cols-3 gap-10 p-5  ">

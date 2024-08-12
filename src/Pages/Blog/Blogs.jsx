@@ -1,10 +1,13 @@
+import { Helmet } from 'react-helmet';
 import img from './../../assets/blogs/blog1.jpg'
 import './Blog.css'
 
 const Blogs = () => {
     return (
         <div className="text-gray-700 max-w-7xl mx-auto ">
-
+            <Helmet>
+                <title> All blogs</title>
+            </Helmet>
             <h1 className="text-center font-bold   text-4xl my-10 ">All update blogs</h1>
             <div className="lg:grid lg:grid-cols-12 p-5 lg:p-0 lg:gap-10 flex flex-col-reverse">
                 <div className="col-span-8  space-y-10">
@@ -47,7 +50,7 @@ const Blogs = () => {
 
                             </div>
                         </div>
-                        <hr className='border border-gray-300 w-10/12 mx-auto mt-5'/>
+                        <hr className='border border-gray-300 w-10/12 mx-auto mt-5' />
                     </div>
                     {/* ================== */}
                     <div className='cursor-pointer'>
@@ -64,7 +67,7 @@ const Blogs = () => {
 
                             </div>
                         </div>
-                        <hr className='border border-gray-300 w-10/12 mx-auto mt-5'/>
+                        <hr className='border border-gray-300 w-10/12 mx-auto mt-5' />
                     </div>
                     {/* ================== */}
                     <div className='cursor-pointer'>
@@ -81,7 +84,7 @@ const Blogs = () => {
 
                             </div>
                         </div>
-                        <hr className='border border-gray-300 w-10/12 mx-auto mt-5'/>
+                        <hr className='border border-gray-300 w-10/12 mx-auto mt-5' />
                     </div>
                     {/* ================== */}
                     <div className='cursor-pointer'>
@@ -98,7 +101,7 @@ const Blogs = () => {
 
                             </div>
                         </div>
-                        <hr className='border border-gray-300 w-10/12 mx-auto mt-5'/>
+                        <hr className='border border-gray-300 w-10/12 mx-auto mt-5' />
                     </div>
                     {/* ================== */}
                     <div>
@@ -115,7 +118,7 @@ const Blogs = () => {
 
                             </div>
                         </div>
-                        <hr className='border border-gray-300 w-10/12 mx-auto mt-5'/>
+                        <hr className='border border-gray-300 w-10/12 mx-auto mt-5' />
                     </div>
                 </div>
             </div>

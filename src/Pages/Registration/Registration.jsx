@@ -9,6 +9,8 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { BsEyeFill, BsEyeSlashFill } from 'react-icons/bs';
 import UseAxiosPublic from '../../Hooks/UseAxiosPublic';
+import { Helmet } from 'react-helmet';
+
 
 const Registration = () => {
     const { divisions, districts, upazilas, bloodGroups, logOut } = UseAuthContext()
@@ -150,7 +152,9 @@ const Registration = () => {
 
     return (
         <div>
-
+            <Helmet>
+                <title> Registration</title>
+            </Helmet>
             <div className="hero bg-base-200 min-h-screen">
 
                 <div className="hero-content flex-col md:flex-row lg:gap-20">

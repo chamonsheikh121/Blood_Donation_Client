@@ -60,6 +60,6 @@ const RequestCard = ({ request, requestType }) => {
 export default RequestCard;
 
 RequestCard.propTypes = {
-    request: PropTypes.node,
+    request: PropTypes.object,
     requestType: PropTypes.node
 }

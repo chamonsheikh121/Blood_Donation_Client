@@ -11,7 +11,7 @@ const UseAxiosSecure = () => {
     const Navigate = useNavigate()
     axiosSecure.interceptors.request.use(config => {
         const token = JSON.parse(localStorage.getItem('user-token'));
-        console.log(token);
+        // console.log(token);
         config.headers.authentication = `bearer ${token}`;
         return config
     }, error => {

@@ -27,8 +27,6 @@ const ProfileModal_1 = ({ data,
     setSelectedbloodGroup
 }) => {
 
-    // console.log(data);
-
 
 
     return (
@@ -89,25 +87,32 @@ const ProfileModal_1 = ({ data,
                         <input ref={dateOfBirthInputValue} defaultValue={data?.dateOfBirth} type="date" placeholder="" id="userDateOfBirth" name='userDateOfBirth' className="input focus:outline-none focus:border-black input-bordered" required onChange={() => setSaveActive(true)} />
                     </div>
                     <div className="flex gap-2 items-center flex-col lg:flex-row">
-                        <div className='w-full mb-2 h-[40px]'>
-                            <span className='mb-1 text-xs block'>Blood group: (not changeable)</span>
-                            <select defaultValue={'12'} required onChange={(e) => setSelectedbloodGroup(JSON.parse(e.target.value))} className="select  select-bordered h-full focus:outline-none select-sm w-full ">
-                                <option disabled selected>{data?.bloodGroups ? data?.bloodGroups?.bloodGroup : 'Select blood'}</option>
-                                {
-                                    bloodGroups?.length > 0 && bloodGroups?.map((bloodGroup, i) => <option key={i}
-                                        value={JSON.stringify(bloodGroup)}
-                                    >{bloodGroup?.group}</option>)
-                                }
+                            <div className='w-full mb-2 h-[40px]'>
+                                <span className='mb-1 text-xs block'>Blood group: (not changeable)</span>
+                                <select disabled={data?.BloodGroup} defaultValue={'12'} required onChange={(e) => {
+                                    setSelectedbloodGroup(JSON.parse(e.target.value))
+                                    setSaveActive(true)
+                                }} className="select  select-bordered h-full focus:outline-none select-sm w-full ">
+                                    <option disabled selected>{data?.bloodGroups ? data?.bloodGroups?.bloodGroup : 'Select blood'}</option>
+                                    {
+                                        bloodGroups?.length > 0 && bloodGroups?.map((bloodGroup, i) => <option key={i}
+                                            value={JSON.stringify(bloodGroup)}
+                                        >{bloodGroup?.group}</option>)
+                                    }
 
-                            </select>
+                                </select>
+                            </div>
                         </div>
-                    </div>
+                    
                     <div className='space-y-5'>
                         {/* ============================================================== */}
                         <div className='w-full h-[40px]'>
                             <span className='mb-1 text-xs block'>Division:</span>
 
-                            <select required onChange={(e) => setSelectedDivision(JSON.parse(e.target.value))} className="select h-full select-bordered focus:outline-none select-sm w-full ">
+                            <select required onChange={(e) => {
+                                setSelectedDivision(JSON.parse(e.target.value))
+                                setSaveActive(true)
+                            }} className="select h-full select-bordered focus:outline-none select-sm w-full ">
                                 <option disabled selected>{data?.Division ? data?.Division?.name : 'Select division'}</option>
                                 {
                                     divisions?.length > 0 && divisions.map(division => <option key={division?.id}
@@ -121,7 +126,10 @@ const ProfileModal_1 = ({ data,
                         <div className='w-full h-[40px] mt-2'>
                             <span className='mb-1 text-xs block'>District:</span>
 
-                            <select required onChange={(e) => setSelectedDistrict(JSON.parse(e.target.value))} className="select select-bordered  h-full focus:outline-none select-sm w-full">
+                            <select required onChange={(e) => {
+                                setSelectedDistrict(JSON.parse(e.target.value))
+                                setSaveActive(true)
+                            }} className="select select-bordered  h-full focus:outline-none select-sm w-full">
                                 <option disabled selected>{data?.District ? data?.District?.name : 'Select District'}</option>
 
                                 {
@@ -144,7 +152,10 @@ const ProfileModal_1 = ({ data,
                         <div className='w-full h-[40px] mb-2'>
                             <span className='mb-1 text-xs block'>Upazila:</span>
 
-                            <select required onChange={(e) => setSelectedUpazila(JSON.parse(e.target.value))} className="select select-bordered focus:outline-none select-sm w-full h-full">
+                            <select required onChange={(e) => {
+                                setSelectedUpazila(JSON.parse(e.target.value))
+                                setSaveActive(true)
+                            }} className="select select-bordered focus:outline-none select-sm w-full h-full">
                                 <option disabled selected>{data?.Upazila ? data?.Upazila?.name : 'Select District'}</option>
 
                                 {
@@ -210,10 +221,10 @@ ProfileModal_1.propTypes = {
     lastDonationInputValue: PropTypes.object,
     medicationInputValue: PropTypes.object,
     dateOfBirthInputValue: PropTypes.object,
-    divisions: PropTypes.object,
-    districts: PropTypes.object,
-    upazilas: PropTypes.object,
-    bloodGroups: PropTypes.object,
+    divisions: PropTypes.array,
+    districts: PropTypes.array,
+    upazilas: PropTypes.array,
+    bloodGroups: PropTypes.array,
     setSelectedDivision: PropTypes.func,
     selectedDivision: PropTypes.func,
     setSelectedDistrict: PropTypes.func,

@@ -5,16 +5,18 @@ import img from './../../assets/Registration/blood.png'
 import './RequestCard.css'
 import { UseDateConverter } from "../../Hooks/UseDateConverter";
 import { UseTimeConverter } from "../../Hooks/UseTimeConverter";
+import UseAuthContext from "../../Hooks/UseAuthContext";
 
 
 const RequestCard = ({ request, requestType }) => {
 
     const dateConstructor = new Date(request?.requestedDate);
     const date = UseDateConverter(dateConstructor)
+    const {user} = UseAuthContext()
     const time = UseTimeConverter(request?.requestedTime)
 
-    const { _id, donarImage, donarName, donarEmail, requestedBloodGroup, requesterImage, requesterHospital, requesterFullAddress, } = request
-
+    const { _id, donarImage, donarName, donarEmail, requestedBloodGroup, requesterImage, requesterHospital, requesterFullAddress} = request
+// console.log(user?.email, donarEmail, request?.status);
 
     return (
         <div className="border cards flex flex-col justify-between  border-gray-300 rounded-md bg-gray-200 hover:bg-white  shadow-lg p-2">
@@ -45,10 +47,10 @@ const RequestCard = ({ request, requestType }) => {
             <div className="flex items-center px-5 justify-between">
 
                 {
-                    requestType ? null :
+                    user?.email == request.donarEmail && 
                         <Link to={`/dashboard/my-donation-requests/${_id}/edit`}> <button className="btn bg-gray-400 border-none btn-sm mt-2 hover:bg-gray-500 hover:text-white">Edit <FaEdit></FaEdit></button></Link>
                 }
-                <Link to={requestType ? `/all-blood-donation-request/${_id}` : `/dashboard/my-donation-requests/${_id}`}><button className="btn btn-sm mt-2 border-none hover:text-white  text-white bg-red-600 hover:bg-red-700">details <FaArrowRight></FaArrowRight></button></Link>
+                <Link to={user?.email == request?.donarEmail ? `/all-blood-donation-request/${_id}` : request?.status == 'notFullFilled' ? `/dashboard/my-acceptations`: `/dashboard/my-donation-requests/${_id}`}><button className="btn btn-sm mt-2 border-none hover:text-white  text-white bg-red-600 hover:bg-red-700">details <FaArrowRight></FaArrowRight></button></Link>
 
 
 

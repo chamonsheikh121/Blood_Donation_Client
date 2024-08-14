@@ -5,7 +5,6 @@ import './style.css'
 import Swal from 'sweetalert2';
 
 const ProfileUpdateMessage = ({ status, data }) => {
-    const initialInfo = true;
     const { verifyEmail, user } = UseAuthContext()
     const handleEmailVerification = () => {
         verifyEmail()
@@ -35,7 +34,7 @@ const ProfileUpdateMessage = ({ status, data }) => {
                         <span className="w-[40px] absolute -right-16 -top-1 text-center h-full text-white">{status} %</span>
                     </div>
                     <p className='text-center'> upadte [
-                        <span className={`pl-2 ${initialInfo ? 'text-green-400' : 'text-white'}`}>Initial info,</span>
+                        
                         <span className={`pl-2 ${data?.donarImage ? 'text-green-400' : 'text-white'}`}>Profile photo,</span>
                         <span className={`pl-2 ${data?.donarName ? 'text-green-400' : 'text-white'}`}>Your name ,</span>
                         <span className={`pl-2 ${data?.donarPhone ? 'text-green-400' : 'text-white'}`}>Phone ,</span>
@@ -45,6 +44,12 @@ const ProfileUpdateMessage = ({ status, data }) => {
                         <span className={`pl-2 ${data?.lastDonation ? 'text-green-400' : 'text-white'}`}>Last donation,</span>
                         <span className={`pl-2 ${data?.medication ? 'text-green-400' : 'text-white'}`}>Medication ,</span>
                         <span className={`pl-2 ${data?.dateOfBirth ? 'text-green-400' : 'text-white'}`}>Date of birth</span>  ]</p>
+                    <span>[
+                        <span className={`pl-2 ${data?.BloodGroup ? 'text-green-400' : ''}`}>Blood-group,</span>
+                        <span className={`pl-2 ${data?.Division ? 'text-green-400' : ''}`}>Division,</span>
+                        <span className={`pl-2 ${data?.District ? 'text-green-400' : ''}`}>District,</span>
+                        <span className={`pl-2 ${data?.Upazila ? 'text-green-400' : ''}`}>Upazila</span>
+                        ]</span>
                 </div>
             </div>
 

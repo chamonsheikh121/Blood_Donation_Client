@@ -25,13 +25,12 @@ const Profile = () => {
 
     const [data, refetch, isLoading] = UseUser();
     const [myRequest, , isLoadMyRequest] = UseMyRequest()
-  const [divisions, districts, upazilas, bloodGroups] = UseRegisterInfo()
-    console.log(divisions,districts,upazilas,bloodGroups);
+    const [divisions, districts, upazilas, bloodGroups] = UseRegisterInfo()
+    // console.log(divisions, districts, upazilas, bloodGroups);
     const [selectedDivision, setSelectedDivision] = useState()
     const [selectedDistrict, setSelectedDistrict] = useState()
     const [selectedUpazila, setSelectedUpazila] = useState();
     const [selectedBloodGroup, setSelectedbloodGroup] = useState()
-    // console.log(selectedDivision, selectedDistrict, selectedUpazila, selectedBloodGroup);
     const [loading, setLoading] = useState(false)
     const [myThreeRequest, setMyThreeRequest] = useState()
     const [myThreeAcceptations, setMyThreeAcceptations] = useState()
@@ -69,6 +68,10 @@ const Profile = () => {
             alert('nothing to be update')
             return
         }
+        if(selectedDivision && (!selectedDistrict || !selectedUpazila)){
+            alert('must select your District and Upazila')
+            return;
+        }
 
         setLoading(true);
         const API_KEY = 'f6a950227b2e6c0fda979d39facb73d8';
@@ -94,6 +97,10 @@ const Profile = () => {
             lastDonation: lastDonationInputValue?.current?.value,
             medication: medicationInputValue?.current?.value,
             dateOfBirth: dateOfBirthInputValue?.current?.value,
+            BloodGroup: selectedBloodGroup || data?.BloodGroup,
+            Division: selectedDivision || data?.Division,
+            District: selectedDistrict ,
+            Upazila: selectedUpazila
         }
         // console.log(profileUpdate);
         axiosPublic.patch('/api/v1/user-profile', profileUpdate)
@@ -122,7 +129,10 @@ const Profile = () => {
     useEffect(() => {
         const UpdateProfile = async () => {
             if (data?.donarEmail) {
-                let count = 10;
+                let count = 0;
+                if (data?.Division && data?.District && data?.Upazila) {
+                    count = count + 10;
+                }
                 if (data?.donarImage) {
                     count = count + 10
                 }
@@ -177,7 +187,7 @@ const Profile = () => {
         }
     }, [myAcceptations])
 
-    
+
 
     return (
         <div className="p-10" id="profile" style={{ opacity: .1, transition: '1s', transform: 'translateY(-90%)' }}>
@@ -218,25 +228,20 @@ const Profile = () => {
                                 setSelectedUpazila={setSelectedUpazila}
                                 setSelectedbloodGroup={setSelectedbloodGroup}
                                 loading={loading}
-
                                 handleFormSubmit={handleFormSubmit}></ProfileModal_1>
                         </figure>
                         <div className='space-y-2'>
                             <div className="flex items-end  gap-4">
                                 <span className="text-3xl font-extrabold">
                                     {data ? data?.donarName : 'name: not given'} </span>
-
                             </div>
                             <p className="font-semibold"> {data?.donarEmail ? data?.donarEmail : 'not given'}</p>
                             <p className="font-bold"><span className='font-bold'>Phone </span> :
-
                                 <span className={`${data?.donarPhone ? 'text-green-600' : 'text-red-500'} pl-2`}>{data?.donarPhone ? data.donarPhone : 'not given'}</span>
-
                             </p>
                             <p className="font-semibold flex items-center gap-3"><span className='font-bold'>userID</span>: <span className='text-blue-600'> {data?.userUID} {
                                 UIDCopy ? <ImCheckmark onClick={handleUidCopy} className='inline ml-2 text-green-500 cursor-pointer' size={20}></ImCheckmark> : <FaCopy onClick={handleUidCopy} className='inline ml-2 text-gray-500 cursor-pointer' size={20}></FaCopy>
                             }</span> </p>
-
                             <p className="font-bold"><span className=''>Health status  </span> : <span className={`${data?.healthStatus ? 'text-green-600' : 'text-red-500'}`}>{data?.healthStatus ? data.healthStatus : 'not given'}</span></p>
                             <p className="font-bold"><span className=''>Recent travel history  </span> :
                                 <span className={`${data?.recentTravelHistory ? 'text-green-600' : 'text-red-500'} pl-2`}>{data?.recentTravelHistory ? data.recentTravelHistory : 'not given'}</span>
@@ -245,47 +250,27 @@ const Profile = () => {
                                 <span className={`${data?.weight ? 'text-green-600' : 'text-red-500'} pl-2`}>{data?.weight ? `${data?.weight} kg` : 'not given'}</span>
                             </p>
                             <p className="font-bold"><span className=''>Profile Update status  </span> :
-
-
                                 <span className={`${data?.profileUpdateStatus ? 'text-green-600' : 'text-red-500'} pl-2`}>{data?.profileUpdateStatus ? data?.profileUpdateStatus : 'not given'}</span>
-
                             </p>
                             <p className="font-bold"><span className=''>Last donation  </span> :
-
                                 <span className={`${data?.lastDonation ? 'text-green-600' : 'text-red-500'} pl-2`}>{data?.lastDonation ? lastDonationDate : 'not given'}</span>
-
                             </p>
                             <p className="font-bold"><span className=''>Medication  </span> :
-
                                 <span className={`${data?.lastDonation ? 'text-green-600' : 'text-red-500'} pl-2`}>{data?.medication ? data.medication : 'not given'}
                                 </span>
-
                             </p>
                             <p className="font-bold"><span className=''>Date of birth  </span> :
                                 <span className={`${data?.dateOfBirth ? 'text-green-600' : 'text-red-500'} pl-2`}>{data?.dateOfBirth ? dateOfBirthDate : 'not given'}
 
                                 </span>
-
                             </p>
-
-
                             <p className="mt-3 flex items-center justify-between  rounded-full"><span className='font-bold'>active status</span>:<div className={`relative h-[30px]  transition-all  w-[60px]`}>
                                 <button className={`${data?.status == 'true' ? 'bg-green-500' : 'bg-gray-300'} h-full transition-all border-2  w-full border-gray-500  rounded-full`}></button>
                                 <span className={`w-[30px] h-[30px]  absolute  ${data?.status == 'true' ? 'right-[2px] ' : 'left-[2px]'} transition-all border-2 border-gray-500 bg-gray-50 rounded-full h-full`}></span>
                             </div> </p>
-
                         </div>
                     </div>
                     <div className=" flex-1 bg-white relative">
-
-                        {/* <span className="btn absolute top-5 right-5" onClick={() => document.getElementById('my_modal_2').showModal()}><MdEdit size={25}></MdEdit></span>
-                        <ProfileModal_2
-                            data={data}
-                            setSaveActive={setSaveActive}
-                            saveActive={saveActive}
-                            loading={loading}
-                            handleProfileDetailsSubmit={handleProfileDetailsSubmit}
-                        ></ProfileModal_2> */}
                         <div className="flex items-center justify-center gap-1">
                             <img className="w-[70px]" src={blood} alt="" />
                             <span className="text-3xl font-extrabold text-red-600">{data?.BloodGroup?.group ? data?.BloodGroup?.group : <FaQuestion></FaQuestion>}</span>

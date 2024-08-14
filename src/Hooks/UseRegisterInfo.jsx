@@ -7,24 +7,26 @@ const UseRegisterInfo = () => {
     const [districts, setDistricts] = useState([])
     const [upazilas, setUpazilas] = useState([])
     const [bloodGroups, setBloodGroups] = useState([])
-    console.log(divisions);
 
     useEffect(() => {
 
-        fetch('Division.json')
-            .then(res => res.json())
-            .then(data => setDivisions(data))
+        const fetchData = async () => {
+            await fetch('/Division.json')
+                .then(res => res.json())
+                .then(data => setDivisions(data))
 
-        fetch('District.json')
-            .then(res => res.json())
-            .then(data => setDistricts(data))
+            await fetch('/District.json')
+                .then(res => res.json())
+                .then(data => setDistricts(data))
 
-        fetch('Upazilas.json')
-            .then(res => res.json())
-            .then(data => setUpazilas(data));
-        fetch('BloodGroups.json')
-            .then(res => res.json())
-            .then(data => setBloodGroups(data))
+            await fetch('/Upazilas.json')
+                .then(res => res.json())
+                .then(data => setUpazilas(data));
+            await fetch('/BloodGroups.json')
+                .then(res => res.json())
+                .then(data => setBloodGroups(data))
+        }
+        fetchData()
 
     }, [])
 

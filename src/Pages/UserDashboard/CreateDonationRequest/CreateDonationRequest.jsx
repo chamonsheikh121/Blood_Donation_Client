@@ -20,6 +20,16 @@ const CreateDonationRequest = () => {
 
     const handleSubmitRequest = async (e) => {
         e.preventDefault()
+        if (data?.Status != 'true') {
+            Swal.fire({
+                position: "center",
+                icon: "question",
+                title: `For requesting blood!!\n you must be "active"`,
+                showConfirmButton: false,
+                showCancelButton: true
+            });
+            return
+        }
         setLoading(true)
         const form = new FormData(e.currentTarget);
         const recipientName = form.get('RecipientName')
@@ -64,7 +74,7 @@ const CreateDonationRequest = () => {
                 requesterFullAddress: fullAddress || null,
                 requesterMessage: requesterMessage || null,
                 requesterImage: res?.data?.data?.display_url || null,
-                status:'pending'
+                status: 'pending'
 
             }
             if (user?.email) {
@@ -111,9 +121,9 @@ const CreateDonationRequest = () => {
 
     return (
         <div>
-<Helmet>
-               <title> Dashboard | create & publish</title>
-              </Helmet>
+            <Helmet>
+                <title> Dashboard | create & publish</title>
+            </Helmet>
             <form onSubmit={handleSubmitRequest} className="bg-white max-w-5xl space-y-5 mt-10 rounded-md p-10 text-gray-700 mx-auto">
                 <div className="flex flex-col md:flex-row gap-10">
                     <div className="flex flex-col flex-1 justify-center gap-2">

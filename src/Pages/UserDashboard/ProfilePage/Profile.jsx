@@ -17,6 +17,7 @@ import UseMyAcceptation from '../../../Hooks/UseMyAcceptation';
 import { UseDateConverter } from '../../../Hooks/UseDateConverter';
 import { Helmet } from 'react-helmet';
 import UseRegisterInfo from '../../../Hooks/UseRegisterInfo';
+import UseAuthContext from '../../../Hooks/UseAuthContext';
 
 
 
@@ -25,6 +26,7 @@ const Profile = () => {
 
     const [data, refetch, isLoading] = UseUser();
     const [myRequest, , isLoadMyRequest] = UseMyRequest()
+    const {user} = UseAuthContext()
     const [divisions, districts, upazilas, bloodGroups] = UseRegisterInfo()
     // console.log(divisions, districts, upazilas, bloodGroups);
     const [selectedDivision, setSelectedDivision] = useState()
@@ -57,18 +59,29 @@ const Profile = () => {
         var lastDonationDate = UseDateConverter(lastDonationDateCons)
 
     }
-
+    console.log(user?.emailVerified);
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        // console.log(healthInputValue);
-
-        // console.log(updatedImage);
-        if (!updatedImage && updatedName == data?.donarName && phoneInputValue?.current?.value == data?.donarPhone && activeStatus == data?.status) {
+        if (
+            !updatedImage &&
+            updatedName == data?.donarName &&
+            activeStatus == data?.status &&
+            phoneInputValue?.current?.value == data?.donarPhone &&
+            healthInputValue?.current?.value == data?.healthStatus &&
+            travelInputValue?.current?.value == data?.recentTravelHistory &&
+            weightInputValue?.current?.value == data?.weight &&
+            lastDonationInputValue?.current?.value == data?.lastDonation &&
+            medicationInputValue?.current?.value == data?.medication &&
+            dateOfBirthInputValue?.current?.value == data?.dateOfBirth &&
+            selectedDivision?.name == data?.Division?.name &&
+            selectedDistrict?.name == data?.District?.name &&
+            selectedUpazila?.name == data?.Upazila?.name
+        ) {
             alert('nothing to be update')
             return
         }
-        if(selectedDivision && (!selectedDistrict || !selectedUpazila)){
+        if (selectedDivision && (!selectedDistrict || !selectedUpazila)) {
             alert('must select your District and Upazila')
             return;
         }
@@ -99,8 +112,9 @@ const Profile = () => {
             dateOfBirth: dateOfBirthInputValue?.current?.value,
             BloodGroup: selectedBloodGroup || data?.BloodGroup,
             Division: selectedDivision || data?.Division,
-            District: selectedDistrict ,
-            Upazila: selectedUpazila
+            District: selectedDistrict,
+            Upazila: selectedUpazila,
+            emailVerify: user?.emailVerified
         }
         // console.log(profileUpdate);
         axiosPublic.patch('/api/v1/user-profile', profileUpdate)
@@ -162,12 +176,13 @@ const Profile = () => {
                 }
                 const countObj = {
                     count: count,
-                    donarEmail: data?.donarEmail
+                    donarEmail: data?.donarEmail,
+                    emailVerify: user?.emailVerified
                 }
                 // console.log(data?.profileUpdateStatus != countObj?.count);
                 if (data?.profileUpdateStatus != countObj?.count) {
-                    const res = await axiosPublic.patch('/api/v1/user-profile', countObj)
-                    const data = res.data;
+                    await axiosPublic.patch('/api/v1/user-profile', countObj)
+                        .then(() => { })
                     refetch()
                     // console.log('profile Updated successfully', data);
                 }
@@ -175,7 +190,7 @@ const Profile = () => {
             }
         }
         UpdateProfile()
-    }, [data, axiosPublic, refetch])
+    }, [data, axiosPublic, refetch, user])
     useEffect(() => {
         if (myRequest) {
             setMyThreeRequest(myRequest?.slice(0, 3))
@@ -264,9 +279,14 @@ const Profile = () => {
 
                                 </span>
                             </p>
+                            <p className="font-bold"><span className=''>Email Verify  </span> :
+                                <span className={`${data?.emailVerify ? 'text-green-600' : 'text-red-500'} pl-2`}>{data?.emailVerify ? 'verified' : 'not verified'}
+
+                                </span>
+                            </p>
                             <p className="mt-3 flex items-center justify-between  rounded-full"><span className='font-bold'>active status</span>:<div className={`relative h-[30px]  transition-all  w-[60px]`}>
-                                <button className={`${data?.status == 'true' ? 'bg-green-500' : 'bg-gray-300'} h-full transition-all border-2  w-full border-gray-500  rounded-full`}></button>
-                                <span className={`w-[30px] h-[30px]  absolute  ${data?.status == 'true' ? 'right-[2px] ' : 'left-[2px]'} transition-all border-2 border-gray-500 bg-gray-50 rounded-full h-full`}></span>
+                                <button className={`${data?.status == 'active' ? 'bg-green-500' : data?.status == 'blocked' ? 'bg-red-500' : 'bg-gray-300'} h-full transition-all border-2  w-full border-gray-500  rounded-full`}></button>
+                                <span className={`w-[30px] h-[30px]  absolute  ${data?.status == 'active' ? 'right-[2px] ' : 'left-[2px]'} transition-all border-2 border-gray-500 bg-gray-50 rounded-full h-full`}></span>
                             </div> </p>
                         </div>
                     </div>

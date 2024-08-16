@@ -18,6 +18,10 @@ import SearchDonar from "../Pages/SearchDonar/SearchDonar";
 import SearchRequest from "../Pages/SearchRequest/SearchRequest";
 import ResetPassword from "../Pages/ResetPassword/ResetPassword";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
+import ManageUsers from "../Pages/UserDashboard/AdminDashboard/ManageUsers/ManageUsers";
+import ManageVolunteers from "../Pages/UserDashboard/AdminDashboard/ManageVolunteers.jsx/ManageVolunteers";
+import ManageRequests from "../Pages/UserDashboard/AdminDashboard/ManageRequests/ManageRequests";
+
 
 const router = createBrowserRouter([
     {
@@ -32,6 +36,11 @@ const router = createBrowserRouter([
             {
                 path: 'all-blood-donation-request',
                 element: <AllDonationReq></AllDonationReq>
+            },
+            {
+                path: 'edit/:id',
+                element: <EditRequest></EditRequest>
+
             },
             {
                 path: 'all-blood-donation-request/:id',
@@ -55,6 +64,7 @@ const router = createBrowserRouter([
                 path: 'blogs',
                 element: <Blogs></Blogs>
             },
+           
             {
                 path: 'dashboard',
                 element: <PrivateRoute>
@@ -85,7 +95,19 @@ const router = createBrowserRouter([
                     {
                         path: 'create-donation-request',
                         element: <CreateDonationRequest></CreateDonationRequest>
-                    }
+                    },
+                    {
+                        path: 'admin/manage-users',
+                        element: <ManageUsers></ManageUsers>
+                    },
+                    {
+                        path: 'admin/manage-volunteers',
+                        element: <ManageVolunteers></ManageVolunteers>
+                    },
+                    {
+                        path: 'admin/manage-requests',
+                        element: <ManageRequests></ManageRequests>
+                    },
                 ]
             }
         ]

@@ -11,7 +11,6 @@ import { Helmet } from "react-helmet";
 const AllDonationReq = () => {
 
     const [data, isLoad] = UseAllRequestCount();
-    console.log(data);
     const [sliceData, setSliceData] = useState()
     const [currentPage, setCurrentPage] = useState(0);
     const [dataPerPage, setDataPerPage] = useState(8)

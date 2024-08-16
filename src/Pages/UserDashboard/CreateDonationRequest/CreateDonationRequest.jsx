@@ -6,11 +6,13 @@ import UseUser from "../../../Hooks/UseUser";
 import UseAxiosPublic from "../../../Hooks/UseAxiosPublic";
 import SectionComponent from "../../../Components/SectionComponent/SectionComponent";
 import { Helmet } from "react-helmet";
+import UseRegisterInfo from "../../../Hooks/UseRegisterInfo";
 
 const CreateDonationRequest = () => {
 
-    const { user, bloodGroups, divisions, districts, upazilas } = UseAuthContext()
+    const { user} = UseAuthContext()
     const [data] = UseUser()
+    const [divisions, districts, upazilas, bloodGroups] = UseRegisterInfo()
     const [selectedBloodGroup, setSelectedBloodGroup] = useState();
     const [selectedDivision, setSelectedDivision] = useState()
     const [selectedDistrict, setSelectedDistrict] = useState()
@@ -20,14 +22,31 @@ const CreateDonationRequest = () => {
 
     const handleSubmitRequest = async (e) => {
         e.preventDefault()
-        if (data?.Status != 'true') {
+        if(data?.status == 'pending'){
             Swal.fire({
-                position: "center",
-                icon: "question",
-                title: `For requesting blood!!\n you must be "active"`,
-                showConfirmButton: false,
-                showCancelButton: true
-            });
+                title: "! Sorry !",
+                text: " Please wait until account approval \nor ( contact any volunteers ) !",
+                icon: "info",
+               
+            })
+            return
+        }
+        if(data?.status == 'blocked'){
+            Swal.fire({
+                title: "! Sorry !",
+                text: " You have been blocked by admin ( contact any volunteers ) !",
+                icon: "info",
+               
+            })
+            return
+        }
+        if(data?.status == 'In-active'){
+            Swal.fire({
+                title: "! Sorry !",
+                text: " for accepting request you must activate your profile !",
+                icon: "info",
+               
+            })
             return
         }
         setLoading(true)

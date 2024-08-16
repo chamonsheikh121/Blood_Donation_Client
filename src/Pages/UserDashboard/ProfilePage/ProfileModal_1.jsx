@@ -27,7 +27,7 @@ const ProfileModal_1 = ({ data,
     setSelectedbloodGroup
 }) => {
 
-
+// console.log(data?.BloodGroup?.group);
 
     return (
         <dialog id="my_modal_1" className="modal ">
@@ -89,11 +89,11 @@ const ProfileModal_1 = ({ data,
                     <div className="flex gap-2 items-center flex-col lg:flex-row">
                             <div className='w-full mb-2 h-[40px]'>
                                 <span className='mb-1 text-xs block'>Blood group: (not changeable)</span>
-                                <select disabled={data?.BloodGroup} defaultValue={'12'} required onChange={(e) => {
+                                <select disabled={data?.BloodGroup} required onChange={(e) => {
                                     setSelectedbloodGroup(JSON.parse(e.target.value))
                                     setSaveActive(true)
                                 }} className="select  select-bordered h-full focus:outline-none select-sm w-full ">
-                                    <option disabled selected>{data?.bloodGroups ? data?.bloodGroups?.bloodGroup : 'Select blood'}</option>
+                                    <option disabled selected>{data?.BloodGroup?.group ? data?.BloodGroup?.group : 'Select blood'}</option>
                                     {
                                         bloodGroups?.length > 0 && bloodGroups?.map((bloodGroup, i) => <option key={i}
                                             value={JSON.stringify(bloodGroup)}
@@ -108,7 +108,6 @@ const ProfileModal_1 = ({ data,
                         {/* ============================================================== */}
                         <div className='w-full h-[40px]'>
                             <span className='mb-1 text-xs block'>Division:</span>
-
                             <select required onChange={(e) => {
                                 setSelectedDivision(JSON.parse(e.target.value))
                                 setSaveActive(true)
@@ -125,7 +124,6 @@ const ProfileModal_1 = ({ data,
                         {/* ======================================================== */}
                         <div className='w-full h-[40px] mt-2'>
                             <span className='mb-1 text-xs block'>District:</span>
-
                             <select required onChange={(e) => {
                                 setSelectedDistrict(JSON.parse(e.target.value))
                                 setSaveActive(true)
@@ -151,7 +149,6 @@ const ProfileModal_1 = ({ data,
                         {/* =================================================== */}
                         <div className='w-full h-[40px] mb-2'>
                             <span className='mb-1 text-xs block'>Upazila:</span>
-
                             <select required onChange={(e) => {
                                 setSelectedUpazila(JSON.parse(e.target.value))
                                 setSaveActive(true)
@@ -177,16 +174,19 @@ const ProfileModal_1 = ({ data,
 
 
                         <div className='form-control mt-2'>
-                            <label htmlFor="">Active Status :</label>
-                            <select onChange={(e) => {
+                            <label htmlFor="">Active Status : </label>
+                            <select disabled={data?.status == 'blocked'} onChange={(e) => {
                                 setActiveStatus(e.target.value);
                                 setSaveActive(true)
                             }} className="select select-info w-full ">
-                                <option defaultValue={data?.Status} disabled selected>Status</option>
-                                <option value={true}>Active</option>
-                                <option value={false}>InActive</option>
+                                <option disabled>select</option>
+                                <option value={'active'}>Active</option>
+                                <option value={'In-active'}>InActive</option>
 
                             </select>
+                            {
+                                data?.status == 'blocked' && <p>You have blocked by admin</p>
+                            }
                         </div>
                     </div>
 

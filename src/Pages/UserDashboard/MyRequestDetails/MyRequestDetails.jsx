@@ -75,6 +75,35 @@ const MyRequestDetails = () => {
             })
             return
         }
+        if(userData?.status == 'pending'){
+            Swal.fire({
+                title: "! Sorry !",
+                text: " Please wait until account approval \nor ( contact any volunteers ) !",
+                icon: "info",
+               
+            })
+            return
+        }
+        if(userData?.status == 'blocked'){
+            Swal.fire({
+                title: "! Sorry !",
+                text: " You have been blocked by admin ( contact any volunteers ) !",
+                icon: "info",
+               
+            })
+            return
+        }
+        if(userData?.status == 'In-active'){
+            Swal.fire({
+                title: "! Sorry !",
+                text: " for accepting request you must activate your profile !",
+                icon: "info",
+               
+            })
+            return
+        }
+        
+
 
         let acceptedUserDetails = {
             accepterName: userData?.donarName,
@@ -82,7 +111,6 @@ const MyRequestDetails = () => {
             accepterPhone: userData?.donarPhone,
             accepterImage: userData?.donarImage,
             accepterUID: userData?.userUID,
-
         }
         acceptedUserDetails = { ...requestDetails, acceptedUserDetails };
         acceptedUserDetails.requestedId = requestDetails?._id;
@@ -159,7 +187,7 @@ const MyRequestDetails = () => {
                     <div className="flex lg:flex-row flex-col justify-center items-center lg:items-start gap-10 p-2 ">
                         <div className={`bg-gradient-to-t from-gray-400 ${requestDetails?.status == 'accepted' ? 'bg-green-600' : 'to-purple-600'}  flex flex-col lg:flex-row  items-start lg:p-5 gap-2 justify-between w-10/12 rounded-md`}>
                             <div className="lg:h-[400px]  lg:w-[600px]">
-                                <img className="h-full w-full " src={requestDetails?.requesterImage} />
+                                <img className="h-full object-cover w-full " src={requestDetails?.requesterImage} />
 
                             </div>
 
@@ -174,10 +202,13 @@ const MyRequestDetails = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div>
+                                <div className={`${userData?.userRole == 'admin' ? 'flex gap-5':''}`}>
                                     {
 
                                         isInDashboard ? <Link to={`/dashboard/my-donation-requests/${requestDetails?._id}/edit`}><button disabled={requestDetails?.donarEmail != user?.email} className="btn flex items-center gap-4 px-16 bg-white text-purple-700 hover:bg-purple-700 hover:text-white border-2 border-purple-700 font-semibold">Edit <LuClipboardEdit size={20}></LuClipboardEdit></button></Link> : <button onClick={handleAccepted} disabled={requestDetails?.donarEmail == user?.email || requestDetails?.status == 'accepted'} className={`btn ${requestDetails?.status == 'accepted' ? 'cursor-not-allowed' : ''} px-16 bg-white text-purple-700 hover:bg-purple-700 hover:text-white border-2 border-purple-700 font-semibold`}>{loading ? <span className="loading loading-ring text-purple-700"></span> : requestDetails?.status == 'accepted' ? 'Accepted' : 'Accept'}</button>
+                                    }
+                                    {
+                                      !isInDashboard ?  userData?.userRole == 'admin' && <Link to={`/edit/${param?.id}`}><button  className="btn flex items-center gap-4 px-16 bg-white text-purple-700 hover:bg-purple-700 hover:text-white border-2 border-purple-700 font-semibold">Edit <LuClipboardEdit size={20}></LuClipboardEdit></button></Link>:null
                                     }
 
                                 </div>

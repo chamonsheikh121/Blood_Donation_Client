@@ -8,7 +8,7 @@ import { UseTimeConverter } from "../../Hooks/UseTimeConverter";
 import UseAuthContext from "../../Hooks/UseAuthContext";
 
 
-const RequestCard = ({ request, requestType }) => {
+const RequestCard = ({ request }) => {
 
     const dateConstructor = new Date(request?.requestedDate);
     const date = UseDateConverter(dateConstructor)
@@ -50,7 +50,7 @@ const RequestCard = ({ request, requestType }) => {
                     user?.email == request.donarEmail && 
                         <Link to={`/dashboard/my-donation-requests/${_id}/edit`}> <button className="btn bg-gray-400 border-none btn-sm mt-2 hover:bg-gray-500 hover:text-white">Edit <FaEdit></FaEdit></button></Link>
                 }
-                <Link to={user?.email == request?.donarEmail ? `/all-blood-donation-request/${_id}` : request?.status == 'notFullFilled' ? `/dashboard/my-acceptations`: `/dashboard/my-donation-requests/${_id}`}><button className="btn btn-sm mt-2 border-none hover:text-white  text-white bg-red-600 hover:bg-red-700">details <FaArrowRight></FaArrowRight></button></Link>
+                <Link to={user?.email == request?.donarEmail ?  request?.status == 'notFullFilled' ? `/dashboard/my-acceptations`: `/dashboard/my-donation-requests/${_id}` :`/all-blood-donation-request/${_id}`}><button className="btn btn-sm mt-2 border-none hover:text-white  text-white bg-red-600 hover:bg-red-700">details <FaArrowRight></FaArrowRight></button></Link>
 
 
 

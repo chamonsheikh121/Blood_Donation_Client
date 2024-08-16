@@ -12,7 +12,7 @@ import SectionComponent from "../SectionComponent/SectionComponent";
 const Navbar = () => {
     const { user, logOut } = UseAuthContext();
     const [showNav, setShowNav] = useState(false);
-    const [data,,isLoading] = UseUser()
+    const [data, , isLoading] = UseUser()
 
     const location = useLocation();
     const userName = data?.donarName?.split('')[0];
@@ -25,7 +25,7 @@ const Navbar = () => {
 
 
         logOut()
-            .then((result) => {
+            .then(() => {
                 // console.log(result);
                 Swal.fire({
                     title: "logged out successfully",
@@ -58,12 +58,12 @@ const Navbar = () => {
                             <div>
                                 <div className="w-14 relative h-14 rounded-full bg-red-600 text-white">
                                     <img className="rounded-full object-cover w-full h-full" src={data?.donarImage} alt="" />
-                                    <span className={`w-[20px] absolute top-0 right-0 rounded-full h-[20px] ${data?.status == 'true' ? 'bg-green-500 border-white border-2' : 'bg-gray-300'}`}></span>
+                                    <span className={`w-[20px] absolute top-0 right-0 rounded-full h-[20px] ${data?.status == 'active' ? 'bg-green-500 border-white border-2' : data?.status == 'blocked' ? 'bg-red-500 border-white border-2' : 'bg-gray-300'}`}></span>
                                 </div>
                             </div> :
                             <div className="w-14 relative h-14 rounded-full bg-red-600 text-white">
                                 <span className="flex items-center justify-center font-semibold text-4xl" >{userName}</span>
-                                <span className={`w-[20px] absolute top-0 right-0 rounded-full h-[20px] ${data?.status == 'true' ? 'bg-green-500' : 'bg-gray-300'}`}></span>
+                                <span className={`w-[20px] absolute top-0 right-0 rounded-full h-[20px] ${data?.status == 'active' ? 'bg-green-500' : data?.status == 'blocked' ? 'bg-red-500' : 'bg-gray-300'}`}></span>
                             </div> :
                     <NavLink to='/login' className=" rounded-md bg-red-700 text-white font-bold uppercase py-2  transition-all  hover:bg-red-900 border-2 px-10">join</NavLink>}
 
@@ -82,8 +82,8 @@ const Navbar = () => {
 
     return (
         <div className="sticky left-0 top-0 bg-white"
-        style={{ opacity: .1, transform: 'translateY(-90%)', transition: '1s', transitionDelay:'.2s'}} id="navSection"
-        
+            style={{ opacity: .1, transform: 'translateY(-90%)', transition: '1s', transitionDelay: '.2s' }} id="navSection"
+
         >
             <div className="max-w-7xl mx-auto ">
                 <div className="flex  sm:flex-row items-center justify-around lg:justify-between">

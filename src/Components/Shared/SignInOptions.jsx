@@ -24,7 +24,7 @@ const SignInOptions = () => {
                         donarName: result?.user?.displayName || '',
                         donarEmail: result?.user?.email,
                         donarImage: result?.user?.photoURL || null,
-                        Status: 'block',
+                        Status: 'pending',
                         userRole: 'user'
                     }
                     axiosPublic.post('/api/v1/all-users', userDetails)

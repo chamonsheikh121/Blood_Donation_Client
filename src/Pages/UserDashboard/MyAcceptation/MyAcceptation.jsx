@@ -10,9 +10,9 @@ const MyAcceptation = () => {
 
     return (
         <div className="max-w-5xl border mx-auto mt-10" id="my-acceptation-container" style={{ opacity: .1, transform: 'translateX(90%)', transition: '1s' }}>
-            <Helmet>
-               <title> Dashboard | My acceptations</title>
-              </Helmet>
+                <Helmet>
+                <title> Dashboard | My acceptations</title>
+                </Helmet>
             
             <p className="text-4xl font-bold text-gray-700 p-10">My Accepted Requests</p>
             <div className="flex flex-col gap-5">

@@ -1,6 +1,6 @@
 import { FaArrowRight, FaHome, FaUserNurse, FaUsers } from "react-icons/fa";
 import { GiNotebook } from "react-icons/gi";
-import { RiFileEditFill, RiFolderAddFill } from "react-icons/ri";
+import { RiFileEditFill, RiFolderAddFill, RiMessage2Fill } from "react-icons/ri";
 import './DashboardLayout.css'
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -17,7 +17,8 @@ const DashboardLayout = () => {
     const [acceptedDataCount, setAcceptedDataCount] = useState()
     const [userData] = UseUser()
     const location = useLocation();
-    const adminNav = <div className="mt-4 space-y-4">
+
+    const adminNav = <div className="mt-4 space-y-4 border-t-2 border-green-700 pt-4 ">
 
         <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/admin/manage-users' ? 'border-b-2' : ''} rounded-md  ${userData?.userRole == 'admin' ? 'hover:bg-green-900' : userData?.userRole == 'volunteer' ? 'hover:bg-yellow-900' : 'hover:bg-red-900'} list-none shadow-md py-2 pl-5 font-semibold space-y-5`}>
             <NavLink to='/dashboard/admin/manage-users' className={` flex items-center gap-4  uppercase`}><FaUsers size={25}></FaUsers>manage users</NavLink>
@@ -25,10 +26,20 @@ const DashboardLayout = () => {
         <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/admin/manage-volunteers' ? 'border-b-2' : ''} rounded-md  ${userData?.userRole == 'admin' ? 'hover:bg-green-900' : userData?.userRole == 'volunteer' ? 'hover:bg-yellow-900' : 'hover:bg-red-900'} list-none shadow-md py-2 pl-5 font-semibold space-y-5`}>
             <NavLink to='/dashboard/admin/manage-volunteers' className={` flex items-center gap-4  uppercase`}><FaUserNurse size={25}></FaUserNurse>manage volunteers</NavLink>
         </li>
-        <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/admin/manage-requests' ? 'border-b-2' : ''} rounded-md  ${userData?.userRole == 'admin' ? 'hover:bg-green-900' : userData?.userRole == 'volunteer' ? 'hover:bg-yellow-900' : 'hover:bg-red-900'} list-none shadow-md py-2 pl-5 font-semibold space-y-5`}>
-            <NavLink to='/dashboard/admin/manage-requests' className={` flex items-center gap-4  uppercase`}><RiFileEditFill size={25}></RiFileEditFill>manage requests</NavLink>
+        <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/manage-requests' ? 'border-b-2' : ''} rounded-md  ${userData?.userRole == 'admin' ? 'hover:bg-green-900' : userData?.userRole == 'volunteer' ? 'hover:bg-yellow-900' : 'hover:bg-red-900'} list-none shadow-md py-2 pl-5 font-semibold space-y-5`}>
+            <NavLink to='/dashboard/manage-requests' className={` flex items-center gap-4  uppercase`}><RiFileEditFill size={25}></RiFileEditFill>manage requests</NavLink>
         </li>
+    </div>
 
+    const volunteerNav = 
+
+    <div className="mt-4 space-y-4 border-t-2 pt-4  border-yellow-700">
+        <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/manage-requests' ? 'border-b-2' : ''} rounded-md  ${userData?.userRole == 'admin' ? 'hover:bg-green-900' : userData?.userRole == 'volunteer' ? 'hover:bg-yellow-900' : 'hover:bg-red-900'} list-none shadow-md py-2 pl-5 font-semibold space-y-5`}>
+            <NavLink to='/dashboard/manage-requests' className={` flex items-center gap-4  uppercase`}><RiFileEditFill size={25}></RiFileEditFill>manage requests</NavLink>
+        </li>
+        <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/send-message' ? 'border-b-2' : ''} rounded-md  ${userData?.userRole == 'admin' ? 'hover:bg-green-900' : userData?.userRole == 'volunteer' ? 'hover:bg-yellow-900' : 'hover:bg-red-900'} list-none shadow-md py-2 pl-5 font-semibold space-y-5`}>
+            <NavLink to='/dashboard/send-message' className={` flex items-center gap-4  uppercase`}><RiMessage2Fill size={25}></RiMessage2Fill>send message</NavLink>
+        </li>
     </div>
 
     const userNav = <ul className="w-full space-y-5 p-1">
@@ -87,7 +98,10 @@ const DashboardLayout = () => {
 
                         {userNav}
                         {
-                            userData?.userRole == 'admin' &&  adminNav 
+                            userData?.userRole == 'admin' && adminNav
+                        }
+                        {
+                            userData?.userRole == 'volunteer' && volunteerNav
                         }
 
                     </div>

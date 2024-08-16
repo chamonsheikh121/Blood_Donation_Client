@@ -7,6 +7,7 @@ import UseAxiosPublic from "../../../Hooks/UseAxiosPublic";
 import { useEffect, useState } from "react";
 import SectionComponent from "../../../Components/SectionComponent/SectionComponent";
 import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
 
 
 
@@ -105,23 +106,24 @@ const MyDonationRequest = () => {
                                     </div>
                                     <div className="space-y-4">
                                         <span className="text-2xl font-bold text-gray-600"> Agreed to donate</span>
-                                        <div className='flex items-center gap-10'>
+                                        <div className='flex items-end gap-5'>
                                             <div className='flex items-start gap-2'>
                                                 <img className='w-[50px] h-[50px] rounded-full' src={details?.acceptedUserDetails?.accepterImage} alt="" />
                                                 <div>
                                                     <h6 className='text-xl text-gray-500 font-bold '>{details?.acceptedUserDetails?.accepterName}</h6>
                                                     <p className='text-sm text-gray-500'>{details?.acceptedUserDetails?.accepterEmail}</p>
                                                 </div>
-
+                                                
                                             </div>
-
+                                            <Link to={`/search-donar/?email=${details?.acceptedUserDetails?.accepterEmail}`}><button className='px-4 bg-blue-700 hover:bg-blue-800 text-white   btn btn-sm'> accepter details</button></Link>
                                         </div>
                                     </div>
                                 </div>
                                 <div className='flex flex-col justify-center gap-2'>
                                     {
                                         details?.status == 'fullFilled' ||
-                                        <button className='px-10 text-black  btn'>See details</button>}
+                                        <Link to={`/donation-requests/${details?.requestedId}`}><button className='w-full text-black  btn'>request details</button></Link>
+                                    }
 
                                     {
                                         details?.status == 'fullFilled' ? <div className="tooltip tooltip-close tooltip-top" data-tip="Completed Donation">

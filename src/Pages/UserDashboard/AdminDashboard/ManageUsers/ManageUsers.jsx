@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import UseAxiosSecure from "../../../../Hooks/UseAxiosSecure";
 import SectionComponent from "../../../../Components/SectionComponent/SectionComponent";
 import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
 
 
 const ManageUsers = () => {
@@ -18,37 +19,37 @@ const ManageUsers = () => {
         navigator.clipboard.writeText(id)
         setUIDCopy(id)
     }
-const handleUserStatus=async(email,value)=>{
-    const doc = {
-        email: email,
-        userStatus: value
+    const handleUserStatus = async (email, value) => {
+        const doc = {
+            email: email,
+            userStatus: value
+        }
+        console.log(doc);
+        const res = await axiosSecure.patch('/api/v1/userStatus', doc);
+        const data = res.data;
+        if (data?.modifiedCount > 0) {
+            refetch()
+        }
+        else {
+            Swal.fire('something went wrong\nplease try again')
+        }
     }
-    console.log(doc);
-    const res = await axiosSecure.patch('/api/v1/userStatus', doc);
-    const data = res.data;
-    if(data?.modifiedCount > 0){
-        refetch()
+    const handleUserRole = async (email, value) => {
+        const doc = {
+            email: email,
+            userRole: value
+        }
+        const res = await axiosSecure.patch('/api/v1/userRole', doc);
+        const data = res.data;
+        if (data?.modifiedCount > 0) {
+            refetch()
+        }
+        else {
+            Swal.fire('something went wrong\nplease try again')
+        }
     }
-    else{
-        Swal.fire('something went wrong\nplease try again')
-    }
-}
-const handleUserRole=async(email,value)=>{
-    const doc = {
-        email: email,
-        userRole: value
-    }
-    const res = await axiosSecure.patch('/api/v1/userRole', doc);
-    const data = res.data;
-    if(data?.modifiedCount > 0){
-        refetch()
-    }
-    else{
-        Swal.fire('something went wrong\nplease try again')
-    }
-}
 
-    
+
     const handleDeleteUser = (email) => {
         Swal.fire({
             title: "! Delete User !",
@@ -79,7 +80,7 @@ const handleUserRole=async(email,value)=>{
 
 
     return (
-        <div className="m-10" id="manageUsers" style={{transition:'1s', opacity:'.1', transform:'translateX(90%)'}}> 
+        <div className="m-10" id="manageUsers" style={{ transition: '1s', opacity: '.1', transform: 'translateX(90%)' }}>
             <Helmet>
                 <title>Dashboard | manage-users</title>
             </Helmet>
@@ -104,9 +105,9 @@ const handleUserRole=async(email,value)=>{
                     <p>Active</p>
                 </div>
             </div>
-            <div  className="mt-10 mb-2 text-2xl font-bold">Total users : {users?.length}</div>
+            <div className="mt-10 mb-2 text-2xl font-bold">Total users : {users?.length}</div>
             {
-                isLoading ? <div  className='w-full flex justify-center items-center mt-5'><span className="loading loading-spinner loading-lg"></span></div> : <div className="overflow-x-auto border max-h-[400px] border-gray-400 shadow-lg ">
+                isLoading ? <div className='w-full flex justify-center items-center mt-5'><span className="loading loading-spinner loading-lg"></span></div> : <div className="overflow-x-auto border max-h-[400px] border-gray-400 shadow-lg ">
                     <table className="table">
                         {/* head */}
                         <thead>
@@ -139,10 +140,12 @@ const handleUserRole=async(email,value)=>{
                                                         alt="Avatar Tailwind CSS Component" />
                                                 </div>
                                             </div>
-                                            <div>
-                                                <div className="font-bold">{user?.donarName}</div>
-                                                <div className="text-sm opacity-50">{user?.donarEmail}</div>
-                                            </div>
+                                            <Link to={`/search-donar/?email=${user?.donarEmail}`}>
+                                                <div className="cursor-pointer">
+                                                    <div className="font-bold hover:underline">{user?.donarName}</div>
+                                                    <div className="text-sm opacity-50 hover:underline">{user?.donarEmail}</div>
+                                                </div>
+                                            </Link>
                                         </div>
                                     </td>
                                     <td className="font-bold">{user?.BloodGroup?.group}</td>
@@ -153,13 +156,13 @@ const handleUserRole=async(email,value)=>{
                                         <div className="flex gap-2 items-center flex-col lg:flex-row">
                                             <div className='w-full mb-2 h-[40px]'>
                                                 <select defaultValue={user?.status}
-                                                onChange={(e)=>handleUserStatus(user?.donarEmail,e.target.value)}
+                                                    onChange={(e) => handleUserStatus(user?.donarEmail, e.target.value)}
                                                     className="select  select-bordered h-full focus:outline-none select-sm w-full ">
-                                                    
+
                                                     {/* <option  className="py-10" value="">{user?.status}</option> */}
                                                     <option value="blocked">Block</option>
                                                     <option value="active">Active</option>
-                                                    
+
                                                 </select>
                                             </div>
                                         </div>
@@ -168,10 +171,10 @@ const handleUserRole=async(email,value)=>{
                                         <div className="flex gap-2 items-center flex-col lg:flex-row">
                                             <div className='w-full mb-2 h-[40px]'>
                                                 <select
-                                                defaultValue={user?.userRole}
-                                                onChange={(e)=>handleUserRole(user?.donarEmail,e.target.value)}
+                                                    defaultValue={user?.userRole}
+                                                    onChange={(e) => handleUserRole(user?.donarEmail, e.target.value)}
                                                     className="select  select-bordered h-full focus:outline-none select-sm w-full ">
-                                                    
+
                                                     <option value="volunteer">Volunteer</option>
                                                     <option value="admin">Admin</option>
                                                     <option value="donar">Donar</option>
@@ -194,7 +197,7 @@ const handleUserRole=async(email,value)=>{
                     </table>
                 </div>
             }
-<SectionComponent id={'manageUsers'} from={'translateX'}></SectionComponent>
+            <SectionComponent id={'manageUsers'} from={'translateX'}></SectionComponent>
         </div>
     );
 };

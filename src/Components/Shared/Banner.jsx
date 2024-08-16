@@ -24,7 +24,7 @@ const Banner = () => {
                                 <Link to='/search-request' className=" rounded-md transition-all hover:bg-red-700 hover:text-white font-bold uppercase py-4 border-2 px-20 bg-white text-red-700 border-red-700">Search Request</Link>
                             </div> : <div className="flex flex-col w-full justify-start md:justify-center md:flex-row  md:w-full pl-5 md:pl-0 gap-5 ">
                                 <Link to='/registration' className=" rounded-md transition-all bg-red-700 text-white font-bold uppercase py-4 border-2 px-20 hover:bg-white hover:text-red-700 border-red-700">Join&nbsp;as  a&nbsp;donar</Link>
-                                <Link to='/registration' className=" rounded-md transition-all bg-red-700 text-white font-bold uppercase py-4 border-2 px-20 hover:bg-white hover:text-red-700 border-red-700">Join&nbsp;as  a&nbsp;donar</Link>
+                                <Link to='/search-request' className=" rounded-md transition-all bg-red-700 text-white font-bold uppercase py-4 border-2 px-20 hover:bg-white hover:text-red-700 border-red-700">Search&nbsp;&nbsp;request</Link>
                             </div>
                         }
                     </div>

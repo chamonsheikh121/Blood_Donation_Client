@@ -6,16 +6,16 @@ import { Helmet } from "react-helmet";
 import SectionComponent from "../../../../Components/SectionComponent/SectionComponent";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import MessageCard from "../../../../Components/Shared/MessageCard";
 
 
 const ManageVolunteers = () => {
     const [volunteers, isLoading, refetch] = UseVolunteers();
     const axiosSecure = UseAxiosSecure()
     const [selectedMessage, setSelectedMessage] = useState()
-    console.log(selectedMessage);
 
     const handleMessageRequest = async (email) => {
-        console.log(email);
         const res = await axiosSecure.get(`/api/v1/message/?email=${email}`)
         const data = res?.data
         setSelectedMessage(data)
@@ -148,10 +148,12 @@ const ManageVolunteers = () => {
                                                         alt="Avatar Tailwind CSS Component" />
                                                 </div>
                                             </div>
-                                            <div>
-                                                <div className="font-bold">{user?.donarName}</div>
-                                                <div className="text-sm opacity-50">{user?.donarEmail}</div>
-                                            </div>
+                                            <Link to={`/search-donar/?email=${user?.donarEmail}`}>
+                                                <div className="cursor-pointer">
+                                                    <div className="font-bold hover:underline">{user?.donarName}</div>
+                                                    <div className="text-sm opacity-50 hover:underline">{user?.donarEmail}</div>
+                                                </div>
+                                            </Link>
                                         </div>
                                     </td>
                                     <td className="font-bold">{user?.BloodGroup?.group}</td>
@@ -165,10 +167,16 @@ const ManageVolunteers = () => {
                                     </td>
                                     <dialog id="my_modal_4" className="modal">
                                         <div className="modal-box w-11/12 max-w-5xl">
-                                            <h3 className="font-bold text-lg">Message from :</h3>
                                             <h3 className="font-bold text-lg"> {selectedMessage?.email}</h3>
-                                            <div className="border mt-5 shadow-lg p-10">
-                                                <p className="py-4">{selectedMessage?.message}</p>
+                                            <div className="border space-y-20 mt-5 shadow-lg h-[300px] overflow-auto p-10">
+                                                {
+                                                    selectedMessage?.length > 0 ? selectedMessage?.map(message =>
+                                                        <MessageCard
+                                                            key={message?._id}
+                                                            messageData={message}
+                                                            
+                                                        ></MessageCard>) : 'no data found'
+                                                }
                                             </div>
                                             <div className="modal-action">
                                                 <form method="dialog">

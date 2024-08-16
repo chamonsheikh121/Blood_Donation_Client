@@ -251,6 +251,7 @@ const Profile = () => {
                                     {data ? data?.donarName : 'name: not given'} </span>
                             </div>
                             <p className="font-semibold"> {data?.donarEmail ? data?.donarEmail : 'not given'}</p>
+                            
                             <p className="font-bold"><span className='font-bold'>Phone </span> :
                                 <span className={`${data?.donarPhone ? 'text-green-600' : 'text-red-500'} pl-2`}>{data?.donarPhone ? data.donarPhone : 'not given'}</span>
                             </p>

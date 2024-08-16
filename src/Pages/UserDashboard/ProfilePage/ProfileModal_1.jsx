@@ -108,7 +108,7 @@ const ProfileModal_1 = ({ data,
                         {/* ============================================================== */}
                         <div className='w-full h-[40px]'>
                             <span className='mb-1 text-xs block'>Division:</span>
-                            <select required onChange={(e) => {
+                            <select defaultValue={data?.Division} required onChange={(e) => {
                                 setSelectedDivision(JSON.parse(e.target.value))
                                 setSaveActive(true)
                             }} className="select h-full select-bordered focus:outline-none select-sm w-full ">
@@ -124,7 +124,7 @@ const ProfileModal_1 = ({ data,
                         {/* ======================================================== */}
                         <div className='w-full h-[40px] mt-2'>
                             <span className='mb-1 text-xs block'>District:</span>
-                            <select required onChange={(e) => {
+                            <select defaultValue={data?.District} required onChange={(e) => {
                                 setSelectedDistrict(JSON.parse(e.target.value))
                                 setSaveActive(true)
                             }} className="select select-bordered  h-full focus:outline-none select-sm w-full">
@@ -149,7 +149,7 @@ const ProfileModal_1 = ({ data,
                         {/* =================================================== */}
                         <div className='w-full h-[40px] mb-2'>
                             <span className='mb-1 text-xs block'>Upazila:</span>
-                            <select required onChange={(e) => {
+                            <select defaultValue={data?.Upazila} required onChange={(e) => {
                                 setSelectedUpazila(JSON.parse(e.target.value))
                                 setSaveActive(true)
                             }} className="select select-bordered focus:outline-none select-sm w-full h-full">

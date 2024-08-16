@@ -21,6 +21,7 @@ import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import ManageUsers from "../Pages/UserDashboard/AdminDashboard/ManageUsers/ManageUsers";
 import ManageVolunteers from "../Pages/UserDashboard/AdminDashboard/ManageVolunteers.jsx/ManageVolunteers";
 import ManageRequests from "../Pages/UserDashboard/AdminDashboard/ManageRequests/ManageRequests";
+import SendMessageToAdmin from "../Pages/UserDashboard/VolunteeerDashboard/SendMessageToAdmin";
 
 
 const router = createBrowserRouter([
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
                 path: 'edit/:id',
                 element: <EditRequest></EditRequest>
 
+            },
+            {
+                path: 'donation-requests/:id',
+                element: <MyRequestDetails></MyRequestDetails>
             },
             {
                 path: 'all-blood-donation-request/:id',
@@ -105,8 +110,16 @@ const router = createBrowserRouter([
                         element: <ManageVolunteers></ManageVolunteers>
                     },
                     {
-                        path: 'admin/manage-requests',
+                        path: 'manage-requests',
                         element: <ManageRequests></ManageRequests>
+                    },
+                    {
+                        path: 'manage-requests',
+                        element: <ManageRequests></ManageRequests>
+                    },
+                    {
+                        path: 'send-message',
+                        element: <SendMessageToAdmin></SendMessageToAdmin>
                     },
                 ]
             }

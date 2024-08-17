@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { BsEnvelopeCheckFill } from "react-icons/bs";
 import useAccepterDetails from "../../../../Hooks/UseAccepterDetails";
 import UseUser from "../../../../Hooks/UseUser";
+import { MdModeEdit } from "react-icons/md";
 
 
 
@@ -27,7 +28,7 @@ const DashboardLayout = () => {
             <NavLink to='/dashboard/admin/manage-volunteers' className={` flex items-center gap-4  uppercase`}><FaUserNurse size={25}></FaUserNurse>manage volunteers</NavLink>
         </li>
         <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/manage-requests' ? 'border-b-2' : ''} rounded-md  ${userData?.userRole == 'admin' ? 'hover:bg-green-900' : userData?.userRole == 'volunteer' ? 'hover:bg-yellow-900' : 'hover:bg-red-900'} list-none shadow-md py-2 pl-5 font-semibold space-y-5`}>
-            <NavLink to='/dashboard/manage-requests' className={` flex items-center gap-4  uppercase`}><RiFileEditFill size={25}></RiFileEditFill>manage requests</NavLink>
+            <NavLink to='/dashboard/manage-requests' className={` flex items-center gap-4  uppercase`}><MdModeEdit size={25}></MdModeEdit>manage requests</NavLink>
         </li>
     </div>
 
@@ -35,11 +36,17 @@ const DashboardLayout = () => {
 
     <div className="mt-4 space-y-4 border-t-2 pt-4  border-yellow-700">
         <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/manage-requests' ? 'border-b-2' : ''} rounded-md  ${userData?.userRole == 'admin' ? 'hover:bg-green-900' : userData?.userRole == 'volunteer' ? 'hover:bg-yellow-900' : 'hover:bg-red-900'} list-none shadow-md py-2 pl-5 font-semibold space-y-5`}>
-            <NavLink to='/dashboard/manage-requests' className={` flex items-center gap-4  uppercase`}><RiFileEditFill size={25}></RiFileEditFill>manage requests</NavLink>
+            <NavLink to='/dashboard/manage-requests' className={` flex items-center gap-4  uppercase`}><MdModeEdit size={25}></MdModeEdit>manage requests</NavLink>
         </li>
         <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/send-message' ? 'border-b-2' : ''} rounded-md  ${userData?.userRole == 'admin' ? 'hover:bg-green-900' : userData?.userRole == 'volunteer' ? 'hover:bg-yellow-900' : 'hover:bg-red-900'} list-none shadow-md py-2 pl-5 font-semibold space-y-5`}>
             <NavLink to='/dashboard/send-message' className={` flex items-center gap-4  uppercase`}><RiMessage2Fill size={25}></RiMessage2Fill>send message</NavLink>
         </li>
+
+        <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/create-blog' ? 'border-b-2' : ''} rounded-md  ${userData?.userRole == 'admin' ? 'hover:bg-green-900' : userData?.userRole == 'volunteer' ? 'hover:bg-yellow-900' : 'hover:bg-red-900'} list-none shadow-md py-2 pl-5 font-semibold space-y-5`}>
+            <NavLink to='/dashboard/create-blog' className={` flex items-center gap-4  uppercase`}><RiFileEditFill size={25}></RiFileEditFill>create blog</NavLink>
+        </li>
+        
+        
     </div>
 
     const userNav = <ul className="w-full space-y-5 p-1">

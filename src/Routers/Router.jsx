@@ -22,6 +22,8 @@ import ManageUsers from "../Pages/UserDashboard/AdminDashboard/ManageUsers/Manag
 import ManageVolunteers from "../Pages/UserDashboard/AdminDashboard/ManageVolunteers.jsx/ManageVolunteers";
 import ManageRequests from "../Pages/UserDashboard/AdminDashboard/ManageRequests/ManageRequests";
 import SendMessageToAdmin from "../Pages/UserDashboard/VolunteeerDashboard/SendMessageToAdmin";
+import CreateBlogPage from "../Pages/UserDashboard/Create Blog/CreateBlogPage";
+import PreviewBlog from "../Pages/UserDashboard/Create Blog/PreviewBlog";
 
 
 const router = createBrowserRouter([
@@ -120,6 +122,14 @@ const router = createBrowserRouter([
                     {
                         path: 'send-message',
                         element: <SendMessageToAdmin></SendMessageToAdmin>
+                    },
+                    {
+                        path: 'create-blog',
+                        element: <CreateBlogPage></CreateBlogPage>
+                    },
+                    {
+                        path: 'create-blog/preview',
+                        element: <PreviewBlog></PreviewBlog>
                     },
                 ]
             }

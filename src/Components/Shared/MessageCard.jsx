@@ -33,8 +33,8 @@ const MessageCard = ({ messageData }) => {
             <p className='text-sm underline underline-offset-4 text-center text-gray-600 font-semibold'>{time} , {date}</p>
             <div className='flex items-center gap-10'>
                 <div className="form-control">
-                    <label className="label ">
-                        <input type="checkbox" checked={status == 'checked'} className="checkbox cursor-not-allowed" />
+                    <label className="label" >
+                        <input type="checkbox" title={status == 'checked' ? 'admin checked' :'admin did not checked'} checked={status == 'checked'} className="checkbox cursor-not-allowed" />
                     </label>
                 </div>
                 <div>

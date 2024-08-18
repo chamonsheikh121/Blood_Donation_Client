@@ -40,16 +40,16 @@ const Navbar = () => {
     //  
     const navContent =
         <ul>
-            <NavLink to='/' className={`${location.pathname === '/' ? 'border-b-4 border-red-600 hover:text-black text-red-700 hover:bg-transparent' : ''} px-5   font-bold uppercase hover:bg-red-200 py-3 transition-all rounded-md`}>Home</NavLink>
+            <NavLink to='/' className={`${location.pathname === '/' ? 'border-b-4 border-red-600 hover:text-black text-red-700 hover:bg-transparent' : ''} px-5   font-bold uppercase hover:bg-blue-100 py-3 transition-all rounded-md`}>Home</NavLink>
 
-            <NavLink to='/all-blood-donation-request' className={`${location.pathname === '/all-blood-donation-request' ? 'border-b-4 border-red-600 hover:text-black text-red-700 hover:bg-transparent' : ''} px-5   font-bold uppercase hover:bg-red-200 py-3 transition-all rounded-md`}> donation&nbsp;req&apos;s</NavLink>
+            <NavLink to='/all-blood-donation-request' className={`${location.pathname === '/all-blood-donation-request' ? 'border-b-4 border-red-600 hover:text-black text-red-700 hover:bg-transparent' : ''} px-5   font-bold uppercase hover:bg-blue-100 py-3 transition-all rounded-md`}> donation&nbsp;req&apos;s</NavLink>
 
             {
-                user ? <NavLink to='/dashboard/profile' className={`${dashboard ? 'border-b-4 border-red-600 hover:text-black text-red-700 hover:bg-transparent' : ''} px-5   font-bold uppercase hover:bg-red-200 py-3 transition-all rounded-md`}>dashboard</NavLink> : null
+                user ? <NavLink to='/dashboard/profile' className={`${dashboard ? 'border-b-4 border-red-600 hover:text-black text-red-700 hover:bg-transparent' : ''} px-5   font-bold uppercase hover:bg-blue-100 py-3 transition-all rounded-md`}>dashboard</NavLink> : null
             }
 
-            <NavLink className={`${location.pathname === '/funding' ? 'border-b-4 border-red-600 hover:text-black text-red-700 hover:bg-transparent' : ''} px-5   font-bold uppercase hover:bg-red-200 py-3 transition-all rounded-md`}>funding</NavLink>
-            <NavLink to='/blogs' className={`${location.pathname === '/blogs' ? 'border-b-4 border-red-600 hover:text-black text-red-700 hover:bg-transparent' : ''} px-5   font-bold uppercase hover:bg-red-200 py-3 transition-all rounded-md`}>blogs</NavLink>
+            <NavLink className={`${location.pathname === '/funding' ? 'border-b-4 border-red-600 hover:text-black text-red-700 hover:bg-transparent' : ''} px-5   font-bold uppercase hover:bg-blue-100 py-3 transition-all rounded-md`}>funding</NavLink>
+            <NavLink to='/blogs' className={`${location.pathname === '/blogs' ? 'border-b-4 border-red-600 hover:text-black text-red-700 hover:bg-transparent' : ''} px-5   font-bold uppercase hover:bg-blue-100 py-3 transition-all rounded-md`}>blogs</NavLink>
 
             <div className="flex relative items-center">
                 {user ?
@@ -81,7 +81,7 @@ const Navbar = () => {
 
 
     return (
-        <div className="sticky left-0 top-0 bg-white"
+        <div className="sticky z-50 left-0 top-0 bg-white"
             style={{ opacity: .1, transform: 'translateY(-90%)', transition: '1s', transitionDelay: '.2s' }} id="navSection"
 
         >

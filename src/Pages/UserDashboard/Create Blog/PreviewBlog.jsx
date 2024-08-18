@@ -10,7 +10,7 @@ const PreviewBlog = () => {
     console.log(bgColor);
     useEffect(() => {
         setData(JSON.parse(localStorage.getItem('blogPreview')))
-    }, [setData])
+    }, [])
 
     return (
         <div className="border border-gray-300 p-5 max-w-4xl mx-auto">
@@ -18,8 +18,8 @@ const PreviewBlog = () => {
             <div className=" p-5  flex flex-col-reverse">
                 <div className=" space-y-10">
                     <div className='space-y-5'>
-                        <div className={`h-[400px] ${thumbnail ? '' : `flex items-center justify-center bg-[${bgColor}]`}  red-700 w-full border relative`}>
-                            <div className='w-[70px] absolute top-2 left-2 p-1 flex items-center gap-5 bg-white rounded-full h-[70px]'>
+                        <div className={`h-[400px] ${thumbnail ? '' : `flex items-center justify-center bg-gradient-to-b from-purple-700 to-violet-700`}  red-700 w-full border relative`}>
+                            <div className='w-[60px] absolute top-2 left-2 p-1 flex items-center gap-5 bg-white rounded-full h-[60px]'>
                                 <img className='w-full object-cover rounded-full h-full' src={publisherImage} alt="" />
                                 <div className=''>
                                     <h1 className="text-xl  font-bold text-gray-200">{name}</h1>

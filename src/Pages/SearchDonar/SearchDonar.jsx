@@ -75,7 +75,7 @@ const SearchDonar = () => {
                                 <div className=" profileCard  p-5   relative  bg-white space-y-10  text-gray-600">
                                     <figure className="relative">
 
-                                        <img className="w-[250px] h-[250px] mx-auto rounded-full" src={data?.donarImage && data?.donarImage} alt="" />
+                                        <img className="w-[250px] h-[250px] mx-auto object-cover rounded-full" src={data?.donarImage && data?.donarImage} alt="" />
 
 
                                     </figure>

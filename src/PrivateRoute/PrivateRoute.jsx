@@ -19,6 +19,7 @@ const PrivateRoute = ({ children }) => {
     if (user) {
         return children
     }
+    console.log('hi',user, loading);
     return <Navigate to='/login'></Navigate>
 };
 

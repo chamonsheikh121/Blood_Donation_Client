@@ -1,18 +1,21 @@
 import { useState } from "react";
-import UseAllUser from "../../../../Hooks/UseAllUser";
+
 import { ImCheckmark } from "react-icons/im";
 import { FaCopy } from "react-icons/fa";
 import Swal from "sweetalert2";
-import UseAxiosSecure from "../../../../Hooks/UseAxiosSecure";
+
 import SectionComponent from "../../../../Components/SectionComponent/SectionComponent";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
+import UseAllUser from "../../../../Hooks/UseAllUser";
+import UseAxiosPublic from "../../../../Hooks/UseAxiosPublic";
 
 
 const ManageUsers = () => {
 
-    const [users, isLoading, refetch] = UseAllUser();
-    const axiosSecure = UseAxiosSecure()
+    const [users, isLoading, refetch] = UseAllUser()
+    const axiosPublic = UseAxiosPublic()
+
     const [copyUID, setUIDCopy] = useState();
     console.log(copyUID);
     const handleUidCopy = (id) => {
@@ -25,7 +28,7 @@ const ManageUsers = () => {
             userStatus: value
         }
         console.log(doc);
-        const res = await axiosSecure.patch('/api/v1/userStatus', doc);
+        const res = await axiosPublic.patch('/api/v1/userStatus', doc);
         const data = res.data;
         if (data?.modifiedCount > 0) {
             refetch()
@@ -39,7 +42,7 @@ const ManageUsers = () => {
             email: email,
             userRole: value
         }
-        const res = await axiosSecure.patch('/api/v1/userRole', doc);
+        const res = await axiosPublic.patch('/api/v1/userRole', doc);
         const data = res.data;
         if (data?.modifiedCount > 0) {
             refetch()
@@ -61,7 +64,7 @@ const ManageUsers = () => {
             confirmButtonText: "Delete"
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const res = await axiosSecure.delete(`/api/v1/delete-user/?email=${email}`)
+                const res = await axiosPublic.delete(`/api/v1/delete-user?email=${email}`)
                 const data = res.data;
                 if (data?.acknowledged === true) {
                     Swal.fire({
@@ -87,7 +90,7 @@ const ManageUsers = () => {
             <div>
                 <h2 className="text-center font-bold my-10 text-3xl">Manage all users</h2>
             </div>
-            <div className="flex items-center gap-10">
+            <div className="flex flex-col md:flex-row items-center gap-10">
                 <div className="flex items-center gap-5 text-sm">
                     <p className="w-[20px] h-[20px] bg-gradient-to-b from-gray-200 to-gray-400 rounded-full "></p>
                     <p>In-active</p>
@@ -175,9 +178,9 @@ const ManageUsers = () => {
                                                     onChange={(e) => handleUserRole(user?.donarEmail, e.target.value)}
                                                     className="select  select-bordered h-full focus:outline-none select-sm w-full ">
 
+                                                    <option value="donar">Donar</option>
                                                     <option value="volunteer">Volunteer</option>
                                                     <option value="admin">Admin</option>
-                                                    <option value="donar">Donar</option>
 
 
                                                 </select>

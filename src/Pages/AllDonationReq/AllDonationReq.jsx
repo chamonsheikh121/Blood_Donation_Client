@@ -28,7 +28,7 @@ const AllDonationReq = () => {
     }
 
 
-
+console.log(data?.data);
     useEffect(() => {
         if (data?.data) {
             const initialData = data?.data?.slice(0, dataPerPage);
@@ -55,7 +55,7 @@ const AllDonationReq = () => {
                 <title>All donation request</title>
             </Helmet>
             <div className="max-w-7xl pb-10 min-h-screen  text-gray-500 mx-auto mt-20" style={{ opacity: .1, transform: 'translateX(-90%)', transition: '1s' }} id="allData">
-                <h1 className="text-center font-bold my-10 text-4xl">All Recent Request&apos;s</h1>
+                <h1 className="text-center font-bold my-10 text-2xl lg:text-4xl">All Recent Request&apos;s</h1>
                 <div className=" col-span-12 grid md:grid-cols-3  grid-cols-1 lg:grid-cols-4 gap-y-10 gap-x-5 p-5  ">
 
                     {

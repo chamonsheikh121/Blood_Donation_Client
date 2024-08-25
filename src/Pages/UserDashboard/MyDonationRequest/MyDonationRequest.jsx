@@ -74,18 +74,18 @@ const MyDonationRequest = () => {
             <Helmet>
                 <title> Dashboard | my request</title>
             </Helmet>
-            <div id="AcceptedRequest" style={{ opacity: '0.1', transform: 'translateX(90%)', transition: '1s' }} className="max-w-5xl border mx-auto m-10">
+            <div id="AcceptedRequest" style={{ opacity: '0.1', transform: 'translateX(90%)', transition: '1s' }} className="max-w-5xl border mx-auto m-20">
                 <h1 className=" text-gray-600 font-bold text-3xl mb-5">Not accepted</h1>
-                <div className=" relative col-span-12 grid md:grid-cols-2 grid-cols-1 lg:grid-cols-3 gap-10 p-5  ">
+                <div className="  relative col-span-12 grid md:grid-cols-2 grid-cols-1 lg:grid-cols-3 gap-10 p-5  ">
                     {
                         isLoading ? <div className="absolute flex  justify-center mt-10 w-full">
                             <span className="loading loading-lg"></span></div> : remainingRequest?.length > 0 ? remainingRequest?.map((request) => <RequestCard
                                 key={request?._id}
                                 request={request && request}
                             ></RequestCard>
-                            ) : <div className="absolute flex  justify-center mt-10 w-full"><span
+                            ) : <div className="absolute text-gray-600 flex  justify-center mt-5 w-full"><span
                                 className="text-2xl font-extrabold"
-                            >No pending request yet</span></div>
+                            >No pending request</span></div>
                     }
 
                 </div>
@@ -98,15 +98,15 @@ const MyDonationRequest = () => {
                         isLoad ? <div className="absolute flex  justify-center mt-10 w-full">
                             <span className="loading loading-lg"></span></div> : accepterData?.length > 0 ? accepterData?.map(details => <div
                                 key={details?._id}
-                                className={`flex ${details?.status == 'fullFilled' ? 'bg-green-100 border border-black' : 'bg-red-200'}   p-5 rounded-md items-center justify-between`}>
+                                className={`flex ${details?.status == 'fullFilled' ? 'bg-green-100 border border-black' : 'bg-red-200'}   p-5 rounded-md items-center flex-col md:flex-row justify-between`}>
 
-                                <div className='flex-1 flex items-center   gap-5'>
+                                <div className='flex-1 flex-col md:flex-row flex items-center   gap-5'>
                                     <div className='w-[200px] h-[150px]'>
                                         <img className='w-full h-full object-cover rounded-md' src={details?.requesterImage} alt="" />
                                     </div>
                                     <div className="space-y-4">
                                         <span className="text-2xl font-bold text-gray-600"> Agreed to donate</span>
-                                        <div className='flex items-end gap-5'>
+                                        <div className='flex flex-col  lg:flex-row items-start pb-2 lg:items-end gap-5'>
                                             <div className='flex items-start gap-2'>
                                                 <img className='w-[50px] h-[50px] rounded-full' src={details?.acceptedUserDetails?.accepterImage} alt="" />
                                                 <div>
@@ -135,13 +135,13 @@ const MyDonationRequest = () => {
                                     }
                                     {
                                         details?.status == 'fullFilled' ||
-                                        <button className='px-10 bg-blue-700 hover:bg-blue-900 text-white btn'>call now</button>
+                                        <a href={`tel:+88${details?.acceptedUserDetails?.accepterPhone}`} className='px-10 bg-blue-700 hover:bg-blue-900 text-white btn'>call now</a>
                                     }
                                 </div>
 
 
                             </div>) : <div className=" flex  justify-center mt-10 w-full"><span
-                                className="text-2xl font-extrabold"
+                                className="text-2xl text-gray-600 font-extrabold"
                             >Not accepted yet</span></div>
                     }
                 </div>

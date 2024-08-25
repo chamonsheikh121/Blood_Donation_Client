@@ -52,6 +52,8 @@ const Registration = () => {
         // ======================= user authentication and send data server =============================
         createUserEmailPass(email, password)
             .then(async () => {
+                const status = 0;
+                localStorage.setItem('profileUpdateStatus', JSON.stringify(status))
                 if (image?.image?.name) {
                     const res = await axios.post(api, image, {
                         headers: {
@@ -67,7 +69,8 @@ const Registration = () => {
                         Upazila: selectedUpazila || null,
                         BloodGroup: selectedBloodGroup || null,
                         Status: 'pending',
-                        userRole: 'user'
+                        userRole: 'user',
+                        profileUpdateStatus: 0
                     }
                     axiosPublic.post('/api/v1/all-users', userDetails)
                         .then(res => {
@@ -102,7 +105,7 @@ const Registration = () => {
                         Upazila: selectedUpazila || null,
                         joiningDate: joinDate,
                         BloodGroup: selectedBloodGroup || null,
-                        Status: 'pending',
+                        status: 'pending',
                         userRole: 'donar'
                     }
                     axiosPublic.post('/api/v1/all-users', userDetails)
@@ -261,7 +264,10 @@ const Registration = () => {
                                 <span onClick={captchaValidation} className='btn text-white btn-success absolute bottom-0 right-0 rounded-tl-none rounded-bl-none'>{captchaResult ? <GiCheckMark></GiCheckMark> : 'check now'}</span>
                             </div>
 
-                            <input type="file" name='userImage' className="file-input mt-2 focus:outline-none file-input-bordered file-input-sm w-full max-w-xs" />
+                            <div>
+                                <label className='text-sm' htmlFor="file">Choose profile picture : </label>
+                                <input type="file" id='file' name='userImage' className="file-input mt-2 focus:outline-none file-input-bordered file-input-sm w-full max-w-xs" />
+                            </div>
 
                             <div className="form-control my-2">
                                 <button disabled={!captchaResult} className="btn bg-red-700 text-white hover:bg-red-800">{loading ? <span className="loading loading-spinner"></span> : 'Register Now'}</button>

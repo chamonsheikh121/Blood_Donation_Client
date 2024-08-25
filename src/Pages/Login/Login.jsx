@@ -24,6 +24,8 @@ const Login = () => {
 
         signInEmailPass(email, password)
             .then(() => {
+                const status = 0;
+                localStorage.setItem('profileUpdateStatus', JSON.stringify(status))
                 Swal.fire({
                     title: "Logged in successfully",
                     icon: 'success',
@@ -62,11 +64,11 @@ const Login = () => {
                                 </div>
                                 <input type={toggle ? 'text' : 'password'} placeholder="password" name='userPassword' className="input focus:outline-none focus:border-black input-bordered" required />
                             </div>
-                            <div className="flex justify-between w-full">
+                            <div className="flex text-sm lg:text-[16px] justify-between w-full">
                                 <p className="flex items-center gap-2"> <input type="checkbox" className="checkbox checkbox-sm" /><span>remember me</span></p>
                                 <Link to={'/login/reset-password'}><p className="text-end hover:underline underline-offset-4">forgot password ? </p></Link>
                             </div>
-                            <button className="btn mt-5 bg-red-600 text-white">{loading ? <span className="loading text-white"></span> : 'Login now'}</button>
+                            <button className="btn mt-5 hover:bg-red-700 bg-red-600 text-white">{loading ? <span className="loading text-white"></span> : 'Login now'}</button>
                             <p className='text-sm text-center text-gray-600'>New here ? <Link className='text-red-700 underline-offset-4 underline' to='/registration'>create account</Link></p>
                         </form>
                         <hr className="mb-2" />

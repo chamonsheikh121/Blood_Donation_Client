@@ -7,10 +7,10 @@ import UseAxiosPublic from "../../Hooks/UseAxiosPublic";
 import Swal from "sweetalert2";
 import { useRef, useState } from "react";
 import { IoMdSend } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import UseUser from "../../Hooks/UseUser";
 import { UseDateConverter } from "../../Hooks/UseDateConverter";
-import { comment } from "postcss";
+
 
 
 const PostDetails = ({ post }) => {
@@ -24,10 +24,31 @@ const PostDetails = ({ post }) => {
     const commentInputValue = useRef()
     const [commentCount, setCommentCount] = useState()
     const [newComment, setNewComment] = useState()
-
+    const location = useLocation()
+    const navigate = useNavigate()
     const [instantMyLike, setInstantMyLike] = useState(false)
-    console.log(commentCount);
     const handleCommentClick = async (id) => {
+        if(myData?.status == 'blocked'){
+            Swal.fire("You are blocked by admin ,\nPlease contact any volunteer")
+            return;
+        }
+        if (!user) {
+            Swal.fire({
+                title: "Want to login ?",
+                text: "To accept any request you have to login first !",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, login",
+                cancelButtonText: "Letter"
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    navigate('/login', { status: location?.pathname })
+                }
+            })
+            return
+        }
         if (!commentInputValue?.current?.value) {
             Swal.fire('can not comment empty')
             return
@@ -70,6 +91,9 @@ const PostDetails = ({ post }) => {
 
     }
 
+
+
+
     return (
         <div>
             <div className="flex items-center w-full  justify-evenly">
@@ -105,7 +129,7 @@ const PostDetails = ({ post }) => {
                                         <pre>{comment?.comment}
                                         </pre>
                                     </div>
-                                </div>) : <h1>no comments cound</h1>
+                                </div>) : <h1>no comments found</h1>
                             }
                             {
                                 newComment && <div
@@ -146,7 +170,7 @@ const PostDetails = ({ post }) => {
                     <p className="font-bold">Comment now:</p>
                     <div>
                         <textarea
-                            onKeyUp={() => setShowCommentSend(true)}
+                            onClick={()=>setShowComment(true)}
                             placeholder="Comment here"
                             ref={commentInputValue}
                             defaultValue={inputDefault}

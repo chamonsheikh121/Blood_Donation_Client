@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "npm run build && firebase deploy"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.51.15",
@@ -15,6 +16,8 @@
     "axios": "^1.7.2",
     "cors": "^2.8.5",
     "firebase": "^10.12.3",
+    "keen-slider": "^6.8.6",
+    "lottie-web": "^5.12.2",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -22,6 +25,7 @@
     "react-hot-toast": "^2.4.1",
     "react-icons": "^5.2.1",
     "react-loader-spinner": "^6.1.6",
+    "react-lottie": "^1.2.4",
     "react-router-dom": "^6.24.1",
     "react-simple-captcha": "^9.3.1",
     "react-toastify": "^10.0.5",

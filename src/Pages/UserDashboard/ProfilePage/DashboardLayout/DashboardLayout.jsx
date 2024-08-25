@@ -1,5 +1,5 @@
 import { FaArrowRight, FaHome, FaUserNurse, FaUsers } from "react-icons/fa";
-import { GiNotebook } from "react-icons/gi";
+import { GiCancel, GiNotebook, GiStarsStack } from "react-icons/gi";
 import { RiFileEditFill, RiFolderAddFill, RiMessage2Fill } from "react-icons/ri";
 import './DashboardLayout.css'
 import { NavLink, Outlet, useLocation } from "react-router-dom";
@@ -30,6 +30,9 @@ const DashboardLayout = () => {
         </li>
         <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/manage-requests' ? 'border-b-2' : ''} rounded-md  ${userData?.userRole == 'admin' ? 'hover:bg-green-900' : userData?.userRole == 'volunteer' ? 'hover:bg-yellow-900' : 'hover:bg-red-900'} list-none shadow-md py-2 pl-5 font-semibold space-y-5`}>
             <NavLink to='/dashboard/manage-requests' className={` flex items-center gap-4  uppercase`}><MdModeEdit size={25}></MdModeEdit>manage requests</NavLink>
+        </li>
+        <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/create-blog' ? 'border-b-2' : ''} rounded-md  ${userData?.userRole == 'admin' ? 'hover:bg-green-900' : userData?.userRole == 'volunteer' ? 'hover:bg-yellow-900' : 'hover:bg-red-900'} list-none shadow-md py-2 pl-5 font-semibold space-y-5`}>
+            <NavLink to='/dashboard/create-blog' className={` flex items-center gap-4  uppercase`}><RiFileEditFill size={25}></RiFileEditFill>create blog</NavLink>
         </li>
     </div>
 
@@ -69,6 +72,9 @@ const DashboardLayout = () => {
         <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/create-donation-request' ? 'border-b-2' : ''} rounded-md  ${userData?.userRole == 'admin' ? 'hover:bg-green-900' : userData?.userRole == 'volunteer' ? 'hover:bg-yellow-900' : 'hover:bg-red-900'} shadow-md py-2 pl-5 font-semibold space-y-5`}>
             <NavLink to='/dashboard/create-donation-request' className={`  flex items-center gap-4  uppercase`}><RiFolderAddFill size={25}></RiFolderAddFill>create request</NavLink>
         </li>
+        <li onClick={() => setLayoutNav(false)} className={`${location.pathname === '/dashboard/add-review' ? 'border-b-2' : ''} rounded-md  ${userData?.userRole == 'admin' ? 'hover:bg-green-900' : userData?.userRole == 'volunteer' ? 'hover:bg-yellow-900' : 'hover:bg-red-900'} shadow-md py-2 pl-5 font-semibold space-y-5`}>
+            <NavLink to='/dashboard/add-review' className={`  flex items-center gap-4  uppercase`}><GiStarsStack size={25}></GiStarsStack >Add review</NavLink>
+        </li>
 
     </ul>
     useEffect(() => {
@@ -80,23 +86,41 @@ const DashboardLayout = () => {
     }, [accepterData])
     return (
         <div className=""  >
-            <button onClick={() => setLayoutNav(true)} className={`fixed btn  ${layoutNav ? 'hidden' : ''} text-white bg-red-700
+            <button onClick={() => setLayoutNav(true)} className={`fixed ${userData?.userRole == 'admin' ? 'bg-green-800' : userData?.userRole == 'volunteer' ? 'bg-yellow-800' : 'bg-red-800'} btn z-20 hover:bg-red-800 lg:hidden  ${layoutNav ? 'hidden' : ''} text-white 
                  p-4 rounded-tr-md rounded-br-md`}><FaArrowRight ></FaArrowRight></button>
-            <div id="mobileNav" style={{ opacity: .1, transition: '1s', transform: 'translateX(-90%)' }} className={`bg-red-700  ${layoutNav ? 'block top-[80px]' : 'hidden'} h-[650px] z-40  absolute  w-2/4 p-2   text-white`}>
+            <div id="mobileNav" style={{ opacity: .1, transition: '1s', transform: 'translateX(-90%)' }} className={`${userData?.userRole == 'admin' ? 'bg-green-800' : userData?.userRole == 'volunteer' ? 'bg-yellow-800' : 'bg-red-800'}  ${layoutNav ? 'block top-[80px]' : 'hidden'}   h-[650px] z-40  absolute  min-w-72 p-2   text-white`}>
                 <div className="flex justify-end mr-5">
 
-                    <span onClick={() => setLayoutNav(false)} className="w-[20px] border text-center">+</span>
+                    <span onClick={() => setLayoutNav(false)} className="w-[20px]  text-center cursor-pointer"><GiCancel size={30}></GiCancel></span>
+                </div>
+                <div className="mb-10">
+                    {
+                        userData?.userRole == 'user' && <h2 className="text-2xl text-center mt-5 font-bold">Donar & Requester</h2>
+                    }
+                    {
+                        userData?.userRole == 'volunteer' && <h2 className="text-2xl text-center mt-5 font-bold">Volunteer</h2>
+                    }
+                    {
+                        userData?.userRole == 'admin' && <h2 className="text-2xl text-center mt-5 font-bold">Admin</h2>
+                    }
                 </div>
                 {userNav}
+                {
+                    userData?.userRole == 'admin' && adminNav
+                }
+                {
+                    userData?.userRole == 'volunteer' && volunteerNav
+                }
+
             </div>
             {
                 layoutNav && <SectionComponent id={'mobileNav'} from={'translateX'}></SectionComponent>
             }
             <div className="grid grid-cols-12">
                 <div className={`lg:col-span-2 hidden lg:block text-gray-200  ${userData?.userRole == 'admin' ? 'bg-green-800' : userData?.userRole == 'volunteer' ? 'bg-yellow-800' : 'bg-red-800'} md:h-[650px] sticky top-[81px]`}>
-                    <div>
+                    <div className="">
                         {
-                            userData?.userRole == 'user' && <h2 className="text-2xl text-center mt-5 font-bold">Donar & Requester</h2>
+                            userData?.userRole == 'user' && <h2 className="text-2xl  text-center  mt-5 font-bold">Donar & Requester</h2>
                         }
                         {
                             userData?.userRole == 'volunteer' && <h2 className="text-2xl text-center mt-5 font-bold">Volunteer</h2>
@@ -118,7 +142,7 @@ const DashboardLayout = () => {
                     </div>
 
                 </div>
-                <div className="lg:col-span-10 col-span-12 lg:p-2 p-5 pt-20 lg:pt-0 text-gray-800 bg-gray-200 ">
+                <div className="lg:col-span-10 col-span-12 p-2 lg:p-5 pt-20 lg:pt-0 text-gray-800 bg-gray-200 ">
                     <Outlet></Outlet>
                 </div>
             </div>

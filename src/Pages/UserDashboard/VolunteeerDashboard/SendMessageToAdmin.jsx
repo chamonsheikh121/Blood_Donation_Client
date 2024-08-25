@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet";
 import UseUser from "../../../Hooks/UseUser";
-import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
+
 import { useState } from "react";
 import Swal from "sweetalert2";
 import UseMessage from "../../../Hooks/UseMessage";
@@ -8,13 +8,14 @@ import UseAuthContext from "../../../Hooks/UseAuthContext";
 import MessageCard from "../../../Components/Shared/MessageCard";
 import { UseDateConverter } from './../../../Hooks/UseDateConverter';
 import SectionComponent from "../../../Components/SectionComponent/SectionComponent";
+import UseAxiosPublic from "../../../Hooks/UseAxiosPublic";
 
 
 
 const SendMessageToAdmin = () => {
     const [myData] = UseUser()
     const { user } = UseAuthContext()
-    const axiosSecure = UseAxiosSecure()
+    const axiosPublic = UseAxiosPublic()
     const [loading, setLoading] = useState(false)
     const [messages, isLoading, refetch] = UseMessage(user?.email);
     console.log(messages);
@@ -40,7 +41,7 @@ const SendMessageToAdmin = () => {
             date: convertedDate,
             time: time
         }
-        const res = await axiosSecure.post('/api/v1/post-message', messageObject)
+        const res = await axiosPublic.post('/api/v1/post-message', messageObject)
         const data = res.data;
         if (data?.acknowledged === true) {
             Swal.fire({
@@ -111,12 +112,12 @@ const SendMessageToAdmin = () => {
                 <div id="myMessages" style={{ opacity: .1, transition: '1s', transform: 'translateX(-90%)' }} className="max-w-4xl space-y-10 mx-auto">
                     {
                         isLoading ? <div className="w-full mt-5 flex justify-center items-center"><span className="loading loading-lg"></span></div> : messages?.length > 0 ? messages?.map(message =>
-                        <MessageCard
-                        key={message?._id}
-                        messageData ={message}
-                        ></MessageCard>) : 
-                        
-                        <div className="w-full mt-5 flex justify-center items-center text-xl text-center font-bold"><span>No message found</span></div>
+                            <MessageCard
+                                key={message?._id}
+                                messageData={message}
+                            ></MessageCard>) :
+
+                            <div className="w-full mt-5 flex justify-center items-center text-xl text-center font-bold"><span>No message found</span></div>
                     }
 
                 </div>

@@ -11,7 +11,7 @@ export const ImpressionCounter = (id) => {
                 entries?.forEach(async (entry) => {
                     if (entry?.isIntersecting === true) {
                         console.log(id);
-                       const res=  await axiosPublic.patch(`/api/v1/impressionCount/?id=${id}`)
+                       const res=  await axiosPublic.patch(`/api/v1/impressionCount?id=${id}`)
                         const data = res?.data;
                         console.log(data);
 

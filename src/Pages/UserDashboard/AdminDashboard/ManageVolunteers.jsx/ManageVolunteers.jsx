@@ -1,5 +1,5 @@
 
-import UseAxiosSecure from "../../../../Hooks/UseAxiosSecure";
+
 import UseVolunteers from "../../../../Hooks/UseVolunteers";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet";
@@ -8,19 +8,20 @@ import { IoNotificationsOutline } from "react-icons/io5";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import MessageCard from "../../../../Components/Shared/MessageCard";
+import UseAxiosPublic from "../../../../Hooks/UseAxiosPublic";
 
 
 const ManageVolunteers = () => {
     const [volunteers, isLoading, refetch] = UseVolunteers();
-    const axiosSecure = UseAxiosSecure()
+    const axiosPublic = UseAxiosPublic()
     const [selectedMessage, setSelectedMessage] = useState()
 
     const handleMessageRequest = async (email) => {
-        const res = await axiosSecure.get(`/api/v1/message/?email=${email}`)
+        const res = await axiosPublic.get(`/api/v1/message?email=${email}`)
         const data = res?.data
         setSelectedMessage(data)
         document.getElementById('my_modal_4').showModal()
-        await axiosSecure.patch(`/api/v1/profile-message-count/?email=${email}`)
+        await axiosPublic.patch(`/api/v1/profile-message-count?email=${email}`)
             .then(() => { })
     }
 
@@ -35,7 +36,7 @@ const ManageVolunteers = () => {
             userStatus: value
         }
         console.log(doc);
-        const res = await axiosSecure.patch('/api/v1/userStatus', doc);
+        const res = await axiosPublic.patch('/api/v1/userStatus', doc);
         const data = res.data;
         if (data?.modifiedCount > 0) {
             refetch()
@@ -49,7 +50,7 @@ const ManageVolunteers = () => {
             email: email,
             userRole: value
         }
-        const res = await axiosSecure.patch('/api/v1/userRole', doc);
+        const res = await axiosPublic.patch('/api/v1/userRole', doc);
         const data = res.data;
         if (data?.modifiedCount > 0) {
             refetch()
@@ -69,7 +70,7 @@ const ManageVolunteers = () => {
             confirmButtonText: "Delete"
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const res = await axiosSecure.delete(`/api/v1/delete-user/?email=${email}`)
+                const res = await axiosPublic.delete(`/api/v1/delete-user?email=${email}`)
                 const data = res.data;
                 if (data?.acknowledged === true) {
                     Swal.fire({
@@ -95,7 +96,7 @@ const ManageVolunteers = () => {
             <div>
                 <h2 className="text-center font-bold my-10 text-3xl">Manage volunteers</h2>
             </div>
-            <div className="flex items-center gap-10">
+            <div className="flex flex-col md:flex-row items-center gap-10">
                 <div className="flex items-center gap-5 text-sm">
                     <p className="w-[20px] h-[20px] bg-gradient-to-b from-gray-200 to-gray-400 rounded-full "></p>
                     <p>In-active</p>
@@ -174,7 +175,7 @@ const ManageVolunteers = () => {
                                                         <MessageCard
                                                             key={message?._id}
                                                             messageData={message}
-                                                            
+
                                                         ></MessageCard>) : 'no data found'
                                                 }
                                             </div>

@@ -11,11 +11,11 @@ const MyAcceptationsCard = ({ acceptationData }) => {
 
 
     return (
-        <div className={`flex ${status == 'fullFilled' ? 'bg-green-200' : 'bg-red-200'} border border-black  p-5 rounded-md items-center justify-between`}>
+        <div className={`flex ${status == 'fullFilled' ? 'bg-green-200' : 'bg-red-200'} border border-black  p-5 rounded-md items-center md:flex-row flex-col gap-5 justify-between`}>
 
-            <div className='flex-1 flex   gap-5'>
-                <div className='w-[200px] h-[150px]'>
-                    <img className='w-full h-full object-cover rounded-md' src={requesterImage} alt="" />
+            <div className='flex-1 flex md:flex-row flex-col  gap-5'>
+                <div className='md:w-[200px] w-full h-[200px] md:h-[150px]'>
+                    <img className=' w-full h-full object-cover rounded-md' src={requesterImage} alt="" />
                 </div>
                 <div>
                     <div className='flex items-center gap-10'>

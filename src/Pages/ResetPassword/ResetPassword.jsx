@@ -19,7 +19,7 @@ const ResetPassword = () => {
 
     return (
         <div className="max-w-4xl mx-auto mt-10 ">
-            <div className="bg-gray-200 p-10">
+            <div className="bg-gray-200 p-2 md:p-10">
                 <div className="shadow-2xl w-full flex flex-col">
                     <label className="pb-4">
                         <span className="label-text ">Email</span>

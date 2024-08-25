@@ -15,17 +15,19 @@ const SignInOptions = () => {
     const handleGoogleLogin = () => {
         googleLogin()
             .then(async (result) => {
-                console.log(result);
+                const status = 0;
+                localStorage.setItem('profileUpdateStatus', JSON.stringify(status))
                 // const object = {email: 'sheikhchamon9@gmail.com', age:10}
-                const res = await axiosPublic.get(`/api/v1/find-user/?email=${result?.user?.email}`)
+                const res = await axiosPublic.get(`/api/v1/find-user?email=${result?.user?.email}`)
                 const data = res?.data;
                 if (!data) {
                     const userDetails = {
                         donarName: result?.user?.displayName || '',
                         donarEmail: result?.user?.email,
                         donarImage: result?.user?.photoURL || null,
-                        Status: 'pending',
-                        userRole: 'user'
+                        status: 'pending',
+                        userRole: 'user',
+                        profileUpdateStatus: 0
                     }
                     axiosPublic.post('/api/v1/all-users', userDetails)
                         .then(res => {

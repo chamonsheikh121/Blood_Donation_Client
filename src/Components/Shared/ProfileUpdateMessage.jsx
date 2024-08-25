@@ -14,16 +14,15 @@ const ProfileUpdateMessage = ({ status, data }) => {
             .catch(error => console.log(error))
     }
 
-    // console.log(user?.emailVerified);
+   console.log(data);
     return (
-        <div id='profileUpdateMessage' style={{ opacity: '.9', transform: 'translateY(-90%)', transition: '1s', transitionDelay: '1s' }} className="bg-purple-900 w-full    flex justify-center items-center text-white">
-            <div className="w-10/12 mx-auto flex items-center justify-center">
-                <div className='space-y-1 p-1 border-r-4 md:mr-5 md:pr-5 flex flex-col items-center justify-center'>
-                    <p>Please Verify your email</p>
+        <div id='profileUpdateMessage' style={{ opacity: '.9', transform: 'translateY(-90%)', transition: '1s', transitionDelay: '1s' }} className="bg-purple-900 w-full  text-xs lg:text-[16px]  flex justify-center items-center text-white">
+            <div className="w-10/12  mx-auto flex flex-col md:flex-row items-center justify-center">
+                <div className='space-y-1 p-1 md:border-r-4 md:mr-5 md:pr-5 flex flex-col items-center justify-center'>
+                    <p className=''>Please Verify your email</p>
                     {
                         user?.emailVerified ? <button className='px-10 py-1 border-green   bg-green-400 font-bold text-gray-600 '>Verified</button> : <button onClick={handleEmailVerification} className='px-10  border-yellow hover:border-2 hover:border-yellow-600 hover:bg-white  btn btn-sm bg-yellow-400 text-black'>Verify now</button>
                     }
-
                 </div>
 
                 <div>
@@ -31,7 +30,7 @@ const ProfileUpdateMessage = ({ status, data }) => {
 
                     <div className="max-w-4xl relative flex-1 mx-auto h-[20px] bg-white p-[2px]">
                         <p style={{ width: `${status ? status : '0'}%`, transition: '1s' }} className={`bg-green-600 h-full`}></p>
-                        <span className="w-[40px] absolute -right-16 -top-1 text-center h-full text-white">{status} %</span>
+                        <span style={{transform: 'translateX(-50%)'}} className={`w-[40px]   left-[50%] absolute  -top-1 text-center h-full${status > 50 ? ' text-white':'text-red-700'} font-bold`}>{status} %</span>
                     </div>
                     <p className='text-center'> upadte [
                         

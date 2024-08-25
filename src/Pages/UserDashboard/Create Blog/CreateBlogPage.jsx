@@ -5,12 +5,13 @@ import { useEffect, useState } from "react";
 import SectionComponent from "../../../Components/SectionComponent/SectionComponent";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
+
 import Swal from "sweetalert2";
 import UsePost from "../../../Hooks/UsePost";
 import UseAuthContext from "../../../Hooks/UseAuthContext";
 
 import PostDetails from "../../../Components/Shared/PostDetails";
+import UseAxiosPublic from "../../../Hooks/UseAxiosPublic";
 
 
 const CreateBlogPage = () => {
@@ -19,7 +20,7 @@ const CreateBlogPage = () => {
     const { user } = UseAuthContext()
     const navigate = useNavigate()
     const [myData] = UseUser()
-    const axiosSecure = UseAxiosSecure()
+    const axiosPublic= UseAxiosPublic()
     const [localData, setLocalData] = useState()
     const [myBlogs, isLoading, refetch] = UsePost(user?.email)
 
@@ -64,7 +65,7 @@ const CreateBlogPage = () => {
             thumbnail: inputThumbnail || localData?.thumbnail
         }
         console.log(messageObject);
-        const mongodbRes = await axiosSecure.post('/api/v1/blogs', messageObject)
+        const mongodbRes = await axiosPublic.post('/api/v1/blogs', messageObject)
         const blogData = mongodbRes?.data;
         console.log(blogData);
 

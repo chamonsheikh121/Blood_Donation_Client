@@ -17,12 +17,14 @@ const HomePage = () => {
         <div>
             <Helmet>
                 <title>
-                    Home 
+                    Home
                 </title>
             </Helmet>
             <Banner></Banner>
             <Featured></Featured>
-            <ContactUs volunteers={volunteers} isLoading={isLoading}></ContactUs>
+            {
+                isLoading ? <p className="loading"></p> : volunteers?.length > 0 ? <ContactUs volunteers={volunteers} isLoading={isLoading}></ContactUs> : <div><p>No Volunteer Found</p></div>
+            }
             <PeopleComments></PeopleComments>
 
             <Footer></Footer>

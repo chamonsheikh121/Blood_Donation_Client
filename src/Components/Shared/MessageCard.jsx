@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types'
 import UseUser from '../../Hooks/UseUser';
-import UseAxiosSecure from '../../Hooks/UseAxiosSecure';
+
 import Swal from 'sweetalert2';
+import UseAxiosPublic from '../../Hooks/UseAxiosPublic';
 
 
 
 const MessageCard = ({ messageData }) => {
     const [admin] = UseUser()
-    const axiosSecure = UseAxiosSecure()
+    const axiosPublic = UseAxiosPublic()
 
     const { _id, messageTitle, message, status, date, time } = messageData;
     const handleMessageStatus = async (id) => {
@@ -15,7 +16,7 @@ const MessageCard = ({ messageData }) => {
             alert('already accepted')
             return;
         }
-        const res = await axiosSecure.patch(`/api/v1/update-message/?id=${id}`)
+        const res = await axiosPublic.patch(`/api/v1/update-message?id=${id}`)
         const data = res.data;
         if (data?.modifiedCount > 0) {
             Swal.fire({
@@ -34,8 +35,10 @@ const MessageCard = ({ messageData }) => {
             <div className='flex items-center gap-10'>
                 <div className="form-control">
                     <label className="label" >
-                        <input type="checkbox" title={status == 'checked' ? 'admin checked' :'admin did not checked'} checked={status == 'checked'} className="checkbox cursor-not-allowed" />
-                    </label>
+                        {
+                            admin?.userRole == 'admin' || <input type="checkbox" title={status == 'checked' ? 'admin checked' : 'admin did not checked'} checked={status == 'checked'} className="checkbox cursor-not-allowed" />
+
+                        }                    </label>
                 </div>
                 <div>
                     <div className='flex items-center gap-10'>

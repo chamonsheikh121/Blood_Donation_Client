@@ -4,14 +4,16 @@ import { FaCopy } from "react-icons/fa";
 import './SearchDonar.css'
 // import UseAxiosPublic from '../../Hooks/UseAxiosPublic';
 import { useEffect, useRef, useState } from 'react';
-import UseAxiosSecure from '../../Hooks/UseAxiosSecure';
+
 import { useLocation } from 'react-router-dom';
+import UseAxiosPublic from '../../Hooks/UseAxiosPublic';
+import Footer from '../HomePage/Footer';
 
 
 const SearchDonar = () => {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState()
-    const axiosSecure = UseAxiosSecure()
+    const axiosPublic = UseAxiosPublic()
     const value = useRef()
     const [searchInputValue, setSearchInputValue] = useState()
     const location = useLocation();
@@ -31,7 +33,7 @@ const SearchDonar = () => {
             idOrEmail = parseInt(value.current.value)
         }
         console.log(isEmail);
-        const res = await axiosSecure.get(`/api/v1/user/${idOrEmail}`)
+        const res = await axiosPublic.get(`/api/v1/user/${idOrEmail}`)
         if (res) {
             setData(res?.data)
             setLoading(false)
@@ -50,7 +52,7 @@ const SearchDonar = () => {
         const fetchUser = async () => {
             if (email) {
                 setSearchInputValue(email)
-                const res = await axiosSecure.get(`/api/v1/user/${email}`)
+                const res = await axiosPublic.get(`/api/v1/user/${email}`)
                 if (res) {
                     setData(res?.data)
                     setLoading(false)
@@ -58,16 +60,16 @@ const SearchDonar = () => {
             }
         }
         fetchUser()
-    }, [email, axiosSecure])
+    }, [email, axiosPublic])
 
 
     return (
         <div >
-            <div className='max-w-xl flex justify-center items-center gap-10 p-5 mt-10 mx-auto bg-purple-600'>
+            <div className='max-w-xl flex flex-col md:flex-row justify-center items-center md:gap-10 gap-2 p-5  mt-10 mx-auto bg-purple-600'>
                 <input defaultValue={searchInputValue} ref={value} className='flex-1 rounded-sm py-2 text-xl px-10' type="text" placeholder='Enter donar UID or email' />
-                <button onClick={handleSearch} className='btn px-10'>{loading ? <span className='loading'></span> : 'Search'}</button>
+                <button onClick={handleSearch} className='btn px-20 lg:px-10'>{loading ? <span className='loading'></span> : 'Search'}</button>
             </div>
-            <div className='max-w-7xl mx-auto p-10' >
+            <div className='max-w-7xl h-screen mx-auto md:p-10' >
                 {
                     loading ? <div className=" flex  justify-center mt-10 w-full">
                         <span className="loading loading-lg"></span></div> : data ? <div>
@@ -215,7 +217,7 @@ const SearchDonar = () => {
 
 
             </div >
-
+            <Footer></Footer>
         </div>
     );
 };

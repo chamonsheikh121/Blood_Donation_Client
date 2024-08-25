@@ -284,7 +284,7 @@ const CreateDonationRequest = () => {
 
                     <div className="flex flex-col flex-1 justify-center gap-2">
                         <label htmlFor="TextArea">Request message:</label>
-                        <textarea name="requesterMessage" id="requesterMessage" required placeholder="why do you need blood describe in this input field
+                        <textarea name="requesterMessage" id="requesterMessage"  placeholder="why do you need blood describe in this input field
 in details"  className="py-2 border bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white h-[100px]"
                             style={{ opacity: .1, transition: '1s', transform: 'translateY(90%)' }}></textarea>
                         <SectionComponent id={'requesterMessage'} from={'translateY'}></SectionComponent>
@@ -296,12 +296,10 @@ in details"  className="py-2 border bg-gray-300 placeholder:text-gray-500 pl-5 f
 
 
 
-                <div className="flex flex-col items-center gap-2 md:items-start">
-                    <label htmlFor="file">Photo :</label>
-                    <input type="file" name="file" id="file" className="py-2 border bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white" style={{ opacity: .1, transition: '1s', transform: 'translateX(-90%)' }} />
+                <div className="flex flex-col  gap-2 items-start">
+                    <label htmlFor="file">Patient photo :</label>
+                    <input type="file" name="file" id="file" className="py-2 border max-w-60 bg-gray-300 placeholder:text-gray-500 pl-5 focus:bg-white" style={{ opacity: .1, transition: '1s', transform: 'translateX(-90%)' }} />
                     <SectionComponent id={'file'} from={'translateX'}></SectionComponent>
-
-
                 </div>
 
                 <div className="max-w-md mx-auto">

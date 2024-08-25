@@ -205,7 +205,7 @@ const Profile = () => {
 
 
     return (
-        <div className="p-10" id="profile" style={{ opacity: .1, transition: '1s', transform: 'translateY(-90%)' }}>
+        <div className="md:p-10" id="profile" style={{ opacity: .1, transition: '1s', transform: 'translateY(-90%)' }}>
             <Helmet>
                 <title> Dashboard | profile</title>
             </Helmet>
@@ -215,7 +215,7 @@ const Profile = () => {
                     <div className=" p-5   relative  bg-white space-y-10  text-gray-600">
                         <figure className="relative">
 
-                            <img className="w-[250px] h-[250px] mx-auto rounded-full" src={data?.donarImage ? data?.donarImage : image} alt="" />
+                            <img className="w-[250px] h-[250px] object-cover mx-auto rounded-full" src={data?.donarImage ? data?.donarImage : image} alt="" />
                             {/* Open the modal using document.getElementById('ID').showModal() method */}
                             <button className="btn btn-sm absolute -top-2 -right-2" onClick={() => document.getElementById('my_modal_1').showModal()}><MdEdit size={20}></MdEdit></button>
                             <ProfileModal_1
@@ -287,7 +287,7 @@ const Profile = () => {
                             </p>
                             <p className="mt-3 flex items-center justify-between  rounded-full"><span className='font-bold'>active status</span>:<div className={`relative h-[30px]  transition-all  w-[60px]`}>
                                 <button className={`${data?.status == 'active' ? 'bg-green-500' : data?.status == 'blocked' ? 'bg-red-500' : 'bg-gray-300'} h-full transition-all border-2  w-full border-gray-500  rounded-full`}></button>
-                                <span className={`w-[30px] h-[30px]  absolute  ${data?.status == 'active' ? 'right-[2px] ' : 'left-[2px]'} transition-all border-2 border-gray-500 bg-gray-50 rounded-full h-full`}></span>
+                                <span className={`w-[30px] h-[30px]  absolute  ${data?.status == 'active' ? 'right-[1px] ' : 'left-[1px]'} transition-all border-2 border-gray-500 bg-gray-50 rounded-full h-full`}></span>
                             </div> </p>
                         </div>
                     </div>
@@ -375,7 +375,7 @@ const Profile = () => {
                     </div>
                 </div>
                 <div style={{ opacity: '.1', transition: '1s', transform: 'translateX(90%)' }} id='recentRequest' className="m-10">
-                    <p className="text-3xl font-bold mt-20 mb-5 text-center  text-gray-600">My recent request&apos;s:</p>
+                    <p className="text-3xl font-bold mt-20 mb-5 text-center  text-gray-600">My recent requests:</p>
 
                     <div className="grid relative md:grid-cols-2 grid-cols-1 lg:grid-cols-3 gap-10 md:mx-10">
                         {

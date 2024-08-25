@@ -29,6 +29,7 @@ const AuthProvider = ({ children }) => {
         return signInWithPopup(auth, provider);
     }
     const logOut = () => {
+        // localStorage.removeItem('user-token')
         return signOut(auth)
     }
     const verifyEmail = () => {
@@ -43,16 +44,16 @@ const AuthProvider = ({ children }) => {
         const subscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
             setLoading(false)
-            const createToken = async () => {
-                if (currentUser) {
-                    const userDoc = { email: currentUser?.email };
-                    const res = await axiosPublic.post('/api/v1/jwt', userDoc);
-                    const data = res.data;
-                    localStorage.setItem('user-token', JSON.stringify(data?.token))
-                    // console.log(data?.token);
-                }
-            }
-            createToken()
+            // const createToken = async () => {
+            //     if (currentUser) {
+            //         const userDoc = { email: currentUser?.email };
+            //         const res = await axiosPublic.post('/api/v1/jwt', userDoc);
+            //         const data = res.data;
+            //         localStorage.setItem('user-token', JSON.stringify(data?.token))
+            //         // console.log(data?.token);
+            //     }
+            // }
+            // createToken()
 
         })
         return () => {

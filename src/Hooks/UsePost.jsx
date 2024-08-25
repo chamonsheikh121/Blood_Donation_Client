@@ -7,7 +7,7 @@ const UsePost = (email) => {
     const {data, isLoading, refetch} = useQuery({
         queryKey:['getPost', email],
         queryFn:async()=>{
-            const res = await axiosPublic.get(`/api/v1/get-blogs/?email=${email}`);
+            const res = await axiosPublic.get(`/api/v1/get-blogs?email=${email}`);
             const data = res?.data;
             return data
         }

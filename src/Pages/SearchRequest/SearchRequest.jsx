@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
+import Footer from "../HomePage/Footer";
 
 const SearchRequest = () => {
     const value = useRef()
@@ -22,12 +23,16 @@ const SearchRequest = () => {
 
     }
     return (
-        <div>
-            <div className='max-w-xl flex justify-center items-center gap-10 p-5 mt-10 mx-auto bg-purple-600'>
+        <div className="min-h-screen">
+            <div className='max-w-xl flex flex-col md:flex-row justify-center items-center gap-2 md:gap-10 p-5 mt-10 mx-auto bg-purple-600'>
                 <input defaultValue={searchValue?.id} ref={value} className='flex-1 rounded-sm py-2 text-xl px-10' type="text" placeholder='Request Id or serial-number' />
                 <button onClick={handleSearchRequest} className='btn px-10'>Search</button>
             </div>
+            
             <Outlet></Outlet>
+          <div className="mt-32">
+          <Footer></Footer>
+          </div>
         </div>
     );
 };

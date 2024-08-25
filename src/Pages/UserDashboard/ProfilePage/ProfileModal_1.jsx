@@ -175,7 +175,7 @@ const ProfileModal_1 = ({ data,
 
                         <div className='form-control mt-2'>
                             <label htmlFor="">Active Status : </label>
-                            <select disabled={data?.status == 'blocked'} onChange={(e) => {
+                            <select disabled={data?.status == 'blocked' || data?.status == 'pending'} onChange={(e) => {
                                 setActiveStatus(e.target.value);
                                 setSaveActive(true)
                             }} className="select select-info w-full ">
@@ -185,7 +185,7 @@ const ProfileModal_1 = ({ data,
 
                             </select>
                             {
-                                data?.status == 'blocked' && <p>You have blocked by admin</p>
+                                data?.status == 'blocked' ? <p className='text-xs'>You have blocked by admin</p>: data.status == 'pending' ? <p className='text-xs'>After account approve you will be able to update status</p>:null
                             }
                         </div>
                     </div>

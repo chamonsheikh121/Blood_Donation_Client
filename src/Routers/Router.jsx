@@ -24,6 +24,8 @@ import ManageRequests from "../Pages/UserDashboard/AdminDashboard/ManageRequests
 import SendMessageToAdmin from "../Pages/UserDashboard/VolunteeerDashboard/SendMessageToAdmin";
 import CreateBlogPage from "../Pages/UserDashboard/Create Blog/CreateBlogPage";
 import PreviewBlog from "../Pages/UserDashboard/Create Blog/PreviewBlog";
+import AddReview from "../Pages/UserDashboard/AddReview/AddReview";
+import Funding from "../Pages/Funding/Funding";
 
 
 const router = createBrowserRouter([
@@ -70,6 +72,10 @@ const router = createBrowserRouter([
             {
                 path: 'blogs',
                 element: <Blogs></Blogs>
+            },
+            {
+                path: '/funding',
+                element: <Funding></Funding>
             },
            
             {
@@ -118,6 +124,10 @@ const router = createBrowserRouter([
                     {
                         path: 'manage-requests',
                         element: <ManageRequests></ManageRequests>
+                    },
+                    {
+                        path: 'add-review',
+                        element: <AddReview></AddReview>
                     },
                     {
                         path: 'send-message',

@@ -1,16 +1,18 @@
 import { Link } from "react-router-dom";
 import UseAllRequestCount from "../../../../Hooks/UseAllDonationRequest";
 import UsePendingRequest from "../../../../Hooks/UsePendingRequest";
-import UseAxiosSecure from "../../../../Hooks/UseAxiosSecure";
+
 import Swal from "sweetalert2";
 import UseUser from './../../../../Hooks/UseUser';
 import { Helmet } from "react-helmet";
+import UseAxiosPublic from "../../../../Hooks/UseAxiosPublic";
 
 
 const ManageRequests = () => {
     const [requests, isLoading, refetchActive] = UseAllRequestCount();
     const [pendingRequest, isLoad, refetchPending] = UsePendingRequest()
-    const axiosSecure = UseAxiosSecure();
+    const axiosPublic = UseAxiosPublic()
+
     const [userData] = UseUser()
 
 
@@ -18,7 +20,7 @@ const ManageRequests = () => {
     const handleApproveDisapprove = async (id) => {
 
         console.log(id);
-        await axiosSecure.patch(`/api/v1/update-request-status/?id=${id}`)
+        await axiosPublic.patch(`/api/v1/update-request-status?id=${id}`)
             .then(result => {
                 if (result?.data?.modifiedCount > 0) {
                     Swal.fire({
@@ -48,8 +50,8 @@ const ManageRequests = () => {
             cancelButtonText: "cancel"
         }).then(async (result) => {
             if (result.isConfirmed) {
-               
-                await axiosSecure.delete(`/app/v1/delete-request/?id=${id}`)
+
+                await axiosPublic.delete(`/app/v1/delete-request?id=${id}`)
                     .then(result => {
                         console.log(result);
                         if (result) {
@@ -62,10 +64,10 @@ const ManageRequests = () => {
                             });
                             refetchActive()
                             refetchPending()
-                           
+
                         }
                     })
-               
+
             }
 
         })
@@ -80,18 +82,18 @@ const ManageRequests = () => {
             <div>
                 <div className="mb-5 space-y-5">
                     {
-                        isLoad ? <div className='w-full flex justify-center items-center mt-5'><span className="loading loading-spinner loading-lg"></span></div> : pendingRequest?.length > 0 ? pendingRequest?.map(request => <div
+                        isLoad ? <div className='w-full flex  justify-center items-center mt-5'><span className="loading loading-spinner loading-lg"></span></div> : pendingRequest?.length > 0 ? pendingRequest?.map(request => <div
                             key={request?._id}
-                            className={`flex bg-white   p-5 rounded-md items-center justify-between`}>
+                            className={`flex bg-white flex-col md:flex-row  p-5 rounded-md items-center justify-between`}>
 
-                            <div className='flex-1 flex items-center   gap-5'>
+                            <div className='flex-1 flex items-center flex-col md:flex-row  gap-5'>
                                 <div className='w-[150px] h-[100px]'>
                                     <img className='w-full h-full object-cover rounded-md' src={request?.requesterImage} alt="" />
                                 </div>
                                 <div className="space-y-4">
 
                                     <span className="text-xl font-bold">Request from :</span>
-                                    <div className='flex items-end flex-row gap-10'>
+                                    <div className='flex flex-col pb-2 lg:items-end items-start  lg:flex-row gap-2 md:gap-10'>
                                         <div className='flex items-start gap-2'>
                                             <img className='w-[50px] h-[50px] rounded-full' src={request?.donarImage} alt="" />
                                             <div>
@@ -106,7 +108,7 @@ const ManageRequests = () => {
                             </div>
                             <div className='flex flex-col justify-center gap-2'>
 
-                                <Link className="" to={`/search-request/${request?._id}`}><button className='px-10 text-black w-full  btn btn-sm'>See details</button></Link>
+                                <Link className="" to={`/search-request/${request?._id}`}><button className='px-10 text-black w-full  btn btn-sm'>Request details</button></Link>
 
                                 {
                                     userData?.userRole == 'admin' && <button onClick={() => handleRequestDelete(request?._id)} className='px-10 text-black w-full  btn btn-sm'>delete</button>
@@ -127,15 +129,15 @@ const ManageRequests = () => {
                     {
                         isLoading ? <div className='w-full flex justify-center items-center mt-5'><span className="loading loading-spinner loading-lg"></span></div> : requests?.data?.length > 0 ? requests?.data?.map(request => <div
                             key={request?._id}
-                            className={`flex bg-white   p-5 rounded-md items-center justify-between`}>
+                            className={`flex bg-white flex-col md:flex-row   p-5 rounded-md items-center justify-between`}>
 
-                            <div className='flex-1 flex items-center   gap-5'>
+                            <div className='flex-1 flex-col md:flex-row flex items-center   gap-5'>
                                 <div className='w-[150px] h-[100px]'>
                                     <img className='w-full h-full object-cover rounded-md' src={request?.requesterImage} alt="" />
                                 </div>
                                 <div className="space-y-4">
                                     <span className="text-xl font-bold">Request from :</span>
-                                    <div className='flex items-end flex-row gap-10'>
+                                    <div className='flex flex-col pb-2 lg:items-end items-start  lg:flex-row gap-2 md:gap-10'>
                                         <div className='flex items-start gap-2'>
                                             <img className='w-[50px] h-[50px] rounded-full' src={request?.donarImage} alt="" />
                                             <div>
@@ -156,7 +158,9 @@ const ManageRequests = () => {
                                     userData?.userRole == 'admin' && <button onClick={() => handleRequestDelete(request?._id)} className='px-10 text-black w-full  btn btn-sm'>delete</button>
                                 }
 
+
                                 <button onClick={() => handleApproveDisapprove(request?._id)} className={` ${request?.status == 'pending' ? 'bg-red-600 hover:bg-red-700 ' : 'bg-blue-700 hover:bg-blue-900'} px-10  text-white btn btn-sm`}>{request?.status == 'pending' ? 'Approve now' : 'make pending'}</button>
+
 
                             </div>
 

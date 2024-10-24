@@ -68,7 +68,7 @@ const Registration = () => {
                         District: selectedDistrict || null,
                         Upazila: selectedUpazila || null,
                         BloodGroup: selectedBloodGroup || null,
-                        Status: 'pending',
+                        status: 'pending',
                         userRole: 'user',
                         profileUpdateStatus: 0
                     }
@@ -106,7 +106,8 @@ const Registration = () => {
                         joiningDate: joinDate,
                         BloodGroup: selectedBloodGroup || null,
                         status: 'pending',
-                        userRole: 'donar'
+                        userRole: 'donar',
+                        profileUpdateStatus: 0
                     }
                     axiosPublic.post('/api/v1/all-users', userDetails)
                         .then(res => {

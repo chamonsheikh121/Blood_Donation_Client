@@ -115,7 +115,7 @@ const AddReview = () => {
                 <div >
                     <div className="flex items-center justify-center">
                         <button onClick={handleReview} className="btn bg-green-700 hover:bg-green-800 text-white max-w-72  w-full">
-                            {loading ? <span className="loading"></span> : 'Publish blog'}</button>
+                            {loading ? <span className="loading"></span> : 'Publish review'}</button>
                     </div>
                 </div>
 

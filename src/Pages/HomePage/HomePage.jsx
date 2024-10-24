@@ -5,12 +5,15 @@ import Featured from "./Featured";
 import Footer from "./Footer";
 import PeopleComments from "./PeopleComments";
 import UseVolunteers from "../../Hooks/UseVolunteers";
+import UseUser from "../../Hooks/UseUser";
 
 
 
 const HomePage = () => {
 
     const [volunteers, isLoading] = UseVolunteers();
+    const [users] = UseUser()
+    
 
 
     return (

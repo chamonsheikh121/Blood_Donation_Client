@@ -13,11 +13,14 @@
   "dependencies": {
     "@tanstack/react-query": "^5.51.15",
     "animejs": "^3.2.2",
+    "aos": "^2.3.4",
     "axios": "^1.7.2",
     "cors": "^2.8.5",
-    "firebase": "^10.12.3",
+    "firebase": "^10.14.1",
+    "framer-motion": "^12.12.2",
     "keen-slider": "^6.8.6",
     "lottie-web": "^5.12.2",
+    "lucide-react": "^0.511.0",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -30,7 +33,7 @@
     "react-simple-captcha": "^9.3.1",
     "react-toastify": "^10.0.5",
     "rsuite-table": "^5.18.3",
-    "sweetalert2": "^11.12.2"
+    "sweetalert2": "^11.22.0"
   },
   "proxy": "https://api.imgbb.com/1/upload",
   "devDependencies": {

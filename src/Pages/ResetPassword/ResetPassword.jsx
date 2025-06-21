@@ -1,21 +1,20 @@
+
 import { useRef } from "react";
-import UseAuthContext from "../../Hooks/UseAuthContext";
-import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
 
 const ResetPassword = () => {
     const emailInput = useRef()
-    const { resetPass } = UseAuthContext()
+    // const { resetPass } = UseAuthContext()
 
-    const handleReset = () => {
-        const email = emailInput.current.value;
-        resetPass(email)
-            .then(() => {
-                Swal.fire(`${'please, check your email'}`);
-            })
-            .catch(err => console.log(err))
-    }
+    // const handleReset = () => {
+    //     const email = emailInput.current.value;
+    //     resetPass(email)
+    //         .then(() => {
+    //             Swal.fire(`${'please, check your email'}`);
+    //         })
+    //         .catch(err => console.log(err))
+    // }
 
     return (
         <div className="max-w-4xl mx-auto mt-10 ">
@@ -28,7 +27,7 @@ const ResetPassword = () => {
                 </div>
 
                 <div className="form-control mt-6">
-                    <button onClick={handleReset} className="btn bg-red-700 hover:bg-red-800 text-white">Reset now</button>
+                    <button  className="btn bg-red-700 hover:bg-red-800 text-white">Reset now</button>
                 </div>
                 <button className="mt-2 underline">
                     <Link to='/login'>Back to login</Link>

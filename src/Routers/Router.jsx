@@ -1,31 +1,25 @@
 // import { Root } from "postcss";
 import { createBrowserRouter } from "react-router-dom";
 import HomePage from "../Pages/HomePage/HomePage";
-import RootLayout from "../Components/Layout/RootLayout";
-import AllDonationReq from "../Pages/AllDonationReq/AllDonationReq";
+
 import Registration from "../Pages/Registration/Registration";
 import Login from "../Pages/Login/Login";
-import Blogs from "../Pages/Blog/Blogs";
-import DashboardLayout from "../Pages/UserDashboard/ProfilePage/DashboardLayout/DashboardLayout";
-import Profile from "../Pages/UserDashboard/ProfilePage/Profile";
-import MyDonationRequest from "../Pages/UserDashboard/MyDonationRequest/MyDonationRequest";
-import CreateDonationRequest from "../Pages/UserDashboard/CreateDonationRequest/CreateDonationRequest";
-import PrivateRoute from "../PrivateRoute/PrivateRoute";
-import MyRequestDetails from "../Pages/UserDashboard/MyRequestDetails/MyRequestDetails";
-import EditRequest from "../Pages/UserDashboard/EditRequest/EditRequest";
-import MyAcceptation from "../Pages/UserDashboard/MyAcceptation/MyAcceptation";
-import SearchDonar from "../Pages/SearchDonar/SearchDonar";
-import SearchRequest from "../Pages/SearchRequest/SearchRequest";
+import RootLayout from "../Components/Layout/RootLayout";
+
 import ResetPassword from "../Pages/ResetPassword/ResetPassword";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
-import ManageUsers from "../Pages/UserDashboard/AdminDashboard/ManageUsers/ManageUsers";
-import ManageVolunteers from "../Pages/UserDashboard/AdminDashboard/ManageVolunteers.jsx/ManageVolunteers";
-import ManageRequests from "../Pages/UserDashboard/AdminDashboard/ManageRequests/ManageRequests";
-import SendMessageToAdmin from "../Pages/UserDashboard/VolunteeerDashboard/SendMessageToAdmin";
-import CreateBlogPage from "../Pages/UserDashboard/Create Blog/CreateBlogPage";
-import PreviewBlog from "../Pages/UserDashboard/Create Blog/PreviewBlog";
-import AddReview from "../Pages/UserDashboard/AddReview/AddReview";
-import Funding from "../Pages/Funding/Funding";
+import Profile from '../Pages/ProfilePage/Profile'
+import AboutUs from "../AboutUsPage/AboutUs";
+import ContactUs from "../Pages/ContactUs/ContactUs";
+import ExploreBooks from "../Pages/ExploreBooks/ExploreBooks";
+import BookDetails from "../BookDetails/BookDetails";
+import AdminLayout from "../Pages/admin/adminLayout/adminLayout";
+import BookManagement from "../Pages/admin/adminLayout/BookManagement/BookManagement";
+import UserManagement from "../Pages/admin/ManageUsers/ManageUser";
+import BorrowReturn from "../Pages/admin/BorrowReturn/BorrowReturn";
+import FinesPayments from "../Pages/admin/FinePayments/FinePayments";
+import { Settings } from "lucide-react";
+
 
 
 const router = createBrowserRouter([
@@ -39,110 +33,51 @@ const router = createBrowserRouter([
                 element: <HomePage></HomePage>
             },
             {
-                path: 'all-blood-donation-request',
-                element: <AllDonationReq></AllDonationReq>
+                path: '/profile',
+                element: <Profile></Profile>
             },
             {
-                path: 'edit/:id',
-                element: <EditRequest></EditRequest>
-
+                path: '/about-us',
+                element: <AboutUs></AboutUs>
             },
             {
-                path: 'donation-requests/:id',
-                element: <MyRequestDetails></MyRequestDetails>
+                path: '/contact-us',
+                element: <ContactUs></ContactUs>
             },
             {
-                path: 'all-blood-donation-request/:id',
-                element: <MyRequestDetails></MyRequestDetails>
+                path: '/all-books',
+                element: <ExploreBooks></ExploreBooks>
             },
             {
-                path: 'search-donar',
-                element: <SearchDonar></SearchDonar>
+                path:'/book/:id',
+                element: <BookDetails></BookDetails>
             },
             {
-                path: 'search-request',
-                element: <SearchRequest></SearchRequest>,
-                children: [
+                path:'/admin',
+                element: <AdminLayout></AdminLayout>,
+                children:[
                     {
-                        path: ':id',
-                        element: <MyRequestDetails></MyRequestDetails>
-                    }
+                        index:true,
+                        element: <BookManagement></BookManagement>
+                    },
+                    {
+                        path:'users',
+                        element: <UserManagement></UserManagement>
+                    },
+                    {
+                        path:'borrows',
+                        element: <BorrowReturn></BorrowReturn>
+                    },
+                    {
+                        path:'fines',
+                        element: <FinesPayments></FinesPayments>
+                    },
+                    {
+                        path:'settings',
+                        element: <Settings></Settings>
+                    },
                 ]
             },
-            {
-                path: 'blogs',
-                element: <Blogs></Blogs>
-            },
-            {
-                path: '/funding',
-                element: <Funding></Funding>
-            },
-           
-            {
-                path: 'dashboard',
-                element: <PrivateRoute>
-                    <DashboardLayout></DashboardLayout>
-                </PrivateRoute>,
-                children: [
-                    {
-                        path: 'profile',
-                        element: <PrivateRoute><Profile></Profile></PrivateRoute>
-                    },
-                    {
-                        path: 'my-donation-requests',
-                        element: <MyDonationRequest></MyDonationRequest>
-                    },
-                    {
-                        path: 'my-donation-requests/:id',
-                        element: <MyRequestDetails></MyRequestDetails>
-                    },
-                    {
-                        path: 'my-acceptations',
-                        element: <MyAcceptation></MyAcceptation>
-                    },
-                    {
-                        path: 'my-donation-requests/:id/edit',
-                        element: <EditRequest></EditRequest>
-
-                    },
-                    {
-                        path: 'create-donation-request',
-                        element: <CreateDonationRequest></CreateDonationRequest>
-                    },
-                    {
-                        path: 'admin/manage-users',
-                        element: <ManageUsers></ManageUsers>
-                    },
-                    {
-                        path: 'admin/manage-volunteers',
-                        element: <ManageVolunteers></ManageVolunteers>
-                    },
-                    {
-                        path: 'manage-requests',
-                        element: <ManageRequests></ManageRequests>
-                    },
-                    {
-                        path: 'manage-requests',
-                        element: <ManageRequests></ManageRequests>
-                    },
-                    {
-                        path: 'add-review',
-                        element: <AddReview></AddReview>
-                    },
-                    {
-                        path: 'send-message',
-                        element: <SendMessageToAdmin></SendMessageToAdmin>
-                    },
-                    {
-                        path: 'create-blog',
-                        element: <CreateBlogPage></CreateBlogPage>
-                    },
-                    {
-                        path: 'create-blog/preview',
-                        element: <PreviewBlog></PreviewBlog>
-                    },
-                ]
-            }
         ]
     },
     {
